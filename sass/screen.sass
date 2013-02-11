@@ -1,0 +1,524 @@
+// Imports
+@import "compass/layout/sticky-footer"
+@import "compass/reset"
+@import "compass"
+@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic)
+@import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=cyrillic,latin)
+
+
+// Variables 
+$main-light-color: #fff
+$main-dark-colot: #000
+$sub-dark-color: adjust-lightness($main-dark-colot, 50%)
+$main-link-color: #bb1d1d
+$border-color: rgba(194, 194, 194,.5)
+$light-border-color: rgba(white,.95)
+$dark-text-shadow: rgba(black,.55)
+$light-text-shadow: rgba(white,.95)
+$red-button-bg: #bb1d1d
+$blue-button-bg: #149ec5
+
+$icons: sprite-map("icons/*.png")
+
+$default-border-radius: 5px
+$bs: border-box
+
+$grid-size: 960px
+$conrent-size: 800px
+
+
+// Mixins
++sticky-footer(45px, ".wrapper", ".footer-push", "footer")
+
+
+// Text styles
+html 
+    font-size: 62.5%
+    line-height: 1.8em
+    height: 100%
+a 
+    +link-colors($main-link-color, adjust-lightness($main-link-color, -10%))
+    text-decoration: none
+h2
+    font-size: 2.5em
+    color: #149ec5
+    padding-top: .3em
+    i
+        margin: 0 10px -3px 0
+h3
+    font-size: 1.4em
+    font-weight: bold
+    min-height: 40px
+    padding-top: .9em
+p
+    font-size: 1.3em
+    padding-top: .9em
+small 
+    font-size: .9em
+    color: $sub-dark-color
+.italic 
+    font-style: italic
+.sub-dark-color
+    color: $sub-dark-color
+.field
+    margin: 10px
+    label, input, .label-link
+        font-size: 1.4em
+    .label-link
+        float: right
+    .checkbox-input
+        margin-right: 3px
+        position: relative
+        top: -1px
+    .text-input
+        font-family: 'PT Sans', sans-serif
+        +box-sizing($bs)
+        width: 100%
+        padding: 3px 10px
+        border: solid 1px $border-color
+        +border-radius
+        outline: none
+        +single-box-shadow(rgba(0,0,0,.45), 0, 1px, 2px, -1px, inset)
+        &:focus
+            +single-box-shadow(rgba(0,0,0,.85), 0, 1px, 2px, -1px, inset)
+    &.error
+        .text-input
+            background: rgba(red,.15)
+        .caption
+            display: block
+.caption
+    font-size: 1.2em
+    font-style: italic
+    color: $sub-dark-color
+    display: none
+
+
+// Grid
+.grid
+    float: left
+    +box-sizing($bs)
+    position: relative
+    h2, h3, p 
+        margin: 0 20px
+.inner
+    width: $grid-size
+    margin: 0 auto
+    position: relative
+.text-content-inner
+    width: $conrent-size
+    margin: 0 auto
+    position: relative
+.small-col
+    width: 30%
+.medium-col
+    width: 40%
+.big-col
+    width: 60%
+    .popup-body &
+        width: 70%
+.full-size-col
+    width: 100%
+    h2
+        margin: 0 20px  
+.hor-splitter 
+    background: $border-color
+    width: 100%
+    height: 1px
+    border-bottom: solid 1px $light-border-color
+
+
+// Body, header and footer
+body 
+    -webkit-font-smoothing: antialiased
+    font-family: 'PT Sans', sans-serif
+    text-shadow: 0 1px 1px $dark-text-shadow
+    background: image-url('main-bg.jpg') repeat #422710
+    height: 100%
+
+.site-main-header
+    font-family: 'PT Sans Narrow', sans-serif
+    background: image-url('header-bg.jpg') center top no-repeat #9a252d
+    width: 100%
+    height: 100px
+    +single-box-shadow(rgba(0,0,0,.45), 0, 4px, 8px)
+    .inner
+        background: image-url('header-bg.jpg') center bottom no-repeat
+        height: 143px
+
+.main-navigation li
+    font-size: 2.5em
+    display: block
+    float: left
+    margin: 40px 0 0 0
+    &:first-child
+        width: 140px
+        margin-left: 28px
+    &:last-child
+        margin-left: 55px
+    a
+        +link-colors($main-light-color, #f1ecee, #e6e1e3)
+        text-shadow: 0 1px 1px $dark-text-shadow, 0 0 13px rgba(255,255,255,.4)
+        position: relative
+        &.selected:after
+            content: ""
+            background: rgba(0,0,0,.25)
+            display: block
+            width: 10px
+            height: 10px
+            margin-left: -5px
+            +border-radius()
+            +single-box-shadow(rgba(white,.5), 0, 1px, 1px, 0)
+            position: absolute
+            top: -8px
+            left: 50% 
+
+.logo 
+    margin: 0 80px
+    position: relative
+    top: -32px
+footer
+    font-size: 1.6em
+    line-height: 47px
+    color: $main-light-color
+    text-align: center
+    background: image-url('header-bg.jpg') center top no-repeat #9a252d
+    width: 100%
+
+
+// Popups
+.popup-bg
+    background: rgba(black, .5)
+    display: none
+    width: 100%
+    height: 100%
+    position: fixed
+    z-index: 60
+.popup-container
+    display: none
+    width: 100%
+    height: 100%
+    overflow: auto
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 65
+.popup-holder
+    width: 460px
+    margin: 60px 0 0 -230px
+    padding-bottom: 30px
+    position: absolute
+    left: 50%
+    z-index: 70
+.popup-body
+    text-shadow: 0 1px 0px $light-text-shadow
+    background: image-url('paper-bg.jpg') repeat #f4f1f2
+    width: 460px
+    padding: 15px 0
+    +border-radius(10px)
+    +single-box-shadow(rgba(black,.5), 0, 2px, 6px, 0px)
+    h2, p
+        margin: 0 10px
+    h2
+        margin-bottom: -8px
+    .hor-splitter
+        margin: 15px 0 0
+.close-btn
+    display: block
+    position: absolute
+    top: 10px
+    right: 10px
+    +opacity(.5)
+    &:hover
+        +opacity(.7)
+
+
+// Icons
+i
+    background: $icons
+    display: inline-block
+
+@each $icon in sprite_names($icons)
+    .icn-#{$icon}
+        +sprite-dimensions($icons, $icon)
+        background-position: sprite-position($icons, $icon)
+
+
+// Buttons
+.small-btn
+    font-size: 1.4em
+    font-weight: bold
+    text-shadow: none
+    display: inline-block
+    padding: 3px 10px 2px
+    +border-radius
+    position: relative
+    +translateZ(0)
+    +single-transition(all, 200ms, ease-in-out, 1ms)  
+.red-btn
+    +link-colors($main-light-color, $main-light-color)
+    background: $red-button-bg
+    +single-box-shadow(adjust-lightness($red-button-bg, -15%), 0, 2px, 0, 0)
+    &:hover
+        background: adjust-lightness($red-button-bg, 2%)
+        +single-box-shadow(adjust-lightness($red-button-bg, -10%), 0, 2px, 0, 0)  
+    &:active
+        +single-box-shadow(adjust-lightness($red-button-bg, -15%), 0, 1px, 2px, 0px, inset)
+        +single-transition(top, 0ms, ease-in-out, 1ms)
+        top: 2px
+.blue-btn
+    +link-colors($main-light-color, $main-light-color)
+    background: $blue-button-bg
+    +single-box-shadow(adjust-lightness($blue-button-bg, -5%), 0, 2px, 0, 0)
+    &:hover
+        background: adjust-lightness($blue-button-bg, 2%)
+        +single-box-shadow(adjust-lightness($blue-button-bg, -7%), 0, 2px, 0, 0)  
+    &:active
+        +single-box-shadow(adjust-lightness($blue-button-bg, -15%), 0, 1px, 2px, 0px, inset)
+        +single-transition(top, 0ms, ease-in-out, 1ms)
+        top: 2px
+
+
+// User panel
+.user-panel-holder 
+    width: 100%
+    margin-top: 25px
+    position: relative
+.phone-holder 
+    float: left
+    width: 50%
+    position: absolute
+.phone-number
+    font-size: 2em
+    display: inline-block
+    a
+        color: $main-light-color
+        cursor: text
+        pointer-events: none
+.icn-phone 
+    margin: 0 10px -3px 0
+
+.panel-fix-position
+    width: $grid-size/2
+    margin-left: $grid-size/2 
+    z-index: 50
+.user-panel
+    background: image-url('main-bg.jpg') repeat #422710
+    float: right
+    height: 30px
+    +border-radius
+    +box-shadow(rgba(black, 0.75) 0 1px 2px, rgba(white, 0.15) 0 -1px 15px 0 inset)
+    li
+        font-size: 1.4em
+        display: block
+        float: left
+        margin: 7px 10px 0
+        a
+            +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
+.icn-cart 
+    margin-bottom: -2px
+    padding-right: 7px
+.splitter-next:after 
+    content: "|"
+    color: $border-color
+    position: absolute
+    margin-left: 8px 
+
+
+// Main slider
+.main-slider-container
+    width: 100%
+    height: 250px
+    margin-top: 25px
+    padding: 10px 0
+.main-slider
+    width: 100%
+    height: 100%
+    .slide
+        float: left
+        width: 640px
+        height: 250px
+    .photo-slide
+        background: rgba(white,.15)
+        +background-size(cover)
+        display: block
+        width: 620px
+        height: 250px
+        margin: 0 auto
+        +border-radius(10px)
+        +single-box-shadow(rgba(black,.5), 0, 1px, 6px, 1px)
+        position: relative
+.slider-arrow
+    background: rgba(white,.75)
+    width: 150px
+    height: 250px
+    position: absolute
+    top: 10px
+    z-index: 5
+    +single-transition(background, 600ms, ease-in-out, 1ms)
+    i
+        position: absolute
+        top: 95px
+        left: 50px
+        +opacity(.6)
+        +single-transition(opacity, 300ms, ease-in-out, 1ms)
+    &:hover
+        background: rgba(white,.85)
+        i
+            +opacity(100)
+    &:active
+        background: rgba(white,0)
+        +single-transition(background, 50ms, ease-in-out, 1ms)
+.prev-slide
+    +border-right-radius(10px)
+    left: 0
+.next-slide
+    +border-left-radius(10px)
+    right: 0
+
+.slider-border
+    background: image-url('slider-borders.png') no-repeat
+    width: 10px
+    height: 270px
+    position: absolute
+    top: 0
+    z-index: 10
+.left-slider-border
+    background-position: 0 0
+    left: 0px
+.right-slider-border
+    background-position: -10px 0
+    right: 0
+
+
+// Menu
+.menu-container
+    margin-top: 20px
+.menu-item
+    display: block
+    float: left
+    width: 20%
+    +box-sizing($bs)
+    padding-bottom: 12px
+    border: dashed 1px rgba(black,0)
+    +border-radius(10px)
+    position: relative
+    .small-btn
+        display: table
+        margin: 7px auto 0 
+        +opacity(0)
+        +translateY(10px)
+    &:hover
+        border: dashed 1px rgba(black,.3)
+        +box-shadow(rgba(white,.15) 0 0 40px 0px inset, rgba(white,.05) 0 0 2px 1px)
+        .small-btn
+            +opacity(100)
+            +translateY(0)
+    &.info-block
+        pointer-events: none
+.menu-photo-holder
+    width: 164px
+    height: 164px
+    margin: 20px auto 0
+    +border-radius(50%)
+    +box-shadow(rgba(238,238,238,.3) 0 0 0 3px, rgba(black,.6) 0 2px 5px 2px)
+    overflow: hidden
+.menu-photo 
+    width: 164px
+    height: 164px
+.menu-name
+    font-size: 1.8em
+    +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
+    text-align: center
+    display: block
+    margin: 15px 10px 0
+
+
+// Postcard content
+.postcard-content
+    text-shadow: 0 1px 0px $light-text-shadow
+    background: image-url('paper-bg.jpg') repeat #f4f1f2
+    width: 100%
+    margin: 30px 0
+    padding: 25px 0
+    +single-box-shadow(rgba(black,.5), 0, 1px, 6px, 1px)
+    position: relative
+    .hor-splitter 
+        margin: 10px
+.right-dark-border
+    border-right: solid 1px $border-color
+.left-light-border
+    border-left: solid 1px $light-border-color
+.variants
+    p 
+        padding-top: .3em
+    label
+        margin-left: 7px
+.answers
+    font-size: 1.3em
+    text-align: center
+    background: $border-color
+    width: 100%
+    margin: 15px 20px 0
+    padding: 5px 0
+    +border-radius(10px)
+.postcard-corener
+    background: image-url('postcard-corner.png') no-repeat
+    width: 45px
+    height: 45px
+    position: absolute 
+.pc-l-t
+    top: -14px
+    left: -10px
+.pc-r-t
+    top: -10px
+    right: -14px
+    +rotate(90deg)
+.pc-l-b
+    bottom: -10px
+    left: -14px
+    +rotate(270deg)
+.pc-r-b
+    bottom: -14px
+    right: -10px
+    +rotate(180deg)
+
+
+// Press
+.press-container
+    margin: 50px 0 30px
+    p
+        font-size: 1.6em
+        color: $main-light-color  
+.press-image 
+    background: image-url('press.png') 0 0 no-repeat
+    width: 450px
+    height: 285px
+    position: relative
+.press-link
+    display: block
+    position: absolute
+    width: 127px
+    height: 127px
+.afisha-link
+    top: 1px
+    left: 319px
+.hopes-link
+    top: 151px
+    left: 230px
+.mail-link
+    font-size: .95em
+    +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
+    i
+        margin: 0 1px -2px 0
+
+
+// Fix
+%group, .group
+    &:after
+        content: ''
+        display: table
+        clear: both
+.centered
+    margin: 0 auto
+    position: relative
+

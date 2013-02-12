@@ -1,4 +1,4 @@
-$(function() {
+jQuery(document).ready(function($){
 
     // Floatin user panel
     var eTop = $('.panel-fix-position').offset().top;
@@ -50,5 +50,25 @@ $(function() {
         event.preventDefault();
         closePopup();
     });
+		
+	$('#user-login').click(function(){
+		var serial = $('#login').serialize();
+		$.post('/user/login.php',
+				serial,
+				function(data){
+					$('#login span.caption').text(data);
+				});
+	});
+	
+	$(document)
+		.ajaxStart(function(){
+			$('.spinner').fadeIn('fast');
+		})
+		.ajaxStop(function(){
+			$('.spinner').fadeOut('fast');
+		})
+	;
+	
+	$('.spinner').hide();
 
 });

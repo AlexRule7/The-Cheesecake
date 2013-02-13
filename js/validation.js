@@ -1,18 +1,11 @@
 $(document).ready(function(){
 	var jVal = {
-		'mail' : function(button) {
+		'mail' : function() {
 			
 			$('body').append('<div id="mailInfo" class="info"></div>');
-			
-			if(typeof(button) != "undefined" && button !== null) {
-				var ele = $(button).closest('form').find('input[name=user-email]');
-			} else {
-				var ele = $(this);
-			}
-			console.log(ele);
-			$(button).closest('form').find('input[name=user-email]')
-			
+						
 			var mailInfo = $('#mailInfo');
+			var ele = $('input[name=user-email]');
 			var pos = ele.offset();
 
 			mailInfo.css({
@@ -37,7 +30,7 @@ $(document).ready(function(){
 			$('body').append('<div id="passInfo" class="info"></div>');
 			
 			var passInfo = $('#passInfo');
-			var ele = $(this);
+			var ele = $('input[name=user-pass]');
 			var pos = ele.offset();
 
 			passInfo.css({
@@ -66,7 +59,7 @@ $(document).ready(function(){
 
 	$('#user-login').click(function (e){
 		jVal.errors = false;
-		jVal.mail(this);
+		jVal.mail();
 		jVal.pass();
 		if(!jVal.errors) {
 			var serial = $('#login').serialize();

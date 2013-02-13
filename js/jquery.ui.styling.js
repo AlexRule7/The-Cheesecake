@@ -50,16 +50,9 @@ jQuery(document).ready(function($){
         event.preventDefault();
         closePopup();
     });
-		
-	$('#user-login').click(function(){
-		var serial = $('#login').serialize();
-		$.post('/user/login.php',
-				serial,
-				function(data){
-					$('#login span.caption').text(data);
-				});
-	});
 	
+	$('.spinner').hide();
+
 	$(document)
 		.ajaxStart(function(){
 			$('.spinner').fadeIn('fast');
@@ -69,6 +62,11 @@ jQuery(document).ready(function($){
 		})
 	;
 	
-	$('.spinner').hide();
+	$('#logout').click(function(e) {
+        $.get('user/logout.php', function() {
+			location.reload();
+		});
+		return false;
+    });
 
 });

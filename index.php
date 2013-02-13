@@ -4,6 +4,77 @@ session_start();
 
 require(dirname(__FILE__).'/Connections/exarium.php');
 
+function user_panel($name) {
+	if (isset($name) && isset($_SESSION['user_id'])) {
+		print '
+                    <div class="panel-fix-position">
+                        <ul class="user-panel">
+                            <li class="splitter-next"><a href="#">Здравствуйте, '.$name.'!</a></li>
+                            <li class="splitter-next"><a href="#" id="logout">Выйти</a></li>
+                            <li class="mini-cart"><a href="#"><i class="icn-cart"></i>Корзина: 1</a></li>
+                        </ul>
+                    </div>';
+	} else {
+		print '
+                    <div class="panel-fix-position">
+                        <ul class="user-panel">
+                            <li class="splitter-next"><a class="si-popup-trigger" href="#">Вход</a></li>
+                            <li class="splitter-next"><a class="su-popup-trigger" href="#">Регистрация</a></li>
+                            <li class="mini-cart"><a href="#"><i class="icn-cart"></i>Корзина: 1</a></li>
+                        </ul>
+                    </div>';
+	}
+}
+
+if (!isset($_SESSION['user_id']))
+{
+	if (isset($_COOKIE['mail']) && isset($_COOKIE['password']))
+	{
+		$mail = sanitize($_COOKIE['mail']);
+		$password = sanitize($_COOKIE['password']);
+
+		$query = "SELECT `user_id`, `password`
+					FROM `users`
+					WHERE `mail`='{$mail}' AND `password`='{$password}'
+					LIMIT 1";
+		$sql = mysql_query($query) or die(mysql_error());
+
+		if (mysql_num_rows($sql) == 1)
+		{
+			$row = mysql_fetch_assoc($sql);
+			$_SESSION['user_id'] = $row['user_id'];
+		}
+	}
+}
+
+if (isset($_SESSION['user_id']))
+{
+	$query = "SELECT `name`, `mail`
+				FROM `users`
+				WHERE `user_id` = '{$_SESSION['user_id']}'
+				LIMIT 1";
+	$sql = mysql_query($query) or die(mysql_error());
+	
+	if (mysql_num_rows($sql) != 1)
+	{
+		if (isset($_SESSION['user_id'])) {
+			unset($_SESSION['user_id']);
+			unset($name);
+		}
+		
+		setcookie('login', '', 0, "/");
+		setcookie('password', '', 0, "/");
+		
+		header('Location: index.php');
+	}
+	
+	$row = mysql_fetch_assoc($sql);
+	
+	$name = $row['name'];
+}
+
+
+
 ?>
 
 
@@ -12,6 +83,7 @@ require(dirname(__FILE__).'/Connections/exarium.php');
     <meta charset="UTF-8">
     <title>Чизкейки в Москве | The Moscow Cheesecake</title>
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/validation.css" rel="stylesheet" type="text/css">
     <!--[if IE]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -52,18 +124,17 @@ require(dirname(__FILE__).'/Connections/exarium.php');
                             <label for="user-email">Email:</label>
                             <input class="text-input" type="email" name="user-email">
                         </div>
-                        <div class="field error">
+                        <div class="field">
                             <label for="user-pass">Пароль:</label>
                             <a href="#" class="label-link">Забыли?</a>
                             <input class="text-input" type="password" name="user-pass">
-                            <span class="caption">Ошибка: пароль введен неверно.</span>
                         </div>
                         <div class="field checkbox-field">
                             <input class="checkbox-input" type="checkbox" name="user-remember">
                             <label for="user-remember">Запомнить меня</label>
                         </div>
                         <div class="field">
-                            <span class="small-btn blue-btn" id="user-login">Войти</span>
+                            <a href="#" class="small-btn blue-btn" id="user-login">Войти</a>
                             <div id="spinner_si"><img src="images/spinner2.gif" class="spinner" title="Loading..."></div>
                         </div>
                         <div class="hor-splitter"></div>
@@ -133,13 +204,9 @@ require(dirname(__FILE__).'/Connections/exarium.php');
                         <i class="icn-phone"></i>
                         <h1 class="phone-number" itemprop="telephone"><a href="tel:+74955185456">+7 (495) 518-54-56</a></h1>
                     </div>
-                    <div class="panel-fix-position">
-                        <ul class="user-panel">
-                            <li class="splitter-next"><a class="si-popup-trigger" href="#">Вход</a></li>
-                            <li class="splitter-next"><a class="su-popup-trigger" href="#">Регистрация</a></li>
-                            <li class="mini-cart"><a href="#"><i class="icn-cart"></i>Корзина: 1</a></li>
-                        </ul>
-                    </div>
+                    <?php
+						user_panel($name);
+					?>
                 </section>
 
                 <!-- Main slider -->

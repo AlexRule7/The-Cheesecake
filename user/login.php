@@ -39,23 +39,21 @@ if (!empty($_POST))
 			$time = 60*60*24*30; // set cookie for a month
 			if (isset($_POST['user-remember']))
 			{
-				setcookie('login', $login, time()+$time, "/");
-				setcookie('password', $pass, time()+$time, "/");
+				setcookie('mail', $mail, time()+$time, "/");
+				setcookie('password', $password, time()+$time, "/");
 			}
 			
 			// return success
-			echo $row['name'];
+			echo 0;
 		}
 		else
 		{
-			$error = 'Пароль ('. $pass . ') не верен.';
-			echo $error;
+			echo 2;
 		}
 	}
 	else
 	{
-		$error = 'Пользователь с таким логином ('. $mail . ') не найден.';
-		echo $error;
+		echo 1;
 	}
 }
 

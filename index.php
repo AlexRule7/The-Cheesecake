@@ -122,12 +122,12 @@ if (isset($_SESSION['user_id']))
                         <div class="hor-splitter"></div>
                         <div class="field">
                             <label for="user-email">Email:</label>
-                            <input class="text-input" type="email" name="user-email">
+                            <input class="text-input" type="email" tabindex="1" name="user-email">
                         </div>
                         <div class="field">
                             <label for="user-pass">Пароль:</label>
                             <a href="#" class="label-link">Забыли?</a>
-                            <input class="text-input" type="password" name="user-pass">
+                            <input class="text-input" type="password" tabindex="2" name="user-pass">
                         </div>
                         <div class="field checkbox-field">
                             <input class="checkbox-input" type="checkbox" name="user-remember">
@@ -155,7 +155,7 @@ if (isset($_SESSION['user_id']))
                     <div class="hor-splitter"></div>
                     <div class="field">
                         <label for="user-name">Ваше имя:</label>
-                        <input class="text-input" type="email" name="user-name">
+                        <input class="text-input" type="text" name="user-name">
                     </div>
                     <div class="field">
                         <label for="user-email">Email:</label>

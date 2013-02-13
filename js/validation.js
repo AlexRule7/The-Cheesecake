@@ -1,15 +1,22 @@
 $(document).ready(function(){
 	var jVal = {
-		'mail' : function() {
+		'mail' : function(button) {
 			
 			$('body').append('<div id="mailInfo" class="info"></div>');
 			
+			if(typeof(button) != "undefined" && button !== null) {
+				var ele = $(button).closest('form').find('input[name=user-email]');
+			} else {
+				var ele = $(this);
+			}
+			console.log(ele);
+			$(button).closest('form').find('input[name=user-email]')
+			
 			var mailInfo = $('#mailInfo');
-			var ele = $('input[name=user-email]');
 			var pos = ele.offset();
 
 			mailInfo.css({
-				top: pos.top-3,
+				top: pos.top-$(window).scrollTop()-3,
 				left: pos.left+ele.width()+30
 			});
 			
@@ -30,11 +37,11 @@ $(document).ready(function(){
 			$('body').append('<div id="passInfo" class="info"></div>');
 			
 			var passInfo = $('#passInfo');
-			var ele = $('input[name=user-pass]');
+			var ele = $(this);
 			var pos = ele.offset();
 
 			passInfo.css({
-				top: pos.top-3,
+				top: pos.top-$(window).scrollTop()-3,
 				left: pos.left+ele.width()+30
 			});
 					
@@ -51,9 +58,15 @@ $(document).ready(function(){
 	
 	// ===================================================================//
 	
-	$('#user-login').click(function (){
+	$('#login').keypress(function(e) {
+		if ((e.keyCode || e.which) == 13) {
+			$('#user-login').trigger('click');
+		}
+	});	
+
+	$('#user-login').click(function (e){
 		jVal.errors = false;
-		jVal.mail();
+		jVal.mail(this);
 		jVal.pass();
 		if(!jVal.errors) {
 			var serial = $('#login').serialize();
@@ -73,9 +86,11 @@ $(document).ready(function(){
 						}
 			});
 		}
-		return false;
+		e.preventDefault();
 	});
 		
 	$('input[name=user-email]').change(jVal.mail);
 	$('input[name=user-pass]').change(jVal.pass);
+	
+	
 });

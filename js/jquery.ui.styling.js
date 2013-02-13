@@ -36,6 +36,8 @@ jQuery(document).ready(function($){
         event.preventDefault();
         closePopup();
         $('.popup-bg, .si-popup').show();
+		$('div.info').remove();
+		$('input').val('');
     });
 
     // Show sign-up popup
@@ -43,11 +45,14 @@ jQuery(document).ready(function($){
         event.preventDefault();
         closePopup();
         $('.popup-bg, .su-popup').show();
+		$('div.info').remove();
+		$('input').val('');
     });
 
     // Close popup on close-btn
     $('.close-btn').click(function(event){
         event.preventDefault();
+		$('div.info').remove();
         closePopup();
     });
 	
@@ -66,7 +71,7 @@ jQuery(document).ready(function($){
         $.get('user/logout.php', function() {
 			location.reload();
 		});
-		return false;
+		e.preventDefault();
     });
-
+		
 });

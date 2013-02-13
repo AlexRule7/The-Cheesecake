@@ -29,6 +29,13 @@ $conrent-size: 800px
 
 // Mixins
 +sticky-footer(45px, ".wrapper", ".footer-push", "footer")
+=arrow-shape($point)
+    $opposite: opposite-position($point)
+    border: 18px solid transparent
+    border-#{$opposite}: 10px solid $red-button-bg
+    border-#{$point}: 0
+    height: 0
+    width: 0
 
 
 // Text styles
@@ -91,6 +98,24 @@ small
     font-style: italic
     color: $sub-dark-color
     display: none
+.mini-cart-item-qt
+    font-family: 'PT Sans', sans-serif
+    font-size: 1em
+    font-weight: bold
+    text-align: center
+    +box-sizing($bs)
+    width: 50px
+    padding: 3px 5px
+    border: solid 1px $border-color
+    +border-radius
+    outline: none
+    +single-box-shadow(rgba(0,0,0,.45), 0, 1px, 2px, -1px, inset)
+    position: relative
+    &:focus
+        +single-box-shadow(rgba(0,0,0,.85), 0, 1px, 2px, -1px, inset)
+.mini-cart-item-qt-label
+    display: inline-block
+        
 
 
 // Grid
@@ -253,7 +278,26 @@ i
     +border-radius
     position: relative
     +translateZ(0)
-    +single-transition(all, 200ms, ease-in-out, 1ms)  
+    +single-transition(all, 200ms, ease-in-out, 1ms)
+.big-btn
+    font-size: 1.7em
+    font-weight: normal
+    text-shadow: none
+    display: inline-block
+    margin: 10px 15px
+    padding: 5px 10px 4px
+    +border-radius(10px)
+    position: relative
+    +translateZ(0)
+    +single-transition(all, 200ms, ease-in-out, 1ms)
+    .in-btn-price
+        background: rgba(0,0,0,.2)
+        display: inline-block
+        padding: 5px 10px
+        +border-radius()
+        +single-box-shadow(rgba(0,0,0,.2), 0, 1px, 2px, 0px, inset)
+    .in-btn-text
+        margin: auto 5px auto 15px
 .red-btn
     +link-colors($main-light-color, $main-light-color)
     background: $red-button-bg
@@ -264,7 +308,7 @@ i
     &:active
         +single-box-shadow(adjust-lightness($red-button-bg, -15%), 0, 1px, 2px, 0px, inset)
         +single-transition(top, 0ms, ease-in-out, 1ms)
-        top: 2px
+        top: 1px
 .blue-btn
     +link-colors($main-light-color, $main-light-color)
     background: $blue-button-bg
@@ -275,7 +319,7 @@ i
     &:active
         +single-box-shadow(adjust-lightness($blue-button-bg, -15%), 0, 1px, 2px, 0px, inset)
         +single-transition(top, 0ms, ease-in-out, 1ms)
-        top: 2px
+        top: 1px
 
 
 // User panel
@@ -322,6 +366,59 @@ i
     color: $border-color
     position: absolute
     margin-left: 8px 
+
+
+// Mini cart
+.mini-cart-container
+    text-shadow: 0 1px 0px $light-text-shadow
+    background: image-url('paper-bg.jpg') repeat #f4f1f2
+    display: none
+    width: 230px
+    +border-radius(10px)
+    border: solid 4px $red-button-bg
+    +single-box-shadow(rgba(black, 0.75), 0, 1px, 3px)
+    position: absolute
+    top: 40px
+    right: 0
+    z-index: 50
+    &.opened
+        display: block
+.mini-cart-item
+    font-size: 1.4em
+    display: block
+    padding-bottom: 3px
+    border-bottom: solid 1px $border-color
+.mini-cart-photo-holder
+    background: #fff
+    float: left
+    width: 70px
+    height: 70px
+    margin: 10px
+    border: solid 3px #eee
+    +border-radius(70px)
+    overflow: hidden
+.mini-cart-photo
+    width: 70px
+    height: 70px
+.mini-cart-info
+    float: left
+    width: 119px
+.mini-cart-item-name
+    line-height: 1em
+    +force-wrap
+    display: block
+    margin: 20px 0 5px
+.mini-cart-btn
+    text-align: center
+    border-top: solid 1px $light-border-color
+.mini-height-scroll-container
+    max-height: 280px
+    overflow-y: auto
+.mini-cart-arrow
+    +arrow-shape(top)
+    position: absolute
+    top: -10px
+    right: 25px
 
 
 // Main slider

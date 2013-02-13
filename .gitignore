@@ -2,3 +2,10 @@
 ###################
 *.sassc
 *.scssc
+
+# _note Folder #
+###################
+/_notes
+*/_notes
+*/_notes/
+*/_notes/*.xml

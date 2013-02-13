@@ -39,9 +39,18 @@ $conrent-size: 800px
 
 
 // Text styles
+@font-face 
+    font-family: 'PFAgoraSlabProRegular'
+    src: url('/fonts/pfagoraslabpro-medium-webfont.eot')
+    src: url('/fonts/pfagoraslabpro-medium-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/pfagoraslabpro-medium-webfont.woff') format('woff'), url('/fonts/pfagoraslabpro-medium-webfont.ttf') format('truetype')
+    font-weight: normal
+    font-style: normal
 html 
+    -webkit-font-smoothing: antialiased
+    font-family: 'PT Sans', sans-serif
     font-size: 62.5%
     line-height: 1.8em
+    text-shadow: 0 1px 1px $dark-text-shadow
     height: 100%
 a 
     +link-colors($main-link-color, adjust-lightness($main-link-color, -10%))
@@ -65,6 +74,8 @@ small
     color: $sub-dark-color
 .italic 
     font-style: italic
+.bold
+    font-weight: bold
 .sub-dark-color
     color: $sub-dark-color
 .field
@@ -115,13 +126,14 @@ small
         +single-box-shadow(rgba(0,0,0,.85), 0, 1px, 2px, -1px, inset)
 .mini-cart-item-qt-label
     display: inline-block
-        
+.agora-font
+    font-family: 'PFAgoraSlabProRegular'     
 
 
 // Grid
 .grid
-    float: left
     +box-sizing($bs)
+    float: left
     position: relative
     h2, h3, p 
         margin: 0 20px
@@ -137,6 +149,8 @@ small
     width: 30%
 .medium-col
     width: 40%
+.half-col
+    width: 50%
 .big-col
     width: 60%
     .popup-body &
@@ -154,9 +168,6 @@ small
 
 // Body, header and footer
 body 
-    -webkit-font-smoothing: antialiased
-    font-family: 'PT Sans', sans-serif
-    text-shadow: 0 1px 1px $dark-text-shadow
     background: image-url('main-bg.jpg') repeat #422710
     height: 100%
 
@@ -402,7 +413,7 @@ i
     height: 70px
 .mini-cart-info
     float: left
-    width: 119px
+    width: 115px
 .mini-cart-item-name
     line-height: 1em
     +force-wrap
@@ -492,9 +503,9 @@ i
     margin-top: 20px
 .menu-item
     display: block
+    +box-sizing($bs)
     float: left
     width: 20%
-    +box-sizing($bs)
     padding-bottom: 12px
     border: dashed 1px rgba(black,0)
     +border-radius(10px)
@@ -506,7 +517,7 @@ i
         +translateY(10px)
     &:hover
         border: dashed 1px rgba(black,.3)
-        +box-shadow(rgba(white,.15) 0 0 40px 0px inset, rgba(white,.05) 0 0 2px 1px)
+        +box-shadow(rgba(black,.25) 0 0 40px 0px inset, rgba(white,.05) 0 0 3px 1px)
         .small-btn
             +opacity(100)
             +translateY(0)
@@ -609,6 +620,69 @@ i
         margin: 0 1px -2px 0
 
 
+// Item full card
+.full-item-card 
+    text-shadow: 0 1px 0px $light-text-shadow
+    background: image-url('paper-bg.jpg') repeat #f4f1f2
+    width: 100%
+    min-height: 370px
+    margin: 30px 0
+    padding: 30px 0 40px
+    +border-radius
+    +single-box-shadow(rgba(black,.7), 0, 8px, 12px, -5px)
+    overflow: hidden
+    position: relative 
+.item-big-photo
+    position: absolute
+    bottom: 5px
+    left: 0
+    z-index: 5
+.full-item-description
+    h1
+        font-size: 5em
+        line-height: .95em
+        color: $red-button-bg
+        margin: 0 10px 15px
+    p
+        font-size: 1.5em
+        margin: auto 10px
+    small
+        font-size: 1.3em
+        line-height: 1em
+    .big-btn
+        margin: 0 10px
+.nutrition-table
+    margin: 25px 0 30px
+    .hor-splitter
+        margin: 8px 0
+.cell-row
+    margin: 20px 0 5px 0
+.cell-block
+    text-align: center
+    display: block
+    +box-sizing($bs)
+    float: left
+    width: 25%
+    border-right: solid 1px $border-color
+    border-left: solid 1px $light-border-color
+    &:first-child
+        border-left: none
+    &:last-child
+        border-right: none
+.cell-data
+    font-size: 4em
+.cell-label
+    font-size: 1.3em
+    font-style: italic
+    text-align: center
+    display: block
+    margin-top: 5px
+.gramm-after:after
+    content: 'г'
+    font-size: .35em
+    color: $sub-dark-color
+
+
 // Fix
 %group, .group
     &:after
@@ -618,4 +692,5 @@ i
 .centered
     margin: 0 auto
     position: relative
-
+.centered-text
+    text-align: center

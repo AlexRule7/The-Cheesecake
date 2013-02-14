@@ -1,4 +1,4 @@
-.info {
+/*.info {
 	text-align: left;
 	padding: 5px;
 	font-size: 11px;
@@ -33,4 +33,16 @@
 .normal {
 	font-weight: normal;
 	color: #222;
+}
+
+*/
+#spinner_si {
+	display: block;
+	position: relative;
+	float: right;
+	margin-top: 6px;
+}
+
+.field {
+	position: relative;
 }

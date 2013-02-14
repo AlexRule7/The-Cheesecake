@@ -125,7 +125,7 @@ if (isset($_SESSION['user_id']))
                         </div>
                         <div class="field">
                             <a href="#" class="small-btn blue-btn" id="user-login">Войти</a>
-                            <div id="spinner_si"><img src="images/spinner2.gif" class="spinner" title="Loading..."></div>
+                        	<div id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></div>
                         </div>
                         <div class="hor-splitter"></div>
                         <p class="sub-dark-color">У вас еще нет аккаунта? <br /><a class="su-popup-trigger" href="#">Зарегистрируйтесь</a> и полуйчате бонусы.</p>
@@ -141,29 +141,32 @@ if (isset($_SESSION['user_id']))
             <div class="popup-body">
                 <a class="close-btn" href="#"><i class="icn-close-popup"></i></a>
                 <div class="big-col centered">
-                    <h2>Регистрация</h2>
-                    <div class="hor-splitter"></div>
-                    <div class="field">
-                        <label for="user-name">Ваше имя:</label>
-                        <input class="text-input" type="text" name="user-name">
-                    </div>
-                    <div class="field">
-                        <label for="user-email">Email:</label>
-                        <input class="text-input" type="email" name="user-email">
-                    </div>
-                    <div class="field">
-                        <label for="user-pass">Пароль:</label>
-                        <input class="text-input" type="password" name="user-pass">
-                    </div>
-                    <div class="field">
-                        <label for="user-pass-conf">Пароль еще раз:</label>
-                        <input class="text-input" type="password" name="user-pass-conf">
-                    </div>
-                    <div class="field">
-                        <a href="#" class="small-btn blue-btn">Зарегистрироваться</a>
-                    </div>
-                    <div class="hor-splitter"></div>
-                    <p class="sub-dark-color">У вас уже есть аккаунт? Тогдай <a class="si-popup-trigger" href="#">войдите</a>.</p>
+                    <form id="register">
+                        <h2>Регистрация</h2>
+                        <div class="hor-splitter"></div>
+                        <div class="field">
+                            <label for="user-name">Ваше имя:</label>
+                            <input class="text-input" type="text" name="user-name">
+                        </div>
+                        <div class="field">
+                            <label for="user-email">Email:</label>
+                            <input class="text-input" type="email" name="user-email">
+                        </div>
+                        <div class="field">
+                            <label for="user-pass">Пароль:</label>
+                            <input class="text-input" type="password" name="user-pass">
+                        </div>
+                        <div class="field">
+                            <label for="user-pass-conf">Пароль еще раз:</label>
+                            <input class="text-input" type="password" name="user-pass-conf">
+                        </div>
+                        <div class="field">
+                            <a href="#" class="small-btn blue-btn" id="user-register">Зарегистрироваться</a>
+                            <div id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></div>
+                        </div>
+                        <div class="hor-splitter"></div>
+                        <p class="sub-dark-color">У вас уже есть аккаунт? Тогдай <a class="si-popup-trigger" href="#">войдите</a>.</p>
+                    </form>
                 </div>
             </div>
         </div>

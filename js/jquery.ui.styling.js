@@ -36,7 +36,8 @@ jQuery(document).ready(function($){
         event.preventDefault();
         closePopup();
         $('.popup-bg, .si-popup').show();
-		$('div.info').remove();
+		$('form .field').removeClass('error');
+		$('form .caption').hide();
 		$('input').val('');
     });
 
@@ -45,7 +46,8 @@ jQuery(document).ready(function($){
         event.preventDefault();
         closePopup();
         $('.popup-bg, .su-popup').show();
-		$('div.info').remove();
+		$('form .field').removeClass('error');
+		$('form .caption').hide();
 		$('input').val('');
     });
 
@@ -58,7 +60,7 @@ jQuery(document).ready(function($){
 	
 	$('.spinner').hide();
 
-	$('body')
+	$(document)
 		.ajaxStart(function(){
 			$('.spinner').fadeIn('fast');
 		})

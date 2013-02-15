@@ -1,260 +1,14 @@
-<?php
+<?php include($_SERVER['DOCUMENT_ROOT'].'/user/session.php'); ?>
 
-session_start();
-
-require(dirname(__FILE__).'/Connections/exarium.php');
-
-function user_panel($name) {
-	if (isset($name) && isset($_SESSION['user_id'])) {
-		print '
-                            <li class="splitter-next"><a href="#">Здравствуйте, '.$name.'!</a></li>
-                            <li class="splitter-next"><a href="#" id="logout">Выйти</a></li>';
-	} else {
-		print '
-                            <li class="splitter-next"><a class="si-popup-trigger" href="#">Вход</a></li>
-                            <li class="splitter-next"><a class="su-popup-trigger" href="#">Регистрация</a></li>';
-	}
-}
-
-if (!isset($_SESSION['user_id']))
-{
-	if (isset($_COOKIE['mail']) && isset($_COOKIE['password']))
-	{
-		$mail = sanitize($_COOKIE['mail']);
-		$password = sanitize($_COOKIE['password']);
-
-		$query = "SELECT `user_id`, `password`
-					FROM `users`
-					WHERE `mail`='{$mail}' AND `password`='{$password}'
-					LIMIT 1";
-		$sql = mysql_query($query) or die(mysql_error());
-
-		if (mysql_num_rows($sql) == 1)
-		{
-			$row = mysql_fetch_assoc($sql);
-			$_SESSION['user_id'] = $row['user_id'];
-		}
-	}
-}
-
-if (isset($_SESSION['user_id']))
-{
-	$query = "SELECT `name`, `mail`
-				FROM `users`
-				WHERE `user_id` = '{$_SESSION['user_id']}'
-				LIMIT 1";
-	$sql = mysql_query($query) or die(mysql_error());
-	
-	if (mysql_num_rows($sql) != 1)
-	{
-		if (isset($_SESSION['user_id'])) {
-			unset($_SESSION['user_id']);
-			unset($name);
-		}
-		
-		setcookie('login', '', 0, "/");
-		setcookie('password', '', 0, "/");
-		
-		header('Location: index.php');
-	}
-	
-	$row = mysql_fetch_assoc($sql);
-	
-	$name = $row['name'];
-}
-
-
-
-?>
-
-
-<!doctype html>
-<head>
+<!doctype html><head>
     <meta charset="UTF-8">
     <title>Чизкейки в Москве | The Moscow Cheesecake</title>
-    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link href="stylesheets/validation.css" rel="stylesheet" type="text/css">
-    <!--[if IE]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--<script src="/js/jquery-1.9.1.min.js"></script> NOT FOR PROD -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="/js/jquery.iosslider.min.js"></script>
-    <script src="/js/jquery.ui.styling.js"></script>
-    <script src="js/validation.js"></script>
-    <script>
-        $(function() {
-            $('.main-slider-container').iosSlider({
-                snapToChildren: true,
-                snapSlideCenter: true,
-                keyboardControls: true,
-                responsiveSlides: false,
-                navPrevSelector: $(".prev-slide"),
-                navNextSelector: $(".next-slide"),
-                autoSlide: true,
-                autoSlideTimer: 3000,
-                autoSlideTransTimer: 600,
-                infiniteSlider: true
-            });
-        });
-    </script>
-</head>
-<body>
-
-    <!-- Sign in popup -->
-    <section class="popup-container si-popup">
-        <div class="popup-holder">
-            <div class="popup-body">
-                <a class="close-btn" href="#"><i class="icn-close-popup"></i></a>
-                <div class="big-col centered">
-                	<form id="login">
-                        <h2>Вход</h2>
-                        <div class="hor-splitter"></div>
-                        <div class="field">
-                            <label for="user-email">Email:</label>
-                            <input class="text-input" type="email" tabindex="1" name="user-email">
-                        </div>
-                        <div class="field">
-                            <label for="user-pass">Пароль:</label>
-                            <a href="#" class="label-link">Забыли?</a>
-                            <input class="text-input" type="password" tabindex="2" name="user-pass">
-                        </div>
-                        <div class="field checkbox-field">
-                            <input class="checkbox-input" type="checkbox" name="user-remember">
-                            <label for="user-remember">Запомнить меня</label>
-                        </div>
-                        <div class="field">
-                            <a href="#" class="small-btn blue-btn" id="user-login">Войти</a>
-                        	<div id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></div>
-                        </div>
-                        <div class="hor-splitter"></div>
-                        <p class="sub-dark-color">У вас еще нет аккаунта? <br /><a class="su-popup-trigger" href="#">Зарегистрируйтесь</a> и полуйчате бонусы.</p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sign up popup -->
-    <section class="popup-container su-popup">
-        <div class="popup-holder">
-            <div class="popup-body">
-                <a class="close-btn" href="#"><i class="icn-close-popup"></i></a>
-                <div class="big-col centered">
-                    <form id="register">
-                        <h2>Регистрация</h2>
-                        <div class="hor-splitter"></div>
-                        <div class="field">
-                            <label for="user-name">Ваше имя:</label>
-                            <input class="text-input" type="text" name="user-name">
-                        </div>
-                        <div class="field">
-                            <label for="user-email">Email:</label>
-                            <input class="text-input" type="email" name="user-email">
-                        </div>
-                        <div class="field">
-                            <label for="user-pass">Пароль:</label>
-                            <input class="text-input" type="password" name="user-pass">
-                        </div>
-                        <div class="field">
-                            <label for="user-pass-conf">Пароль еще раз:</label>
-                            <input class="text-input" type="password" name="user-pass-conf">
-                        </div>
-                        <div class="field">
-                            <a href="#" class="small-btn blue-btn" id="user-register">Зарегистрироваться</a>
-                            <div id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></div>
-                        </div>
-                        <div class="hor-splitter"></div>
-                        <p class="sub-dark-color">У вас уже есть аккаунт? Тогдай <a class="si-popup-trigger" href="#">войдите</a>.</p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="popup-bg"></div>
-
-    <div class="wrapper">
-        <header class="site-main-header">
-            <div class="inner">
-                <nav>
-                    <ul class="main-navigation">
-                        <li><a class="selected" href="/">Меню</a></li>
-                        <li><a href="/about">О наших чизкейках</a></li>
-                        <li><a class="logo" href="/"><i class="icn-logo"></i></a></li>
-                        <li><a href="/payments-and-deliveries">Доставка и оплата</a></li>
-                        <li><a href="/company">Компания</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <section class="content">
-            <div class="inner">
-
-                <!-- User panel -->
-                <section class="user-panel-holder group">
-                    <div class="phone-holder">
-                        <i class="icn-phone"></i>
-                        <h1 class="phone-number" itemprop="telephone"><a href="tel:+74955185456">+7 (495) 518-54-56</a></h1>
-                    </div>
-                    <div class="panel-fix-position">
-                        <ul class="user-panel">
-							<?php
-                                user_panel($name);
-                            ?>
-                            <li class="mini-cart"><a href="#"><i class="icn-cart"></i>Корзина: 4</a></li>
-                        </ul>
-                        <section class="mini-cart-container">
-                            <div class="mini-cart-arrow"></div>
-                            <div class="mini-height-scroll-container">
-                                <div class="mini-cart-item group">
-                                    <div class="mini-cart-photo-holder">
-                                        <a href="#"><img class="mini-cart-photo" src="/images/menu/mint.jpg" alt="Чизкейк Мятный"></a>
-                                    </div>
-                                    <div class="mini-cart-info">
-                                        <span class="mini-cart-item-name">Мятный чизкейк</span>
-                                        <input class="mini-cart-item-qt" type="number" value="1">
-                                        <span class="mini-cart-item-qt-label">× шт.</span>
-                                    </div>
-                                </div>
-                                <div class="mini-cart-item group">
-                                    <div class="mini-cart-photo-holder">
-                                        <a href="#"><img class="mini-cart-photo" src="/images/menu/strawberry.jpg" alt="Чизкейк Клубничный"></a>
-                                    </div>
-                                    <div class="mini-cart-info">
-                                        <span class="mini-cart-item-name">Клубничный чизкейк</span>
-                                        <input class="mini-cart-item-qt" type="number" value="1">
-                                        <span class="mini-cart-item-qt-label">× шт.</span>
-                                    </div>
-                                </div>
-                                <div class="mini-cart-item group">
-                                    <div class="mini-cart-photo-holder">
-                                        <a href="#"><img class="mini-cart-photo" src="/images/menu/caramel-apple.jpg" alt="Чизкейк Карамельно-яблочный"></a>
-                                    </div>
-                                    <div class="mini-cart-info">
-                                        <span class="mini-cart-item-name">Карамельно-яблочный чизкейк</span>
-                                        <input class="mini-cart-item-qt" type="number" value="1">
-                                        <span class="mini-cart-item-qt-label">× шт.</span>
-                                    </div>
-                                </div>
-                                <div class="mini-cart-item group">
-                                    <div class="mini-cart-photo-holder">
-                                        <a href="#"><img class="mini-cart-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
-                                    </div>
-                                    <div class="mini-cart-info">
-                                        <span class="mini-cart-item-name">Лаймовый чизкейк</span>
-                                        <input class="mini-cart-item-qt" type="number" value="1">
-                                        <span class="mini-cart-item-qt-label">× шт.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mini-cart-btn">
-                                <a href="#" class="big-btn red-btn"><span class="in-btn-price">3960 ₷</span><span class="in-btn-text">Оформить</span></a>
-                            </div>
-                        </section>
-                    </div>
-                </section>
-
+	<?php include($_SERVER['DOCUMENT_ROOT'].'/include/header.php'); ?>
+        
+	
+<section class="content">
+        <div class="inner">
+				<?php include($_SERVER['DOCUMENT_ROOT'].'/user/user_panel.php'); ?>
                 <!-- Main slider -->
                 <section class="main-slider-container">
                     <div class="main-slider">
@@ -279,65 +33,65 @@ if (isset($_SESSION['user_id']))
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/new-york.jpg" alt="Чизкейк New-York"></a>
+                                <a href="/cakes/?newyork"><img class="menu-photo" src="/images/menu/new-york.jpg" alt="Чизкейк New-York"></a>
                             </div>
-                            <a href="#" class="menu-name">New-York</a>
+                            <a href="/cakes/?newyork" class="menu-name">New-York</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/chocolate.jpg" alt="Чизкейк Шоколадный"></a>
+                                <a href="/cakes/?chocolate"><img class="menu-photo" src="/images/menu/chocolate.jpg" alt="Чизкейк Шоколадный"></a>
                             </div>
-                            <a href="#" class="menu-name">Шоколадный</a>
+                            <a href="/cakes/?chocolate" class="menu-name">Шоколадный</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/strawberry.jpg" alt="Чизкейк Клубничный"></a>
+                                <a href="/cakes/?strawberry"><img class="menu-photo" src="/images/menu/strawberry.jpg" alt="Чизкейк Клубничный"></a>
                             </div>
-                            <a href="#" class="menu-name">Клубничный</a>
+                            <a href="/cakes/?strawberry" class="menu-name">Клубничный</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/mint.jpg" alt="Чизкейк Мятный"></a>
+                                <a href="/cakes/?mint"><img class="menu-photo" src="/images/menu/mint.jpg" alt="Чизкейк Мятный"></a>
                             </div>
-                            <a href="#" class="menu-name">Мятный</a>
+                            <a href="/cakes/?mint" class="menu-name">Мятный</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/caramel-apple.jpg" alt="Чизкейк Карамельно-яблочный"></a>
+                                <a href="/cakes/?caramelapple"><img class="menu-photo" src="/images/menu/caramel-apple.jpg" alt="Чизкейк Карамельно-яблочный"></a>
                             </div>
-                            <a href="#" class="menu-name">Карамельно-яблочный</a>
+                            <a href="/cakes/?caramelapple" class="menu-name">Карамельно-яблочный</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/berries.jpg" alt="Чизкейк Ягодный"></a>
+                                <a href="/cakes/?berries"><img class="menu-photo" src="/images/menu/berries.jpg" alt="Чизкейк Ягодный"></a>
                             </div>
-                            <a href="#" class="menu-name">Ягодный</a>
+                            <a href="/cakes/?berries" class="menu-name">Ягодный</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
+                                <a href="/cakes/?lime"><img class="menu-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
                             </div>
-                            <a href="#" class="menu-name">Лаймовый</a>
+                            <a href="/cakes/?lime" class="menu-name">Лаймовый</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/peanuts.jpg" alt="Чизкейк Арахисовый"></a>
+                                <a href="/cakes/?peanutbutter"><img class="menu-photo" src="/images/menu/peanuts.jpg" alt="Чизкейк Арахисовый"></a>
                             </div>
-                            <a href="#" class="menu-name">Арахисовый</a>
+                            <a href="/cakes/?peanutbutter" class="menu-name">Арахисовый</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/raspberry.jpg" alt="Чизкейк Малиновый"></a>
+                                <a href="/cakes/?raspberry"><img class="menu-photo" src="/images/menu/raspberry.jpg" alt="Чизкейк Малиновый"></a>
                             </div>
-                            <a href="#" class="menu-name">Малиновый</a>
+                            <a href="/cakes/?raspberry" class="menu-name">Малиновый</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                     </ul>
@@ -424,9 +178,5 @@ if (isset($_SESSION['user_id']))
 
             </div><!-- inner -->
         </section><!-- content -->
-        <div class="footer-push"></div>
-    </div><!-- wrapper -->
-
-    <footer>© 2011–2013 Moscow Cheesecake</footer>
-</body>
-</html>
+        
+	<?php include($_SERVER['DOCUMENT_ROOT'].'/include/footer.php'); ?>

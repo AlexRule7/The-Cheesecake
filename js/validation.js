@@ -123,19 +123,25 @@ $(document).ready(function(){
 		jVal.pass(that);
 		if(!jVal.errors) {
 			var serial = $('#login').serialize();
-			$.post('/user/login.php',
-					serial,
-					function(data){
-						if (data == 1) {
-							$('input[name=user-email]').addClass('error');
-							$('.mailCaption').html('Пользователя с таким e-mail не существует').show();
-							$('input[name=user-pass]').val('');
-						} else if (data == 2) {
-							$('input[name=user-pass]').addClass('error');
-							$('.passCaption').html('Пароль неверный').show();
-						} else {
-							location.reload();
-						}
+			$.ajax({
+				type: 'POST',
+				url: '/user/login.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					if (data.id == 1) {
+						$('input[name=user-email]').parent().addClass('error');
+						$('.mailCaption').html(data.text).show();
+						$('input[name=user-pass]').val('');
+					} else if (data.id == 1) {
+						$('input[name=user-pass]').parent().addClass('error');
+						$('.passCaption').html(data.text).show();
+						$('input[name=user-pass]').val('');
+					} else {
+						location.reload();
+					}
+				}
 			});
 		}
 		e.preventDefault();
@@ -150,15 +156,20 @@ $(document).ready(function(){
 		jVal.pass_conf(that);
 		if(!jVal.errors) {
 			var serial = $('#register').serialize();
-			$.post('/user/register.php',
-					serial,
-					function(data){
-						if (data == 1) {
-							$('input[name=user-email]').parent().addClass('error');
-							$('.mailCaption').html('Пользователь с таким e-mail уже зарегистрирован').show();
-						} else {
-							location.reload();
-						}
+			$.ajax({
+				type: 'POST',
+				url: '/user/register.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					if (data.id == 1) {
+						$('input[name=user-email]').parent().addClass('error');
+						$('.mailCaption').html(data.text).show();
+					} else {
+						location.reload();
+					}
+				}
 			});
 		}
 		e.preventDefault();

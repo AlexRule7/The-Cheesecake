@@ -5,6 +5,8 @@ session_start();
 
 require(dirname(__FILE__).'/../Connections/exarium.php');
 
+header('Content-type: application/json');
+
 if (!empty($_POST))
 {
 	$name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
@@ -32,10 +34,14 @@ if (!empty($_POST))
 		$sql = mysql_query($query) or die(mysql_error());
 		
 		$_SESSION['user_id'] = mysql_insert_id();
-				
-		echo 0;
+		
+		echo json_encode ('success');
 	} else {
-		echo 1;
+		$error = array (
+			'id' => '1',
+			'text' => 'Пользователь с таким e-mail уже зарегистрирован'
+		);
+		echo json_encode($error);
 	}
 }
 

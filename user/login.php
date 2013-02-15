@@ -5,6 +5,8 @@ session_start();
 
 require(dirname(__FILE__).'/../Connections/exarium.php');
 
+header('Content-type: application/json');
+
 if (!empty($_POST))
 {
 	$mail = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
@@ -42,18 +44,24 @@ if (!empty($_POST))
 				setcookie('mail', $mail, time()+$time, "/");
 				setcookie('password', $password, time()+$time, "/");
 			}
-			
-			// return success
-			echo 0;
+			echo json_encode('success');
 		}
 		else
 		{
-			echo 2;
+			$error = array (
+				'id' => '2',
+				'text' => 'Пароль неверный'
+			);
+			echo json_encode($error);
 		}
 	}
 	else
 	{
-		echo 1;
+		$error = array (
+			'id' => '1',
+			'text' => 'Пользователя с таким e-mail не существует'
+		);
+		echo json_encode($error);
 	}
 }
 

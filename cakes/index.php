@@ -34,7 +34,8 @@
 				header('Location: ../');
 		}
 		
-		$query = "SELECT `name`, `image`, `price`, `annotation`
+		$query = "SELECT `name`, `image`, `price`, `annotation`,
+					`protein`, `fat`, `carbohydrate`, `calories`
 					FROM `products`
 					WHERE `product_id`='{$product_id}'
 					LIMIT 1";
@@ -67,10 +68,10 @@
                                 <div class="hor-splitter"></div>
                                 <div class="centered-text italic"><small>В 100 граммах содержится:</small></div>
                                 <div class="cell-row group">
-                                    <div class="cell-block"><span class="cell-data gramm-after">7</span><span class="cell-label">Белок</span></div>
-                                    <div class="cell-block"><span class="cell-data gramm-after">9</span><span class="cell-label">Жир</span></div>
-                                    <div class="cell-block"><span class="cell-data gramm-after">31</span><span class="cell-label">Углеводы</span></div>
-                                    <div class="cell-block"><span class="cell-data">240</span><span class="cell-label">Калорий</span></div>
+                                    <div class="cell-block"><span class="cell-data gramm-after"><?php echo $row['protein']; ?></span><span class="cell-label">Белок</span></div>
+                                    <div class="cell-block"><span class="cell-data gramm-after"><?php echo $row['fat']; ?></span><span class="cell-label">Жир</span></div>
+                                    <div class="cell-block"><span class="cell-data gramm-after"><?php echo $row['carbohydrate']; ?></span><span class="cell-label">Углеводы</span></div>
+                                    <div class="cell-block"><span class="cell-data"><?php echo $row['calories']; ?></span><span class="cell-label">Калорий</span></div>
                                 </div>
                                 <div class="hor-splitter"></div>
                             </div>
@@ -142,7 +143,7 @@
                                 <h2><i class="icn-delivery"></i>Доставка</h2>
                                 <p>Пока мы доставляем чизкейки только по Москве.</p>
                                 <p>Доставка осуществляется каждый день (даже в праздники) с 10:00 до 22:00.</p>
-                                <p>Стоимость доставки 200 ₷.</p>
+                                <p>Стоимость доставки 250 ₷.</p>
                                 <p><span class="italic">При заказе от 3-х чизкейков, мы доставим их бесплатно.</span></p>
                             </div>
                             <div class="grid medium-col left-light-border">

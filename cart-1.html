@@ -1,0 +1,140 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>Оформление заказа | The Moscow Cheesecake</title>
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--<script src="/js/jquery-1.9.1.min.js"></script> NOT FOR PROD -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/jquery.iosslider.min.js"></script>
+    <script src="/js/jquery.ui.styling.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="site-main-header">
+            <div class="inner">
+                <nav>
+                    <ul class="main-navigation">
+                        <li><a href="/">Меню</a></li>
+                        <li><a href="/about">О наших чизкейках</a></li>
+                        <li><a class="logo" href="/"><i class="icn-logo"></i></a></li>
+                        <li><a href="/payments-and-deliveries">Доставка и оплата</a></li>
+                        <li><a href="/company">Компания</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="content">
+            <div class="inner">
+
+                <!-- User panel -->
+                <section class="user-panel-holder group">
+                    <div class="phone-holder">
+                        <i class="icn-phone"></i>
+                        <h1 class="phone-number" itemprop="telephone"><a href="tel:+74955185456">+7 (495) 518-54-56</a></h1>
+                    </div>
+                    <div class="panel-fix-position">
+                        <ul class="user-panel">
+                            <li class="splitter-next"><a class="si-popup-trigger" href="#">Вход</a></li>
+                            <li><a class="su-popup-trigger" href="#">Регистрация</a></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Full item card -->
+                <section class="main-cart-holder">
+                    <div class="main-cart group">
+                        <div class="text-content-inner group">
+                            <h2>Корзина</h2>
+                            <div class="hor-splitter"></div>
+                            <div class="main-cart-item group">
+                                <div class="main-cart-photo-holder main-cart-cell">
+                                    <a href="#"><img class="main-cart-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
+                                </div>
+                                <div class="main-cart-info main-cart-cell">
+                                    <a href="#" class="main-cart-item-link">Лаймовый чизкейк</a>
+                                    <span class="main-cart-item-sub-info">1500 грамм; 12 порций</span>
+                                </div>
+                                <div class="main-cart-qt main-cart-cell">
+                                    <input class="mini-cart-item-qt" type="number" value="1">
+                                    <span class="mini-cart-item-qt-label">× шт.</span>
+                                </div>
+                                <div class="main-cart-item-price main-cart-cell">990 ₷</div>
+                                <div class="main-cart-item-del main-cart-cell">
+                                    <a class="del-item-btn" title="Убрать из корзины" href="#"><i class="icn-del-item"></i></a>
+                                </div>
+                            </div><!-- main-cart-item -->
+                            <div class="main-cart-item group">
+                                <div class="main-cart-photo-holder main-cart-cell">
+                                    <a href="#"><img class="main-cart-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
+                                </div>
+                                <div class="main-cart-info main-cart-cell">
+                                    <a href="#" class="main-cart-item-link">Лаймовый чизкейк</a>
+                                    <span class="main-cart-item-sub-info">1500 грамм; 12 порций</span>
+                                </div>
+                                <div class="main-cart-qt main-cart-cell">
+                                    <input class="mini-cart-item-qt" type="number" value="1">
+                                    <span class="mini-cart-item-qt-label">× шт.</span>
+                                </div>
+                                <div class="main-cart-item-price main-cart-cell">990 ₷</div>
+                                <div class="main-cart-item-del main-cart-cell">
+                                    <a class="del-item-btn" title="Убрать из корзины" href="#"><i class="icn-del-item"></i></a>
+                                </div>
+                            </div><!-- main-cart-item -->
+                            <div class="main-cart-sub-total">
+                                <span class="sub-dark-color">Товаров в корзине на:</span><span class="final-sum sub-dark-color">1980 ₷</span><br />
+                                <span class="sub-dark-color">Доставка по Москве:</span><span class="final-sum sub-dark-color">200 ₷</span>
+                                <div class="hor-splitter"></div>
+                                <div class="total-price">Итого к оплате: <span class="final-sum">2180 ₷</span></div>
+                            </div>
+                        </div><!-- text-content-inner  -->
+                    </div><!-- main-cart -->
+                        <div class="grid half-col multi-form">
+                            <div class="big-col">
+                                <h2>Вход</h2>
+                                <div class="hor-splitter"></div>
+                                <div class="field">
+                                    <label for="user-email">Email:</label>
+                                    <input class="text-input" type="email" id="user-email">
+                                </div>
+                                <div class="field">
+                                    <label for="user-pass">Пароль:</label>
+                                    <a href="#" class="label-link">Забыли?</a>
+                                    <input class="text-input" type="password" id="user-pass">
+                                    <span class="caption">Ошибка: пароль введен неверно.</span>
+                                </div>
+                                <div class="field checkbox-field">
+                                    <input class="checkbox-input" type="checkbox" id="user-remember">
+                                    <label for="user-remember">Запомнить меня</label>
+                                </div>
+                                <div class="field">
+                                    <a href="#" class="small-btn blue-btn">Войти</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid half-col multi-form">
+                            <div class="big-col">
+                                <h2>Заказ без регистрации</h2>
+                                <div class="hor-splitter"></div>
+                                <div class="field">
+                                    <p>Завершить оформление заказа без регистрации в нашем магазине.</p>
+                                    <p>В конце мы предложим вам зарегистрироваться, чтобы не вводить адрес при следующей покупке.</p>
+                                </div>
+                                <div class="field">
+                                    <a href="#" class="small-btn blue-btn">Продолжить</a>
+                                </div>
+                            </div>
+                        </div>
+                </section><!-- main-cart-holder -->
+
+            </div><!-- inner -->
+        </section><!-- content -->
+        <div class="footer-push"></div>
+    </div><!-- wrapper -->
+
+    <footer>© 2011–2013 Moscow Cheesecake</footer>
+</body>
+</html>

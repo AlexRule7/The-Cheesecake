@@ -159,6 +159,12 @@ small
     width: 100%
     h2
         margin: 0 20px  
+.multi-form
+    padding: 0 0 0 90px
+    .big-col
+        width: 80%
+    p
+        margin: 0
 .hor-splitter 
     background: $border-color
     width: 100%
@@ -430,6 +436,17 @@ i
     position: absolute
     top: -10px
     right: 25px
+.empty-cart-message
+    text-align: center
+    display: none
+    padding: 20px 0
+.empty-cart
+    .mini-cart-btn
+        display: none
+    .empty-cart-message
+        display: block
+
+
 
 
 // Main slider
@@ -681,6 +698,65 @@ i
     content: 'г'
     font-size: .35em
     color: $sub-dark-color
+
+
+// Main card
+.main-cart-holder
+    @extend .full-item-card
+    min-height: 0
+    padding: 20px 0
+    .hor-splitter
+        margin: 10px 0 0
+    h2
+        margin: 0 10px
+.main-cart
+    margin: 0 0 30px
+    padding: 0 0 25px
+    +single-box-shadow(rgba(black,.3), 0, 5px, 8px, -2px)
+.main-cart-item
+    border-bottom: solid 1px $border-color
+.main-cart-cell
+    float: left
+.main-cart-photo-holder
+    @extend .mini-cart-photo-holder
+.main-cart-photo
+    @extend .mini-cart-photo
+.main-cart-info
+    width: 400px
+    margin: 30px 0 10px 25px
+.main-cart-item-link
+    font-size: 1.8em
+.main-cart-item-sub-info
+    font-size: 1.3em
+    color: $sub-dark-color
+    display: block
+.main-cart-qt
+    font-size: 1.5em
+    margin: 24px 0 10px 15px
+.main-cart-item-price
+    font-size: 1.5em
+    font-weight: bold
+    text-align: right
+    width: 100px
+    margin: 31px 0 10px 10px
+.main-cart-item-del
+    margin: 32px 0 10px 43px
+    +opacity(.5)
+    &:hover
+        +opacity(.9)
+.main-cart-sub-total
+    font-size: 1.5em
+    text-align: right
+    float: right
+    margin: 20px 0 0
+.final-sum
+    width: 80px
+    display: inline-block
+    margin-right: 10px
+.total-price
+    font-size: 1.2em
+    font-weight: bold
+    margin: 15px 0 0
 
 
 // Fix

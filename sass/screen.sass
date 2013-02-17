@@ -80,6 +80,7 @@ small
     color: $sub-dark-color
 .field
     margin: 10px
+    position: relative
     label, input, .label-link
         font-size: 1.4em
     .label-link
@@ -90,6 +91,7 @@ small
         top: -1px
     .text-input
         font-family: 'PT Sans', sans-serif
+        font-size: 1.4em
         +box-sizing($bs)
         width: 100%
         padding: 3px 10px
@@ -97,6 +99,7 @@ small
         +border-radius
         outline: none
         +single-box-shadow(rgba(0,0,0,.45), 0, 1px, 2px, -1px, inset)
+        resize: none
         &:focus
             +single-box-shadow(rgba(0,0,0,.85), 0, 1px, 2px, -1px, inset)
     &.error
@@ -104,6 +107,16 @@ small
             background: rgba(red,.15)
         .caption
             display: block
+.mini-field
+    display: inline-block
+    float: left
+    width: 30%
+    margin-right: 15px
+    &:last-child
+        margin-right: 0
+.first-field
+    margin-top: 36px
+    margin-bottom: 15px
 .caption
     font-size: 1.2em
     font-style: italic
@@ -160,7 +173,7 @@ small
     h2
         margin: 0 20px  
 .multi-form
-    padding: 0 0 0 90px
+    padding: 0 0 0 80px
     .big-col
         width: 80%
     p
@@ -770,3 +783,9 @@ i
     position: relative
 .centered-text
     text-align: center
+#spinner_si 
+    display: block
+    float: right
+    margin-top: 6px
+    position: relative
+

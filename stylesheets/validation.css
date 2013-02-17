@@ -36,7 +36,11 @@
 }
 
 */
-#spinner_si {
+
+
+/* !!!!!!    Все, что ниже закомменчено — перенс в основные стили*/
+
+/*#spinner_si {
 	display: block;
 	position: relative;
 	float: right;

@@ -50,5 +50,13 @@
 		
 		$name = $row['name'];
 	}
+	
+	if (!isset($_SESSION['item_total'])) {
+		$_SESSION['item_total'] = 0;
+	}
+	
+	if (!isset($_SESSION['item_list'])) {
+		$_SESSION['item_list'] = array();
+	}
 
 ?>

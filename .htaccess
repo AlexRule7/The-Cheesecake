@@ -1,0 +1,5 @@
+AuthUserFile /home/d/denjer/exarium.ru/public_html/.htpasswd
+AuthName "Please Log In"
+AuthType Basic
+
+require user admin

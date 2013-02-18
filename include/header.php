@@ -5,9 +5,11 @@
     <![endif]-->
     <!--<script src="/js/jquery-1.9.1.min.js"></script> NOT FOR PROD -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script src="/js/jquery.iosslider.min.js"></script>
     <script src="/js/jquery.ui.styling.js"></script>
     <script src="js/validation.js"></script>
+    <script src="/js/cart.js"></script>
     <script>
         $(function() {
             $('.main-slider-container').iosSlider({
@@ -51,7 +53,7 @@
                         </div>
                         <div class="field">
                             <a href="#" class="small-btn blue-btn" id="user-login">Войти</a>
-                        	<div id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></div>
+                        	<span id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>
                         </div>
                         <div class="hor-splitter"></div>
                         <p class="sub-dark-color">У вас еще нет аккаунта? <br /><a class="su-popup-trigger" href="#">Зарегистрируйтесь</a> и полуйчате бонусы.</p>
@@ -88,7 +90,7 @@
                         </div>
                         <div class="field">
                             <a href="#" class="small-btn blue-btn" id="user-register">Зарегистрироваться</a>
-                            <div id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></div>
+                            <span id="spinner_su"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>
                         </div>
                         <div class="hor-splitter"></div>
                         <p class="sub-dark-color">У вас уже есть аккаунт? Тогдай <a class="si-popup-trigger" href="#">войдите</a>.</p>

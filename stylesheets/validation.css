@@ -47,6 +47,22 @@
 	margin-top: 6px;
 }
 
+#spinner_su {
+	display: block;
+	position: relative;
+	float: right;
+	margin-top: 6px;
+}
+
+#spinner_cart {
+	display: inline-block;
+	margin: 10px 0px;
+}
+
+.mini-height-scroll-container {
+	text-align: center;
+}
+
 .field {
 	position: relative;
 }

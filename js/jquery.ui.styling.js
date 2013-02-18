@@ -94,17 +94,6 @@ jQuery(document).ready(function($){
         }
     });
 
-    // Show/hide mini cart function
-    function openMiniCart() {
-        $('.mini-cart-container').toggleClass('opened');
-    };
-
-    // Show/hide mini cart on mini-cart click
-    $('.mini-cart').click(function(event) {
-        event.preventDefault();
-        openMiniCart();
-    });
-
 });
 
 

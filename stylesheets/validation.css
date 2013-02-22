@@ -88,3 +88,11 @@
 .mini-field.error .caption, .half-field.error .caption {
 	display:block
 }
+
+#empty-message {
+	display: block;
+	text-align: center;
+	margin: 30px 0px;
+	color: #bb1d1d;
+	font-size: 2em;
+}

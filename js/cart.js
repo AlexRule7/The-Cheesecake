@@ -47,18 +47,6 @@ jQuery(document).ready(function($){
 				}
 			});
 		} else {
-			var id = new Array();
-			$('.mini-cart-item-id').each(function(index, element) {
-				id[index] = element.value;
-			});
-			
-			var qty = new Array();
-			$('.mini-cart-item-qt').each(function(index, element) {
-				qty[index] = element.value;
-			});
-			
-			addItem(id, qty);
-			
 			$('.mini-height-scroll-container').html('<span id="spinner_cart"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>');
 			$('.mini-cart-btn').remove();
 		}
@@ -66,7 +54,7 @@ jQuery(document).ready(function($){
         e.preventDefault();
     });
 	// Click on button "Add to cart"
-	$('li.menu-item a.red-btn').click(function(e) {
+	$('.menu-item a.red-btn, .grid a.red-btn').click(function(e) {
 		
 		if ($('.mini-cart-container').hasClass('opened')) {
 			openMiniCart();
@@ -91,6 +79,10 @@ jQuery(document).ready(function($){
 			this.value = 0;
 		}
 		
+		var id = new Array();
+		$('.mini-cart-item-id').each(function(index, element) {
+			id[index] = element.value;
+		});
 		var price = new Array();
 		$('.mini-cart-item-price').each(function(index, element) {
             price[index] = element.value;
@@ -117,23 +109,11 @@ jQuery(document).ready(function($){
 			$('.final-sum').text(bill+ ' ₷');
 		} else {
 			$('.mini-cart a').html('<i class="icn-cart"></i>Корзина: '+ item_total);
-			$('.in-btn-price').text(bill+ ' ₷');
+			$('.mini-cart-btn .in-btn-price').text(bill+ ' ₷');
 		}
-	});
-	// Click on button "Check out"
-	$('body').on('click', '.mini-cart-btn a', function(e) {
-		var id = new Array();
-		$('.mini-cart-item-id').each(function(index, element) {
-			id[index] = element.value;
-		});
-		
-		var qty = new Array();
-		$('.mini-cart-item-qt').each(function(index, element) {
-			qty[index] = element.value;
-		});
 		
 		addItem(id, qty);
-    });
+	});
 	// Click on delete item in main-cart
 	$('.del-item-btn').click(function(e) {
 		var item = $(this).closest('.main-cart-item');
@@ -141,7 +121,21 @@ jQuery(document).ready(function($){
 		$('.mini-cart-item-qt').trigger('change');
 		
 		item.hide('slow');
+		var id = new Array();
+		$('.mini-cart-item-id').each(function(index, element) {
+			id[index] = element.value;
+		});
+
+		var qty = new Array();
+		$('.mini-cart-item-qt').each(function(index, element) {
+            qty[index] = element.value;
+        });
+		addItem(id, qty);
 		
+		if ($('.main-cart-item:visible').length == 1) {
+			$('.text-content-inner h2').after('<span id="empty-message">Ваша корзина пуста :(</span>');
+			$('.grid.full-size-col a').remove();
+		}
         e.preventDefault();
     });
 	// Office checkbox behaviour

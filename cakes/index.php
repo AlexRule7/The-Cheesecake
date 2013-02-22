@@ -76,7 +76,7 @@
                                 <div class="hor-splitter"></div>
                             </div>
                             <div class="grid big-col">
-                                <a href="#" class="big-btn red-btn"><span class="in-btn-price"><?php echo $row['price']; ?> ₷</span><span class="in-btn-text">В корзину</span></a>
+                                <a href="<?php echo $product_id; ?>" class="big-btn red-btn"><span class="in-btn-price"><?php echo $row['price']; ?> ₷</span><span class="in-btn-text">В корзину</span></a>
                             </div>
                             <div class="grid medium-col">
                                 <small class="bold"><a href="/">Закажите еще 2 чизкейка</a>, и мы доставим их бесплатно!</small>

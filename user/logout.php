@@ -7,7 +7,7 @@
 		unset($name);
 	}
 	
-	setcookie('mail', '', 0, "/");
+	setcookie('email', '', 0, "/");
 	setcookie('password', '', 0, "/");
 	
 ?>

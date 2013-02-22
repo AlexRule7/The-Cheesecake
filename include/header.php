@@ -1,5 +1,6 @@
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link href="stylesheets/validation.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/validation.css" rel="stylesheet" type="text/css">
+    <link href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
     <!--[if IE]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -8,8 +9,9 @@
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script src="/js/jquery.iosslider.min.js"></script>
     <script src="/js/jquery.ui.styling.js"></script>
-    <script src="js/validation.js"></script>
+    <script src="/js/jquery.maskedinput.min.js"></script>
     <script src="/js/cart.js"></script>
+    <script src="/js/validation.js"></script>
     <script>
         $(function() {
             $('.main-slider-container').iosSlider({
@@ -53,7 +55,7 @@
                         </div>
                         <div class="field">
                             <a href="#" class="small-btn blue-btn" id="user-login">Войти</a>
-                        	<span id="spinner_si"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>
+                        	<span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
                         </div>
                         <div class="hor-splitter"></div>
                         <p class="sub-dark-color">У вас еще нет аккаунта? <br /><a class="su-popup-trigger" href="#">Зарегистрируйтесь</a> и полуйчате бонусы.</p>
@@ -90,10 +92,10 @@
                         </div>
                         <div class="field">
                             <a href="#" class="small-btn blue-btn" id="user-register">Зарегистрироваться</a>
-                            <span id="spinner_su"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>
+                            <span id="spinner_su"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
                         </div>
                         <div class="hor-splitter"></div>
-                        <p class="sub-dark-color">У вас уже есть аккаунт? Тогдай <a class="si-popup-trigger" href="#">войдите</a>.</p>
+                        <p class="sub-dark-color">У вас уже есть аккаунт? Тогда <a class="si-popup-trigger" href="#">войдите</a>.</p>
                     </form>
                 </div>
             </div>

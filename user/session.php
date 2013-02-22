@@ -6,14 +6,14 @@
 	
 	if (!isset($_SESSION['user_id']))
 	{
-		if (isset($_COOKIE['mail']) && isset($_COOKIE['password']))
+		if (isset($_COOKIE['email']) && isset($_COOKIE['password']))
 		{
-			$mail = sanitize($_COOKIE['mail']);
+			$email = sanitize($_COOKIE['email']);
 			$password = sanitize($_COOKIE['password']);
 	
 			$query = "SELECT `user_id`, `password`
 						FROM `users`
-						WHERE `mail`='{$mail}' AND `password`='{$password}'
+						WHERE `email`='{$email}' AND `password`='{$password}'
 						LIMIT 1";
 			$sql = mysql_query($query) or die(mysql_error());
 	
@@ -27,7 +27,7 @@
 	
 	if (isset($_SESSION['user_id']))
 	{
-		$query = "SELECT `name`, `mail`
+		$query = "SELECT `name`, `email`
 					FROM `users`
 					WHERE `user_id` = '{$_SESSION['user_id']}'
 					LIMIT 1";

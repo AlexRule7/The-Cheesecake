@@ -43,7 +43,7 @@ if ($_SESSION['item_total'] != 0) {
 echo "
 		</div>
 		<div class='mini-cart-btn'>
-			<a href='#' class='big-btn red-btn'><span class='in-btn-price'>$bill ₷</span><span class='in-btn-text'>Оформить</span></a>
+			<a href='/cart/' class='big-btn red-btn'><span class='in-btn-price'>$bill ₷</span><span class='in-btn-text'>Оформить</span></a>
 		</div>";
 
 } else {

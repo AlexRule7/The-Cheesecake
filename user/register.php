@@ -10,7 +10,7 @@ header('Content-type: application/json');
 if (!empty($_POST))
 {
 	$name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
-	$mail = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
+	$email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
 	$pass = (isset($_POST['user-pass'])) ? sanitize($_POST['user-pass']) : '';
 	
 	$salt = GenerateSalt();
@@ -18,7 +18,7 @@ if (!empty($_POST))
 		
 	$query = "SELECT 1
 				FROM `users`
-				WHERE `mail` = '{$mail}'";
+				WHERE `email` = '{$email}'";
 
 	$sql = mysql_query($query) or die(mysql_error());
 	
@@ -27,7 +27,7 @@ if (!empty($_POST))
 					INTO `users`
 					SET
 						`name`='{$name}',
-						`mail`='{$mail}',
+						`email`='{$email}',
 						`password`='{$password}',
 						`salt`='{$salt}'";
 						

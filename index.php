@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>Чизкейки в Москве | The Moscow Cheesecake</title>
 	<?php include($_SERVER['DOCUMENT_ROOT'].'/include/header.php'); ?>
-        
 	
-<section class="content">
+	<section class="content">
         <div class="inner">
 				<?php include($_SERVER['DOCUMENT_ROOT'].'/user/user_panel.php'); ?>
                 <!-- Main slider -->

@@ -9,12 +9,12 @@ header('Content-type: application/json');
 
 if (!empty($_POST))
 {
-	$mail = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
+	$email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
 	$pass = (isset($_POST['user-pass'])) ? sanitize($_POST['user-pass']) : '';
 	
 	$query = "SELECT `salt`
 				FROM `users`
-				WHERE `mail`='{$mail}'
+				WHERE `email`='{$email}'
 				LIMIT 1";
 	$sql = mysql_query($query) or die(mysql_error());
 	
@@ -26,7 +26,7 @@ if (!empty($_POST))
 
 		$query = "SELECT `user_id`, `name`
 					FROM `users`
-					WHERE `mail`='{$mail}' AND `password`='{$password}'
+					WHERE `email`='{$email}' AND `password`='{$password}'
 					LIMIT 1";
 		$sql = mysql_query($query) or die(mysql_error());
 
@@ -41,7 +41,7 @@ if (!empty($_POST))
 			$time = 60*60*24*30; // set cookie for a month
 			if (isset($_POST['user-remember']))
 			{
-				setcookie('mail', $mail, time()+$time, "/");
+				setcookie('email', $email, time()+$time, "/");
 				setcookie('password', $password, time()+$time, "/");
 			}
 			echo json_encode('success');

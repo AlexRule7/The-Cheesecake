@@ -32,23 +32,23 @@ jQuery(document).ready(function($){
     };
 
     // Show sign-in popup
-    $('.si-popup-trigger').click(function(event){
+    $('body').on('click', '.si-popup-trigger', function(event){
         event.preventDefault();
         closePopup();
         $('.popup-bg, .si-popup').show();
 		$('form .field').removeClass('error');
 		$('form .caption').hide();
-		$('input').val('');
+		$('.user-panel input').val('');
     });
 
     // Show sign-up popup
-    $('.su-popup-trigger').click(function(event){
+    $('body').on('click', '.su-popup-trigger', function(event){
         event.preventDefault();
         closePopup();
         $('.popup-bg, .su-popup').show();
 		$('form .field').removeClass('error');
 		$('form .caption').hide();
-		$('input').val('');
+		$('.user-panel input').val('');
     });
 
     // Close popup on close-btn
@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
 	;
 	
 	$('#logout').click(function(e) {
-        $.get('user/logout.php', function() {
+        $.get('/user/logout.php', function() {
 			location.reload();
 		});
 		e.preventDefault();

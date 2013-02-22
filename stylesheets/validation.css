@@ -47,6 +47,10 @@
 	margin-top: 6px;
 }
 
+.field {
+	position: relative;
+}*/
+
 #spinner_su {
 	display: block;
 	position: relative;
@@ -63,6 +67,24 @@
 	text-align: center;
 }
 
-.field {
-	position: relative;
+.company {
+	display: none;
+}
+
+.half-field {
+	display: inline-block;
+	float: left;
+	width: 47.5%;
+	margin-right: 15px;
+}
+
+.half-field:last-child {
+	margin-right: 0px;
+}
+
+.mini-field.error .text-input, .half-field.error .text-input {
+	background:rgba(255,0,0,0.15)
+}
+.mini-field.error .caption, .half-field.error .caption {
+	display:block
 }

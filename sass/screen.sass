@@ -713,7 +713,7 @@ i
     color: $sub-dark-color
 
 
-// Main card
+// Main cart
 .main-cart-holder
     @extend .full-item-card
     min-height: 0
@@ -770,6 +770,20 @@ i
     font-size: 1.2em
     font-weight: bold
     margin: 15px 0 0
+
+
+// Result card
+.result-holder
+    @extend .full-item-card
+    +box-sizing($bs)
+    width: 50%
+    min-height: 50px
+    margin-right: auto
+    margin-left: auto
+    padding-right: 50px
+    padding-left: 50px
+    .hor-splitter
+        margin: 10px 0 0
 
 
 // Fix

@@ -182,17 +182,60 @@
                                             <option value="18:00-22:00">18:00-22:00</option>
                                         </select>
                                     </div>
+                                    <?php
+										$tomorrow = mktime(0, 0, 0, date("m"), date("d")+1, date("y"));
+										$date = date("Y-m-d", $tomorrow); 
+									?>
                                     <div class="half-field">
                                         <label for="order-date">Дата доставки*:</label>
-                                        <input class="text-input" type="date" name="order-date">
+                                        <input class="text-input" type="date" name="order-date" value="<?php echo $date; ?>">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="grid full-size-col centered-text">
-                            <div class="field"><a href="#" class="big-btn red-btn">Оформить заказ</a></div>
+                            <div class="field"><a href="/cart/complete/" class="big-btn red-btn">Оформить заказ</a></div>
                         </div>
                         </form>
+                        <div class="grid half-col multi-form">
+                            <div class="big-col">
+                            	<form class="login">
+                                <h2>Вход</h2>
+                                <div class="hor-splitter"></div>
+                                <div class="field">
+                                    <label for="user-email">Email:</label>
+                                    <input class="text-input" type="email" name="user-email">
+                                </div>
+                                <div class="field">
+                                    <label for="user-pass">Пароль:</label>
+                                    <a href="#" class="label-link">Забыли?</a>
+                                    <input class="text-input" type="password" name="user-pass">
+                                    <span class="caption">Ошибка: пароль введен неверно.</span>
+                                </div>
+                                <div class="field checkbox-field">
+                                    <input class="checkbox-input" type="checkbox" name="user-remember">
+                                    <label for="user-remember">Запомнить меня</label>
+                                </div>
+                                <div class="field">
+                                    <a href="#" class="small-btn blue-btn user-login">Войти</a>
+                                    <span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="grid half-col multi-form">
+                            <div class="big-col">
+                                <h2>Заказ без регистрации</h2>
+                                <div class="hor-splitter"></div>
+                                <div class="field">
+                                    <p>Завершить оформление заказа без регистрации в нашем магазине.</p>
+                                    <p>В конце мы предложим вам зарегистрироваться, чтобы не вводить адрес при следующей покупке.</p>
+                                </div>
+                                <div class="field">
+                                    <a href="#" class="small-btn blue-btn">Продолжить</a>
+                                </div>
+                            </div>
+                        </div>
                 </section><!-- main-cart-holder -->
 
             </div><!-- inner -->

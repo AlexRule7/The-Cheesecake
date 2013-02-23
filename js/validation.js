@@ -233,9 +233,9 @@ $(document).ready(function(){
 	
 	// =================================================================== //
 	
-	$('#login').keypress(function(e) {
+	$('.login').keypress(function(e) {
 		if ((e.keyCode || e.which) == 13) {
-			$('#user-login').trigger('click');
+			$('.user-login').trigger('click');
 		}
 	});
 	
@@ -245,13 +245,14 @@ $(document).ready(function(){
 		}
 	});		
 
-	$('#user-login').click(function (e){
+	$('.user-login').click(function (e){
 		var that = $(this);
+		var form = that.closest('.login');
 		jVal.errors = false;
 		jVal.mail(that);
 		jVal.pass(that);
 		if(!jVal.errors) {
-			var serial = $('#login').serialize();
+			var serial = form.serialize();
 			$.ajax({
 				type: 'POST',
 				url: '/user/login.php',
@@ -260,13 +261,13 @@ $(document).ready(function(){
 				dataType: 'json',
 				success: function(data) {
 					if (data.id == 1) {
-						$('input[name=user-email]').parent().addClass('error');
-						$('.mailCaption').html(data.text).show();
-						$('input[name=user-pass]').val('');
+						form.find('input[name=user-email]').parent().addClass('error');
+						form.find('.mailCaption').html(data.text).show();
+						form.find('input[name=user-pass]').val('');
 					} else if (data.id == 1) {
-						$('input[name=user-pass]').parent().addClass('error');
-						$('.passCaption').html(data.text).show();
-						$('input[name=user-pass]').val('');
+						form.find('input[name=user-pass]').parent().addClass('error');
+						form.find('.passCaption').html(data.text).show();
+						form.find('input[name=user-pass]').val('');
 					} else {
 						location.reload();
 					}
@@ -278,13 +279,14 @@ $(document).ready(function(){
 	
 	$('#user-register').click(function (e){
 		var that = $(this);
+		var form = that.closest('#register');
 		jVal.errors = false;
 		jVal.name(that);
 		jVal.mail(that);
 		jVal.pass(that);
 		jVal.pass_conf(that);
 		if(!jVal.errors) {
-			var serial = $('#register').serialize();
+			var serial = form.serialize();
 			$.ajax({
 				type: 'POST',
 				url: '/user/register.php',
@@ -293,8 +295,8 @@ $(document).ready(function(){
 				dataType: 'json',
 				success: function(data) {
 					if (data.id == 1) {
-						$('input[name=user-email]').parent().addClass('error');
-						$('.mailCaption').html(data.text).show();
+						form.find('input[name=user-email]').parent().addClass('error');
+						form.find('.mailCaption').html(data.text).show();
 					} else {
 						location.reload();
 					}
@@ -339,7 +341,7 @@ $(document).ready(function(){
 						$('input[name=user-email]').parent().addClass('error');
 						$('.mailCaption').html(data.text).show();
 					} else {
-						window.location.href = "/";
+						window.location.href = that.prop('href');
 					}
 				}
 			});

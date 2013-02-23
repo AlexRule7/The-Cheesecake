@@ -171,6 +171,7 @@ foreach ($_SESSION['item_list'] as $key => $val) {
 
 unset ($_SESSION['item_total']);
 unset ($_SESSION['item_list']);
+$_SESSION['order_id'] = $order_id;
 
 $error = array (
 	'id' => '0',

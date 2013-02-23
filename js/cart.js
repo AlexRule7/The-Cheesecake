@@ -138,6 +138,18 @@ jQuery(document).ready(function($){
 		}
         e.preventDefault();
     });
+	// Show sign-in prompt
+	if ($('.half-col:first input[name=user-email]').val() != '') {
+		$('.grid:gt(2)').hide();
+	} else {
+		$('.grid:lt(3)').hide();
+	}
+	$('.grid:last a').click(function(e) {
+		$('.grid:gt(2)').hide();
+		$('.grid:lt(3)').show();
+		
+		e.preventDefault();
+    });
 	// Office checkbox behaviour
 	$('#to-office').change(function() {
 		if(this.checked) {

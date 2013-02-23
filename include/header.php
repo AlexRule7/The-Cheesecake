@@ -37,7 +37,7 @@
             <div class="popup-body">
                 <a class="close-btn" href="#"><i class="icn-close-popup"></i></a>
                 <div class="big-col centered">
-                	<form id="login">
+                	<form class="login">
                         <h2>Вход</h2>
                         <div class="hor-splitter"></div>
                         <div class="field">
@@ -54,7 +54,7 @@
                             <label for="user-remember">Запомнить меня</label>
                         </div>
                         <div class="field">
-                            <a href="#" class="small-btn blue-btn" id="user-login">Войти</a>
+                            <a href="#" class="small-btn blue-btn user-login">Войти</a>
                         	<span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
                         </div>
                         <div class="hor-splitter"></div>

@@ -166,7 +166,7 @@ small
     width: 50%
 .big-col
     width: 60%
-    .popup-body &
+    .popup-body &, .profile-holder &
         width: 70%
 .full-size-col
     width: 100%
@@ -786,6 +786,36 @@ i
         margin: 10px 0 0
 
 
+// Profile
+.profile-holder
+    @extend .main-cart-holder
+.ver-shadow-splitter
+    background: transparent
+    width: 5px
+    margin-left: -5px
+    +box-shadow(rgba(black,.45) 3px 0 4px -1px)
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 30%
+.profile-nav-link
+    font-size: 2em
+    display: block
+    +box-sizing($bs)
+    padding: 15px 5px 15px 65px
+    position: relative
+    &.selected
+        color: $main-dark-colot
+        +background-image(linear-gradient(left, transparent, rgba(white,.7)))
+        .icn-selected-nav
+            visibility: visible
+.icn-selected-nav
+    visibility: hidden
+    position: absolute
+    top: 19px
+    right: 25px
+
+
 // Fix
 %group, .group
     &:after
@@ -802,4 +832,7 @@ i
     float: right
     margin-top: 6px
     position: relative
+input:disabled, .disabled
+    +opacity(.45)
+    pointer-events: none
 

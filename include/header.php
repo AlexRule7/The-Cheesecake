@@ -12,6 +12,7 @@
     <script src="/js/jquery.maskedinput.min.js"></script>
     <script src="/js/cart.js"></script>
     <script src="/js/validation.js"></script>
+    <script src="/js/profile.js"></script>
     <script>
         $(function() {
             $('.main-slider-container').iosSlider({

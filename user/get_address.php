@@ -14,14 +14,7 @@ if (isset($_POST)) {
 
 	$sql = mysql_query($query) or die(mysql_error());
 	$row = mysql_fetch_assoc($sql);
-	/*
-	$i = 0;
-	foreach ($row as $key => $val) {
-		$row[$i] = $row[$key];
-		unset ($row[$key]);
-		$i++;
-	}
-	*/
+
 	echo json_encode($row);
 }
 

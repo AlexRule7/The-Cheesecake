@@ -54,7 +54,7 @@ jQuery(document).ready(function($){
         e.preventDefault();
     });
 	// Click on button "Add to cart"
-	$('.menu-item a.red-btn, .grid a.red-btn').click(function(e) {
+	$('.add-to-cart').click(function(e) {
 		
 		if ($('.mini-cart-container').hasClass('opened')) {
 			openMiniCart();
@@ -140,13 +140,14 @@ jQuery(document).ready(function($){
     });
 	// Show sign-in prompt
 	if ($('.half-col:first input[name=user-email]').val() != '') {
-		$('.grid:gt(2)').hide();
+		$('.w-reg').hide();
 	} else {
-		$('.grid:lt(3)').hide();
+		$('.wo-reg').hide();
 	}
 	$('.grid:last a').click(function(e) {
-		$('.grid:gt(2)').hide();
-		$('.grid:lt(3)').show();
+		$('.w-reg').slideUp('normal', function (){
+			$('.wo-reg').slideDown('normal');
+		});
 		
 		e.preventDefault();
     });
@@ -205,42 +206,41 @@ jQuery(document).ready(function($){
 			}
 		});
 	};
-	// Disable e-mail field if user is logged in
-	if ($('.half-col:first input[name=user-email]').val() != '') {
+	// Disable e-mail and name fields if user is logged in
+	if ($('.half-col:first input[name=user-email]').val() != '' && !$('#profile-tabs').length) {
 		$('.half-col:first input[name=user-name]').prop('disabled', true);
 		$('.half-col:first input[name=user-email]').prop('disabled', true);
     }
-	// Address select
-	if ($('select[name=user-address]').length) {
+	// Address select and field disable
+	if ($('#order select[name=user-address]').length) {
 		$('#address :input').prop('disabled', true);
-		$('select[name=user-address]').change(function(e) {
-			if ($(this).val() == '0') {
-				$('#address :input').val('').prop('disabled', false);
-				$('#to-office').prop('checked', false).trigger('change');
-			} else {
-				$.ajax({
-					type: 'POST',
-					url: '/user/get_address.php',
-					data: 'id='+ $(this).val(),
-					cache: false,
-					dataType: 'json',
-					success: function(data) {
-						$('#address :input').prop('disabled', true);
-						if (data.office == 1) {
-							$('#to-office').prop('checked', true).trigger('change');
-						} else {
-							$('#to-office').prop('checked', false).trigger('change');
-						}
-						var patt = /[a-z]+$/;
-						$('#address :input').each(function(index, element) {
-							var matches = patt.exec($(element).prop('name'));
-							$(element).val(data[matches[0]]);
-						});
-					}
-				});
-			}
-		});
 	}
-	
+	$('select[name=user-address]').change(function(e) {
+		if ($(this).val() == '0') {
+			$('#address :input').val('').prop('disabled', false);
+			$('#to-office').prop('checked', false).trigger('change');
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '/user/get_address.php',
+				data: 'id='+ $(this).val(),
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					$('#order #address :input').prop('disabled', true);
+					if (data.office == 1) {
+						$('#to-office').prop('checked', true).trigger('change');
+					} else {
+						$('#to-office').prop('checked', false).trigger('change');
+					}
+					var patt = /[a-z]+$/;
+					$('#address :input').each(function(index, element) {
+						var matches = patt.exec($(element).prop('name'));
+						$(element).val(data[matches[0]]);
+					});
+				}
+			});
+		}
+	});
 	
 });

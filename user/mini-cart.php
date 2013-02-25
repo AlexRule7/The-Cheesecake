@@ -3,6 +3,6 @@
                         <section class="mini-cart-container empty-cart">
                             <div class="mini-cart-arrow"></div>
                             <div class="mini-height-scroll-container">
-                            	<span id="spinner_cart"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>
+                            	<span id="spinner_cart"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
                             </div>
                         </section>

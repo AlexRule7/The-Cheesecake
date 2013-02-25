@@ -35,63 +35,63 @@
                                 <a href="/cakes/?newyork"><img class="menu-photo" src="/images/menu/new-york.jpg" alt="Чизкейк New-York"></a>
                             </div>
                             <a href="/cakes/?newyork" class="menu-name">New-York</a>
-                            <a href="1" class="small-btn red-btn">В корзину</a>
+                            <a href="1" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?chocolate"><img class="menu-photo" src="/images/menu/chocolate.jpg" alt="Чизкейк Шоколадный"></a>
                             </div>
                             <a href="/cakes/?chocolate" class="menu-name">Шоколадный</a>
-                            <a href="2" class="small-btn red-btn">В корзину</a>
+                            <a href="2" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?strawberry"><img class="menu-photo" src="/images/menu/strawberry.jpg" alt="Чизкейк Клубничный"></a>
                             </div>
                             <a href="/cakes/?strawberry" class="menu-name">Клубничный</a>
-                            <a href="3" class="small-btn red-btn">В корзину</a>
+                            <a href="3" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?mint"><img class="menu-photo" src="/images/menu/mint.jpg" alt="Чизкейк Мятный"></a>
                             </div>
                             <a href="/cakes/?mint" class="menu-name">Мятный</a>
-                            <a href="4" class="small-btn red-btn">В корзину</a>
+                            <a href="4" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?caramelapple"><img class="menu-photo" src="/images/menu/caramel-apple.jpg" alt="Чизкейк Карамельно-яблочный"></a>
                             </div>
                             <a href="/cakes/?caramelapple" class="menu-name">Карамельно-яблочный</a>
-                            <a href="5" class="small-btn red-btn">В корзину</a>
+                            <a href="5" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?berries"><img class="menu-photo" src="/images/menu/berries.jpg" alt="Чизкейк Ягодный"></a>
                             </div>
                             <a href="/cakes/?berries" class="menu-name">Ягодный</a>
-                            <a href="6" class="small-btn red-btn">В корзину</a>
+                            <a href="6" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?lime"><img class="menu-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
                             </div>
                             <a href="/cakes/?lime" class="menu-name">Лаймовый</a>
-                            <a href="7" class="small-btn red-btn">В корзину</a>
+                            <a href="7" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?peanutbutter"><img class="menu-photo" src="/images/menu/peanuts.jpg" alt="Чизкейк Арахисовый"></a>
                             </div>
                             <a href="/cakes/?peanutbutter" class="menu-name">Арахисовый</a>
-                            <a href="8" class="small-btn red-btn">В корзину</a>
+                            <a href="8" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="/cakes/?raspberry"><img class="menu-photo" src="/images/menu/raspberry.jpg" alt="Чизкейк Малиновый"></a>
                             </div>
                             <a href="/cakes/?raspberry" class="menu-name">Малиновый</a>
-                            <a href="9" class="small-btn red-btn">В корзину</a>
+                            <a href="9" class="small-btn red-btn add-to-cart">В корзину</a>
                         </li>
                     </ul>
                 </section>

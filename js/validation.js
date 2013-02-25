@@ -243,8 +243,14 @@ $(document).ready(function(){
 		if ((e.keyCode || e.which) == 13) {
 			$('#user-register').trigger('click');
 		}
-	});		
-
+	});
+	
+	$('#profile-address').keypress(function(e) {
+		if ((e.keyCode || e.which) == 13) {
+			$('#profile-address .save-address').trigger('click');
+		}
+	});
+	
 	$('.user-login').click(function (e){
 		var that = $(this);
 		var form = that.closest('.login');
@@ -264,7 +270,7 @@ $(document).ready(function(){
 						form.find('input[name=user-email]').parent().addClass('error');
 						form.find('.mailCaption').html(data.text).show();
 						form.find('input[name=user-pass]').val('');
-					} else if (data.id == 1) {
+					} else if (data.id == 2) {
 						form.find('input[name=user-pass]').parent().addClass('error');
 						form.find('.passCaption').html(data.text).show();
 						form.find('input[name=user-pass]').val('');
@@ -306,7 +312,7 @@ $(document).ready(function(){
 		e.preventDefault();
 	});
 	
-	$('.grid.full-size-col a').click(function (e){
+	$('.wo-reg a').click(function (e){
 		var that = $(this);
 		jVal.errors = false;
 		jVal.name(that);
@@ -317,18 +323,6 @@ $(document).ready(function(){
 		jVal.house(that);
 		jVal.date(that);
 		if(!jVal.errors) {
-			var id = new Array();
-			$('.mini-cart-item-id').each(function(index, element) {
-				id[index] = element.value;
-			});
-			
-			var qty = new Array();
-			$('.mini-cart-item-qt').each(function(index, element) {
-				qty[index] = element.value;
-			});
-			
-			addItem(id, qty);
-			
 			var serial = $('#order').serialize()+ '&order-bill='+ parseInt($('.final-sum').text(), 10);
 			$.ajax({
 				type: 'POST',
@@ -348,6 +342,28 @@ $(document).ready(function(){
 		}
 		e.preventDefault();
 	});
+	
+	// Save address button behaviour
+	$('#profile-address .save-address').click(function(e) {
+		var that = $(this);
+		jVal.errors = false;
+		jVal.metro(that);
+		jVal.street(that);
+		jVal.house(that);
+		if(!jVal.errors) {
+			var serial = $('#profile-address').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '/user/update_address.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					location.reload();
+				}
+			});
+		}
+    });
 		
 	$('input[name=user-email]').change(jVal.mail);
 	$('input[name=user-pass]').change(jVal.pass);
@@ -359,8 +375,8 @@ $(document).ready(function(){
 	$('input[name=user-house]').change(jVal.house);
 	$('input[name=order-date]').change(jVal.date);
 	
-	if ($('.main-cart-holder').length) {
-		$('input[name=user-phone]').mask('+7(999)999-99-99');
+	if ($('input[name="user-phone[]"]').length || $('input[name=user-phone]').length) {
+		$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');
 	}
 	
 });

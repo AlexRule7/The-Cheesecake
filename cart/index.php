@@ -83,7 +83,7 @@
                         </div><!-- text-content-inner  -->
                     </div><!-- main-cart -->
                     <form id="order">
-                        <div class="grid half-col multi-form">
+                        <div class="grid half-col multi-form wo-reg">
                             <div class="big-col">
                                 <h2>Личные данные</h2>
                                 <div class="hor-splitter"></div>
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid half-col multi-form">
+                        <div class="grid half-col multi-form wo-reg">
                             <div class="big-col">
                                 <h2>Адрес и время доставки</h2>
                                 <div class="hor-splitter"></div>
@@ -193,11 +193,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid full-size-col centered-text">
+                        <div class="grid full-size-col centered-text wo-reg">
                             <div class="field"><a href="/cart/complete/" class="big-btn red-btn">Оформить заказ</a></div>
                         </div>
                         </form>
-                        <div class="grid half-col multi-form">
+                        <div class="grid half-col multi-form w-reg">
                             <div class="big-col">
                             	<form class="login">
                                 <h2>Вход</h2>
@@ -223,7 +223,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="grid half-col multi-form">
+                        <div class="grid half-col multi-form w-reg">
                             <div class="big-col">
                                 <h2>Заказ без регистрации</h2>
                                 <div class="hor-splitter"></div>

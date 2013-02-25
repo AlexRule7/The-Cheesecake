@@ -10,7 +10,7 @@
                         
 							if (isset($name) && isset($_SESSION['user_id'])) {
 								print '
-									<li class="splitter-next"><a href="#">Здравствуйте, '.$name.'!</a></li>';
+									<li class="splitter-next"><a href="/profile/">Личный кабинет</a></li>';
 								if ($_SERVER['PHP_SELF'] != '/cart/index.php') {
 									print '
 										<li class="splitter-next"><a href="#" id="logout">Выйти</a></li>';

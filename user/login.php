@@ -7,8 +7,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/exarium.php');
 
 header('Content-type: application/json');
 
-if (!empty($_POST))
-{
+if (!empty($_POST)) {
 	$email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
 	$pass = (isset($_POST['user-pass'])) ? sanitize($_POST['user-pass']) : '';
 	

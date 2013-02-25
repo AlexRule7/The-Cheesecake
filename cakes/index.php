@@ -57,7 +57,7 @@
             
                 <!-- Full item card -->
                 <section class="full-item-card">
-                    <img class="item-big-photo" src="/images/menu/berries-big.jpg" alt="Ягодный чизкейк">
+                    <img class="item-big-photo" src="<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
                     <article class="text-content-inner group">
                         <div class="grid half-col">&nbsp;</div>
                         <div class="grid half-col full-item-description">
@@ -76,7 +76,7 @@
                                 <div class="hor-splitter"></div>
                             </div>
                             <div class="grid big-col">
-                                <a href="<?php echo $product_id; ?>" class="big-btn red-btn"><span class="in-btn-price"><?php echo $row['price']; ?> ₷</span><span class="in-btn-text">В корзину</span></a>
+                                <a href="<?php echo $product_id; ?>" class="big-btn red-btn add-to-cart"><span class="in-btn-price"><?php echo $row['price']; ?> ₷</span><span class="in-btn-text">В корзину</span></a>
                             </div>
                             <div class="grid medium-col">
                                 <small class="bold"><a href="/">Закажите еще 2 чизкейка</a>, и мы доставим их бесплатно!</small>

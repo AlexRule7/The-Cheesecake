@@ -11,7 +11,6 @@ $user_name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
 $user_email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
 $user_phone = (isset($_POST['user-phone'])) ? sanitize($_POST['user-phone']) : '';
 $address_id = (isset($_POST['user-address'])) ? sanitize($_POST['user-address']) : '';
-$user_office = (isset($_POST['user-office'])) ? sanitize($_POST['user-office']) : '';
 $user_metro = (isset($_POST['user-metro'])) ? sanitize($_POST['user-metro']) : '';
 $user_street = (isset($_POST['user-street'])) ? sanitize($_POST['user-street']) : '';
 $user_house = (isset($_POST['user-house'])) ? sanitize($_POST['user-house']) : '';
@@ -21,6 +20,11 @@ $user_enter = (isset($_POST['user-enter'])) ? sanitize($_POST['user-enter']) : '
 $user_floor = (isset($_POST['user-floor'])) ? sanitize($_POST['user-floor']) : '';
 $user_domofon = (isset($_POST['user-domofon'])) ? sanitize($_POST['user-domofon']) : '';
 $user_company = (isset($_POST['user-company'])) ? sanitize($_POST['user-company']) : '';
+if (isset($_POST['user-office'])) {
+	$user_office = 1;
+} else {
+	$user_office = 0;
+}
 
 $order_comment = (isset($_POST['order-comment'])) ? sanitize($_POST['order-comment']) : '';
 $order_time = (isset($_POST['order-time'])) ? sanitize($_POST['order-time']) : '';
@@ -36,11 +40,18 @@ if (!isset($_SESSION['user_id'])) {
 
 	$sql = mysql_query($query) or die(mysql_error());
 	if (!mysql_num_rows($sql)) {
+		preg_match('/\d-\d+-\d+$/', $user_phone, $match);
+		$pass = str_replace('-', '', $match[0]);
+		$salt = GenerateSalt();
+		$user_pass = md5(md5($pass) . $salt);
+		
 		$query = "INSERT
 					INTO `users`
 					SET
 						`name`='{$user_name}',
-						`email`='{$user_email}'";
+						`email`='{$user_email}',
+						`password`='{$user_pass}',
+						`salt`='{$salt}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
 		$_SESSION['user_id'] = mysql_insert_id();
@@ -54,39 +65,27 @@ if (!isset($_SESSION['user_id'])) {
 		$sql = mysql_query($query) or die(mysql_error());
 		$phone_id = mysql_insert_id();
 		
-		if (empty($user_office)) {
-			$query = "INSERT
-						INTO `addresses`
-						SET
-							`user_id`='{$_SESSION['user_id']}',
-							`metro`='{$user_metro}',
-							`street`='{$user_street}',
-							`house`='{$user_house}',
-							`building`='{$user_building}',
-							`office`='0',
-							`flat`='{$user_flat}',
-							`enter`='{$user_enter}',
-							`floor`='{$user_floor}',
-							`domofon`='{$user_domofon}'";
-		} else {
-			$query = "INSERT
-						INTO `addresses`
-						SET
-							`user_id`='{$_SESSION['user_id']}',
-							`metro`='{$user_metro}',
-							`street`='{$user_street}',
-							`house`='{$user_house}',
-							`building`='{$user_building}',
-							`office`='1',
-							`company`='{$user_company}'";
-		}
+		$query = "INSERT
+					INTO `addresses`
+					SET
+						`user_id`='{$_SESSION['user_id']}',
+						`metro`='{$user_metro}',
+						`street`='{$user_street}',
+						`house`='{$user_house}',
+						`building`='{$user_building}',
+						`office`='{$user_office}',
+						`company`='{$user_company}',
+						`flat`='{$user_flat}',
+						`enter`='{$user_enter}',
+						`floor`='{$user_floor}',
+						`domofon`='{$user_domofon}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
 		$address_id = mysql_insert_id();
 	} else {
 		$error = array (
 			'id' => '1',
-			'text' => 'Пользователя с таким e-mail уже зарегистрирован. Если это вы - <a class="si-popup-trigger" href="#">войдите</a>.'
+			'text' => 'Пользователь с таким e-mail уже зарегистрирован. Если это вы - <a class="si-popup-trigger" href="#">войдите</a>.'
 		);
 		echo json_encode($error);
 		exit;
@@ -112,32 +111,21 @@ if (!isset($_SESSION['user_id'])) {
 	}
 	
 	if ($address_id == 0) {
-		if (empty($user_office)) {
-			$query = "INSERT
-						INTO `addresses`
-						SET
-							`user_id`='{$_SESSION['user_id']}',
-							`metro`='{$user_metro}',
-							`street`='{$user_street}',
-							`house`='{$user_house}',
-							`building`='{$user_building}',
-							`office`='0',
-							`flat`='{$user_flat}',
-							`enter`='{$user_enter}',
-							`floor`='{$user_floor}',
-							`domofon`='{$user_domofon}'";
-		} else {
-			$query = "INSERT
-						INTO `addresses`
-						SET
-							`user_id`='{$_SESSION['user_id']}',
-							`metro`='{$user_metro}',
-							`street`='{$user_street}',
-							`house`='{$user_house}',
-							`building`='{$user_building}',
-							`office`='1',
-							`company`='{$user_company}'";
-		}
+		$query = "INSERT
+					INTO `addresses`
+					SET
+						`user_id`='{$_SESSION['user_id']}',
+						`metro`='{$user_metro}',
+						`street`='{$user_street}',
+						`house`='{$user_house}',
+						`building`='{$user_building}',
+						`office`='0',
+						`office`='{$user_office}',
+						`company`='{$user_company}',
+						`flat`='{$user_flat}',
+						`enter`='{$user_enter}',
+						`floor`='{$user_floor}',
+						`domofon`='{$user_domofon}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
 		$address_id = mysql_insert_id();

@@ -96,3 +96,31 @@
 	color: #bb1d1d;
 	font-size: 2em;
 }
+
+.field .profile-phone {
+	width: 90%;
+}
+
+.profile-phone-holder {
+	display: block;
+}
+
+.deleterow {
+	background-image: url(/images/icons/delete.png);
+	background-repeat: no-repeat;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	cursor: pointer;
+	float: right;
+	margin-top: 4px;
+}
+
+.deleterow:hover {
+	background-image: url(/images/icons/delete_hover.png);
+	background-repeat: no-repeat;
+}
+
+.delete-address {
+	float: right;
+}

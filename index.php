@@ -103,8 +103,8 @@
                     <article class="text-content-inner group">
                         <div class="grid big-col">
                             <div class="press-image">
-                                <a href="#" class="press-link afisha-link"></a>
-                                <a href="#" class="press-link hopes-link"></a>
+                                <a href="http://www.afisha.ru/article/best-food-delivery/" class="press-link afisha-link" target="_blank" rel="nofollow"></a>
+                                <a href="http://www.hopesandfears.com/hopesandfears/start-up/svoemesto/117381-moscow-cheesecake-kak-pech-drug-drugu-torty-s-marzhoy-v-60" class="press-link hopes-link" target="_blank" rel="nofollow"></a>
                             </div>
                         </div>
                         <div class="grid medium-col">

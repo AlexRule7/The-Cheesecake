@@ -48,7 +48,7 @@
 
 <!doctype html><head>
     <meta charset="UTF-8">
-    <title>Ягодный чизкейк | The Moscow Cheesecake</title>
+    <title><?php echo $row['name']; ?> | The Moscow Cheesecake</title>
 	<?php include($_SERVER['DOCUMENT_ROOT'].'/include/header.php'); ?>
     
 <section class="content">
@@ -125,38 +125,8 @@
                         </li>
                     </ul>
                 </section>
-
-                <!-- Postcart -->
-                <section class="postcard-content group">
-                    <div class="postcard-corener pc-l-t"></div>
-                    <div class="postcard-corener pc-r-t"></div>
-                    <div class="postcard-corener pc-l-b"></div>
-                    <div class="postcard-corener pc-r-b"></div>
-                    <article class="text-content-inner group">
-                        <div class="information-part group">
-                            <div class="grid small-col right-dark-border">
-                                <h2><i class="icn-heart"></i>Чизкейки</h2>
-                                <p>Основной принцип нашей компании — это высокое качество продукта. Все наши Чизкейки готовятся только по оригинальным американским рецептам.</p>
-                                <p>Ассортимент и конечная рецептура разрабатывались при участии американского кондитера с опытом работы более 20 лет.</p>
-                            </div>
-                            <div class="grid small-col right-dark-border left-light-border">
-                                <h2><i class="icn-delivery"></i>Доставка</h2>
-                                <p>Пока мы доставляем чизкейки только по Москве.</p>
-                                <p>Доставка осуществляется каждый день (даже в праздники) с 10:00 до 22:00.</p>
-                                <p>Стоимость доставки 250 ₷.</p>
-                                <p><span class="italic">При заказе от 3-х чизкейков, мы доставим их бесплатно.</span></p>
-                            </div>
-                            <div class="grid medium-col left-light-border">
-                                <h2><i class="icn-profile-card"></i>Бонусы и скидки</h2>
-                                <p>Регистрация позволит вам экономить время при заказе и даст возможность получать скидки.</p>
-                                <p><a class="su-popup-trigger" href="#">Зарегистрируйтесь сейчас</a> или во время оформления первого заказа.</p>
-                                <div class="hor-splitter"></div>
-                                <h2><i class="icn-case"></i>Для ресторанов</h2>
-                                <p>Мы любим сотрудничать. Если вы тоже, то, пожалуйста, посмотрите на <a href="#">наше коммерческое предложение</a> <small>(pdf, 3 mb)</small>.</p>
-                            </div>
-                        </div>
-                    </article>
-                </section>
+                
+				<?php include($_SERVER['DOCUMENT_ROOT'].'/include/postcard.php'); ?>
 
             </div><!-- inner -->
         </section><!-- content -->

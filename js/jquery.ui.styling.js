@@ -94,6 +94,36 @@ jQuery(document).ready(function($){
         }
     });
 
+	$('.questions-part :radio').change(function(e) {
+		if ($('.questions-part :radio:checked').length == 1) {
+			$('.answers').text('Спасибо за ответ. Пожалуйста, ответьте на оставшиеся 2 вопроса.');
+		} else if ($('.questions-part :radio:checked').length == 2) {
+			$('.answers').text('Спасибо за ответ. Пожалуйста, ответьте на оставшийся вопрос.');
+		} else {
+			if ($('.user-panel-holder .si-popup-trigger').length) {
+				$('.answers').html('Только зарегистрированные пользователи могут участвовать в опросах. Если у вас уже есть аккаунт - <a class="si-popup-trigger" href="#">войдите</a>.');
+			} else {
+				$('.answers').html('<a href="#" class="small-btn blue-btn" id="poll_submit">Отправить</a>');
+			}
+		}
+	});
+	
+	$('body').on('click', '#poll_submit', function(e) {
+		var serial = $('#poll').serialize();
+		$.ajax({
+			type: 'POST',
+			url: '/user/update_poll.php',
+			data: serial,
+			cache: false,
+			dataType: 'json',
+			success: function(data) {
+				$('.answers').text('Спасибо!');
+			}
+		});
+		
+        e.preventDefault();
+    });
+	
 });
 
 

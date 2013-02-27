@@ -124,3 +124,7 @@
 .delete-address {
 	float: right;
 }
+
+.hidden {
+	display: none;
+}

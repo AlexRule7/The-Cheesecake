@@ -1,4 +1,10 @@
-<?php include($_SERVER['DOCUMENT_ROOT'].'/user/session.php'); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/user/session.php');
+
+	if (!isset($_SESSION['user_id'])) {
+		header('Location: ../');
+	}
+
+?>
 
 <!doctype html><head>
     <meta charset="UTF-8">

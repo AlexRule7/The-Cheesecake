@@ -251,6 +251,12 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('#forgot').keypress(function(e) {
+		if ((e.keyCode || e.which) == 13) {
+			$('#forgot a').trigger('click');
+		}
+	});
+	
 	$('.user-login').click(function (e){
 		var that = $(this);
 		var form = that.closest('.login');
@@ -363,10 +369,42 @@ $(document).ready(function(){
 				}
 			});
 		}
+		e.preventDefault();
+    });
+	
+	$('#forgot a').click(function(e) {
+		var that = $(this);
+		jVal.errors = false;
+		if ($('#forgot input[name=user-email]').length) {
+			jVal.mail(that);
+		} else {
+			jVal.pass(that);
+			jVal.pass_conf(that);
+		}
+		if(!jVal.errors) {
+			var serial = $('#forgot').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '/user/forgot_password.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					if (data.id == 1) {
+						$('input[name=user-email]').parent().addClass('error');
+						$('.mailCaption').html(data.text).show();
+					} else {
+						$('#forgot .forgot-success').slideDown();
+					}
+				}
+			});
+		}
+		e.preventDefault();
     });
 		
 	$('input[name=user-email]').change(jVal.mail);
 	$('input[name=user-pass]').change(jVal.pass);
+	$('input[name=user-pass-old]').change(jVal.pass);
 	$('input[name=user-name]').change(jVal.name);
 	$('input[name=user-pass-conf]').change(jVal.pass_conf);
 	$('input[name=user-phone]').change(jVal.phone);

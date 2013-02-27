@@ -41,10 +41,16 @@ jQuery(document).ready(function($){
 			success: function(data) {
 				if (data.id == 1) {
 					form.find('.profile-phone-holder').parent().addClass('error');
-					if (!form.find('input[value=0]').parent().find('.mailCaption').length) {
-						form.find('input[value=0]').parent().append('<span class="caption mailCaption">'+ data.text+ '</span>');
+					if (!form.find('input[value=0]').parent().find('.phoneCaption').length) {
+						form.find('input[value=0]').parent().append('<span class="caption phoneCaption">'+ data.text+ '</span>');
 					} else {
-						form.find('input[value=0]').parent().find('.mailCaption').html(data.text).show();
+						form.find('input[value=0]').parent().find('.phoneCaption').html(data.text).show();
+					}
+				} else if (data.id == 2) {
+					if (!form.find('input[name=user-pass-old]').parent().find('.passCaption').length) {
+						form.find('input[name=user-pass-old]').parent().append('<span class="caption passCaption">'+ data.text+ '</span>').addClass('error');
+					} else {
+						form.find('input[name=user-pass-old]').parent().addClass('error').find('.passCaption').html(data.text).show();
 					}
 				} else {
 					location.reload();

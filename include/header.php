@@ -47,7 +47,7 @@
                         </div>
                         <div class="field">
                             <label for="user-pass">Пароль:</label>
-                            <a href="#" class="label-link">Забыли?</a>
+                            <a href="/forgot/" class="label-link">Забыли?</a>
                             <input class="text-input" type="password" tabindex="2" name="user-pass">
                         </div>
                         <div class="field checkbox-field">

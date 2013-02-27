@@ -93,6 +93,10 @@ jQuery(document).ready(function($){
             event.preventDefault();
         }
     });
+	
+	$('.order-history-item').click(function() {
+	  $(this).find('.order-history-details').slideToggle();
+	});
 
 	$('.questions-part :radio').change(function(e) {
 		if ($('.questions-part :radio:checked').length == 1) {

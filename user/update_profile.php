@@ -8,8 +8,12 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/exarium.php');
 header('Content-type: application/json');
 
 if (!empty($_POST)) {
-	$user_name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
-	$user_email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
+	$user_name = (!empty($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
+	$user_email = (!empty($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
+	$user_pass_old = (!empty($_POST['user-pass-old'])) ? sanitize($_POST['user-pass-old']) : '';
+	$user_pass = (!empty($_POST['user-pass'])) ? sanitize($_POST['user-pass']) : '';
+	$user_pass_conf = (!empty($_POST['user-pass-conf'])) ? sanitize($_POST['user-pass-conf']) : '';
+	
 	foreach ($_POST as $key => $val) {
 		if ($key == 'user-phone-id') {
 			$phone_id = $val;
@@ -68,7 +72,7 @@ if (!empty($_POST)) {
 		$i++;	
 	}
 	
-	$query = "SELECT `name`
+	$query = "SELECT `name`, `password`, `salt`
 				FROM `users`
 				WHERE `user_id` = '{$_SESSION['user_id']}'";
 	$sql = mysql_query($query) or die(mysql_error());
@@ -81,7 +85,30 @@ if (!empty($_POST)) {
 		$sql = mysql_query($query) or die(mysql_error());
 	}
 	
-	echo json_encode('success');
+	if (!empty($user_pass_old) && !empty($user_pass) && !empty($user_pass_conf)) {
+		$salt = $row['salt'];
+		$user_pass_old = md5(md5($user_pass_old) . $salt);
+		if ($row['password'] == $user_pass_old) {
+			$salt = GenerateSalt();
+			$user_pass = md5(md5($user_pass) . $salt);
+			$query = "UPDATE `users`
+						SET `password`='{$user_pass}', `salt`='{$salt}'
+						WHERE `user_id` = '{$_SESSION['user_id']}'";
+			$sql = mysql_query($query) or die(mysql_error());
+			
+			echo json_encode('success');
+		} else {
+			$error = array (
+				'id' => 2,
+				'text' => 'Вы неверно ввели старый пароль'
+			);
+			echo json_encode($error);
+			exit;
+		}
+	} else {
+		echo json_encode('success');
+	}
+	
 }
 
 ?>

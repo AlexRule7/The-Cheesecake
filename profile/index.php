@@ -61,6 +61,19 @@
                                     <input type="hidden" name="user-phone-id[]" value="0">
                                     <input class="text-input" type="tel" name="user-phone[]" placeholder="Добавить новый телефон">
                                 </div>
+                                <div class="hor-splitter"></div>
+                                <div class="field">
+                                    <label for="user-pass-old">Старый пароль:</label>
+                                    <input class="text-input" type="password" name="user-pass-old">
+                                </div>
+                                <div class="field">
+                                    <label for="user-pass">Новый пароль:</label>
+                                    <input class="text-input" type="password" name="user-pass">
+                                </div>
+                                <div class="field">
+                                    <label for="user-pass-conf">Новый пароль еще раз:</label>
+                                    <input class="text-input" type="password" name="user-pass-conf">
+                                </div>
                                 <div class="field">
                                     <a href="#" class="small-btn blue-btn">Сохранить</a>
                                     <span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
@@ -151,10 +164,10 @@
                                 </div>
                             </form>
                         </div><!-- half-col -->
-                        <div class="full-size-col centered tab" id="tabs-3">
+                        <div class="big-col centered tab" id="tabs-3">
                         	<h2>История ваших заказов</h2>
                             <div class="hor-splitter"></div>
-                        	<div id="profile-orders">
+                            <div class="order-history-holder">
                         	<?php
                                 $query = "SELECT `order_id`, `order_date`, `delivery_date`, `delivery_time`, `bill`, `comment`
                                             FROM `orders`
@@ -168,24 +181,16 @@
                                     {
                                         $row = mysql_fetch_assoc($sql);
                                         
-                                        print "
-                                            <h3>Заказ #$i :: Доставка: ".$row["delivery_date"]." :: Сумма: ".$row["bill"].".00 руб.</h3>
-                                            <div>
-                                            <table border='1px'>
-                                                <thead>
-                                                    <tr>
-                                                        <th>&nbsp;</th>
-                                                        <th>Наименование</th>
-                                                        <th>Кол.</th>
-                                                        <th>Цена</th>
-                                                        <th>Всего</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>";
+                                        echo "
+											<div class='order-history-item group'>
+												<div class='order-history-number'>Заказ № {$row['order_id']}</div>
+												<div class='order-history-date'>{$row['delivery_date']}</div>
+												<div class='order-history-sum'>Сумма: ".(($row['bill'] > 1500) ? $row['bill'] : $row['bill']+250)." ₷</div>
+												<div class='order-history-details group'>";
                                                 
                                         $query2 = "SELECT `product_id`, `amount`
                                                     FROM `purchases`
-                                                    WHERE `order_id` = '".$row["order_id"]."'
+                                                    WHERE `order_id` = '{$row['order_id']}'
                                                     ORDER BY `id` ASC";
                                                         
                                         $sql2 = mysql_query($query2) or die(mysql_error());
@@ -197,38 +202,32 @@
                                                 
                                                 $query3 = "SELECT `name`, `price`
                                                             FROM `products`
-                                                            WHERE `product_id` = '".$row2["product_id"]."'";
+                                                            WHERE `product_id` = '{$row2['product_id']}'";
                                                                 
                                                 $sql3 = mysql_query($query3) or die(mysql_error());
                                                 
                                                 $row3 = mysql_fetch_assoc($sql3);
                                                 
-                                                print "			
-                                                        <tr>
-                                                            <th>$p</th>
-                                                            <th>".$row3["name"]."</th>
-                                                            <th>".$row2["amount"]."</th>
-                                                            <th>".$row3["price"]."</th>
-                                                            <th>".($row2["amount"] * $row3["price"])."</th>
-                                                        </tr>";
+                                                echo "
+													<div class='order-history-details-row group'>
+														<div class='order-history-details-number'>$p.</div>
+														<div class='order-history-details-name'>{$row3['name']}</div>   
+														<div class='order-history-details-price'>{$row3['price']} ₷</div>
+														<div class='order-history-details-qt'>× {$row2['amount']} шт.</div>
+														<div class='order-history-details-total-price'>".($row2['amount'] * $row3['price'])." ₷</div>
+													</div>";
                                             }
                                         }
-                                        print "
-                                                    <tr align='right'>
-                                                        <th>&nbsp;</th>
-                                                        <th colspan='3'>Доставка:</th>
-                                                        <th>".(($row["bill"] > 1500) ? "Бесплатно" : "250.00")."</th>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr align='right'>
-                                                        <th colspan='4'>Всего к оплате:</th>
-                                                        <th>".(($row["bill"] > 1500) ? $row["bill"] : $row["bill"]+250)."</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                        
-                                            </div>";
+                                        echo "
+													<div class='order-history-details-row group'>
+														<div class='order-history-details-number'>&nbsp;</div>
+														<div class='order-history-details-name'>Доставка</div>   
+														<div class='order-history-details-price'>&nbsp;</div>
+														<div class='order-history-details-qt'>&nbsp;</div>
+														<div class='order-history-details-total-price'>".(($row['bill'] > 1500) ? 'Бесплатно' : '250 ₷')."</div>
+													</div>
+												</div>
+											</div>";
                                     }
                                 } else {
 									echo '<p>Вы еще ничего не заказывали</p>';

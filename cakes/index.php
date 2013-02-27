@@ -95,6 +95,15 @@
                             <a href="#" class="menu-name">New-York</a>
                             <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
+                        <?php
+						
+							$query = "SELECT `product_id`, `url`, `name`, `image_thumb`, `price`
+										FROM `products`
+										WHERE `product_id`='1'";
+							$sql = mysql_query($query) or die(mysql_error());
+							$row = mysql_fetch_assoc($sql);
+						
+						?>
                         <li class="menu-item">
                             <div class="menu-photo-holder">
                                 <a href="#"><img class="menu-photo" src="/images/menu/mint.jpg" alt="Чизкейк Мятный"></a>

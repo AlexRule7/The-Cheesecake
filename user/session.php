@@ -58,5 +58,20 @@
 	if (!isset($_SESSION['item_list'])) {
 		$_SESSION['item_list'] = array();
 	}
+	
+	switch ($_SERVER['PHP_SELF']) {
+		case '/index.php':
+			$nav_1 = 'class="selected"';
+			break;
+		case '/about/index.php':
+			$nav_2 = 'class="selected"';
+			break;
+		case '/payments-and-delivery/index.php':
+			$nav_3 = 'class="selected"';
+			break;
+		case '/company/index.php':
+			$nav_4 = 'class="selected"';
+			break;
+	}
 
 ?>

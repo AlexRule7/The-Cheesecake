@@ -48,7 +48,7 @@
                     </form>
 				<?php
 						} else {
-							echo '<script> window.location.replace("/forgot/") </script>';
+							echo '<script> window.location.replace("/profile/forgot/") </script>';
 							exit;
 						}
 					} else {

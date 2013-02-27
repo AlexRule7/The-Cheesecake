@@ -47,7 +47,7 @@
                         </div>
                         <div class="field">
                             <label for="user-pass">Пароль:</label>
-                            <a href="/forgot/" class="label-link">Забыли?</a>
+                            <a href="/profile/forgot/" class="label-link">Забыли?</a>
                             <input class="text-input" type="password" tabindex="2" name="user-pass">
                         </div>
                         <div class="field checkbox-field">
@@ -109,11 +109,11 @@
             <div class="inner">
                 <nav>
                     <ul class="main-navigation">
-                        <li><a class="selected" href="/">Меню</a></li>
-                        <li><a href="/about">О наших чизкейках</a></li>
+                        <li><a <?php echo $nav_1; ?> href="/">Меню</a></li>
+                        <li><a <?php echo $nav_2; ?> href="/about">О наших чизкейках</a></li>
                         <li><a class="logo" href="/"><i class="icn-logo"></i></a></li>
-                        <li><a href="/payments-and-deliveries">Доставка и оплата</a></li>
-                        <li><a href="/company">Компания</a></li>
+                        <li><a <?php echo $nav_3; ?> href="/payments-and-delivery">Доставка и оплата</a></li>
+                        <li><a <?php echo $nav_4; ?> href="/company">Компания</a></li>
                     </ul>
                 </nav>
             </div>

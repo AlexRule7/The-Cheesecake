@@ -41,10 +41,10 @@ if (!empty($_POST['user-email'])) {
 				
 		$to = $user_email;
 		$subject = 'Смена пароля';
-		$message = 'http://'.$_SERVER['HTTP_HOST'].'/forgot/?hash='.$hash;
+		$message = 'http://'.$_SERVER['HTTP_HOST'].'/profile/forgot/?hash='.$hash;
 		$from = 'info@thecheesecake.ru';
 		$headers = 'From:' . $from;
-		mail($to,$subject,$message,$headers);	
+		mail($to,$subject,$message,$headers);
 		
 		echo json_encode('success');
 	} else {

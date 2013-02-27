@@ -208,7 +208,7 @@
                                 </div>
                                 <div class="field">
                                     <label for="user-pass">Пароль:</label>
-                                    <a href="/forgot/" class="label-link">Забыли?</a>
+                                    <a href="/profile/forgot/" class="label-link">Забыли?</a>
                                     <input class="text-input" type="password" name="user-pass">
                                     <span class="caption">Ошибка: пароль введен неверно.</span>
                                 </div>

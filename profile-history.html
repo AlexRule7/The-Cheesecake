@@ -1,0 +1,125 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет | The Moscow Cheesecake</title>
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--<script src="/js/jquery-1.9.1.min.js"></script> NOT FOR PROD -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/jquery.iosslider.min.js"></script>
+    <script src="/js/jquery.ui.styling.js"></script>
+    <script>
+        $(function() {
+            $('.order-history-item').click(function() {
+                $(this).find('.order-history-details').slideToggle();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="site-main-header">
+            <div class="inner">
+                <nav>
+                    <ul class="main-navigation">
+                        <li><a href="/">Меню</a></li>
+                        <li><a href="/about">О наших чизкейках</a></li>
+                        <li><a class="logo" href="/"><i class="icn-logo"></i></a></li>
+                        <li><a href="/payments-and-deliveries">Доставка и оплата</a></li>
+                        <li><a href="/company">Компания</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="content">
+            <div class="inner">
+
+                <!-- User panel -->
+                <section class="user-panel-holder group">
+                    <div class="phone-holder">
+                        <i class="icn-phone"></i>
+                        <h1 class="phone-number" itemprop="telephone"><a href="tel:+74955185456">+7 (495) 518-54-56</a></h1>
+                    </div>
+                    <div class="panel-fix-position">
+                        <ul class="user-panel">
+                            <li class="splitter-next"><a href="#">Личный кабинет</a></li>
+                            <li class="splitter-next"><a class="si-popup-trigger" href="#">Вход</a></li>
+                            <li><a class="su-popup-trigger" href="#">Регистрация</a></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Full item card -->
+                <section class="profile-holder group">
+                    <div class="ver-shadow-splitter"></div>
+                    <div class="grid small-col">
+                        <aside class="progile-nav">
+                            <a href="#" class="profile-nav-link">Личные данные <i class="icn-selected-nav"></i></a>
+                            <a href="#" class="profile-nav-link">Адрес доставки <i class="icn-selected-nav"></i></a>
+                            <a href="#" class="profile-nav-link selected">История заказов <i class="icn-selected-nav"></i></a>
+                            <a href="#" class="profile-nav-link">Скидки и купоны <i class="icn-selected-nav"></i></a>
+                        </aside>
+                    </div>
+                    <div class="grid big-col group">
+                        <div class="big-col centered">
+                            <h2>История заказов</h2>
+                            <div class="hor-splitter"></div>
+                            <div class="order-history-holder">
+                                <div class="order-history-item group">
+                                    <div class="order-history-number">Заказ № 1</div>
+                                    <div class="order-history-date">26.02.2013</div>
+                                    <div class="order-history-sum">Сумма: 2230 ₷</div>
+                                    <div class="order-history-details group">
+                                        <div class="order-history-details-row group">
+                                            <div class="order-history-details-number">1.</div>
+                                            <div class="order-history-details-name">Чизкейк New York</div>   
+                                            <div class="order-history-details-price">990 ₷</div>
+                                            <div class="order-history-details-qt">× 2 шт.</div>
+                                            <div class="order-history-details-total-price">1980 ₷</div>
+                                        </div>
+                                        <div class="order-history-details-row group">
+                                            <div class="order-history-details-number">2.</div>
+                                            <div class="order-history-details-name">Доставка</div>   
+                                            <div class="order-history-details-price">&nbsp;</div>
+                                            <div class="order-history-details-qt">&nbsp;</div>
+                                            <div class="order-history-details-total-price">250 ₷</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-history-item group">
+                                    <div class="order-history-number">Заказ № 2</div>
+                                    <div class="order-history-date">27.02.2013</div>
+                                    <div class="order-history-sum">Сумма: 2230 ₷</div>
+                                    <div class="order-history-details group">
+                                        <div class="order-history-details-row group">
+                                            <div class="order-history-details-number">1.</div>
+                                            <div class="order-history-details-name">Чизкейк New York</div>   
+                                            <div class="order-history-details-price">990 ₷</div>
+                                            <div class="order-history-details-qt">× 2 шт.</div>
+                                            <div class="order-history-details-total-price">1980 ₷</div>
+                                        </div>
+                                        <div class="order-history-details-row group">
+                                            <div class="order-history-details-number">2.</div>
+                                            <div class="order-history-details-name">Доставка</div>   
+                                            <div class="order-history-details-price">&nbsp;</div>
+                                            <div class="order-history-details-qt">&nbsp;</div>
+                                            <div class="order-history-details-total-price">Бесплатно</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- bif-col -->
+                    </div>
+                </section><!-- profile-holder -->
+
+            </div><!-- inner -->
+        </section><!-- content -->
+        <div class="footer-push"></div>
+    </div><!-- wrapper -->
+
+    <footer>© 2011–2013 Moscow Cheesecake</footer>
+</body>
+</html>

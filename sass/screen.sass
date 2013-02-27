@@ -816,6 +816,56 @@ i
     position: absolute
     top: 19px
     right: 25px
+.order-history-holder
+    font-size: 1.3em
+    margin: 15px 0
+.order-history-item
+    background: white
+    padding: 10px
+    +border-radius
+    border: solid 1px $border-color
+    cursor: pointer
+    &:hover
+        +box-shadow(rgba(black,.15) 0 1px 2px 0)
+.order-history-item
+    margin: 5px 0
+.order-history-number
+    float: left
+    width: 30%
+.order-history-date
+    float: left
+    width: 40%
+.order-history-sum
+    text-align: right
+    float: left
+    width: 30%
+.order-history-details
+    display: none
+    margin-top: 25px
+    padding-top: 5px
+    border-top: solid 1px $border-color
+    div
+        +box-sizing($bs)
+        float: left
+        padding: 2px
+.order-history-details-row
+    float: none
+    width: 100%
+.order-history-details-number
+    color: $sub-dark-color
+    text-align: center
+    width: 5%
+.order-history-details-name
+    width: 50%
+.order-history-details-qt
+    width: 10%
+.order-history-details-price
+    text-align: right
+    width: 15%
+.order-history-details-total-price
+    text-align: right
+    width: 20%
+
 
 
 // Fix

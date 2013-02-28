@@ -51,6 +51,7 @@ if (!isset($_SESSION['user_id'])) {
 						`name`='{$user_name}',
 						`email`='{$user_email}',
 						`password`='{$user_pass}',
+						`discount_5`='1',
 						`salt`='{$salt}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
@@ -156,6 +157,26 @@ foreach ($_SESSION['item_list'] as $key => $val) {
 					
 	$sql = mysql_query($query) or die(mysql_error());
 }
+
+// MAIL
+
+$mail_data = array (
+	'user_name' => $user_name,
+	'order_id' => $order_id,
+	'item_list' => $item_list,
+	'order_bill' => $order_bill
+);
+
+$to = $user_email;
+$subject = 'Информация о заказе № '.$order_id;
+$message = mail_order($mail_data);
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
+$headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
+$headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
+mail($to,$subject,$message,$headers);
+
+// END OF MAIL
 
 unset ($_SESSION['item_total']);
 unset ($_SESSION['item_list']);

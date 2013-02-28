@@ -29,6 +29,7 @@ if (!empty($_POST))
 						`name`='{$name}',
 						`email`='{$email}',
 						`password`='{$password}',
+						`discount_5`='1',
 						`salt`='{$salt}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());

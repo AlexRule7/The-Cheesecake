@@ -9,16 +9,34 @@
 
 include($_SERVER['DOCUMENT_ROOT'].'/Connections/exarium.php');
 
-$user_phone = '+7(111)111-11-11';
-preg_match('/\d-\d+-\d+$/', $user_phone, $match);
-$pass = str_replace('-', '', $match[0]);
-$salt = GenerateSalt();
-$user_pass = md5(md5($pass) . $salt);
 
-echo "salt = $salt<br>pass = $pass<br>hash = $user_pass";
+$order_id = 10;
+$user_name = 'Денис';
+$item_list = array (
+	'id' => '3',
+	'qty' => '2'
+);
+$order_bill = 1240;
+$user_email = 'denjer@mail.ru';
+//$to = 'alexrule7@gmail.com';
+$mail_data = array (
+	'user_name' => $user_name,
+	'order_id' => $order_id,
+	'item_list' => $item_list,
+	'order_bill' => $order_bill
+);
+
+
+$to = $user_email;
+$subject = 'Информация о заказе № '.$order_id;
+$message = mail_order($mail_data);
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
+$headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
+$headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
+echo mail($to,$subject,$message,$headers);
+
 
 ?>
 
-<body>
-</body>
 </html>

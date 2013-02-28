@@ -18,7 +18,6 @@
             $('.main-slider-container').iosSlider({
                 snapToChildren: true,
                 snapSlideCenter: true,
-                keyboardControls: true,
                 responsiveSlides: false,
                 navPrevSelector: $(".prev-slide"),
                 navNextSelector: $(".next-slide"),

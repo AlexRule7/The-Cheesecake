@@ -208,8 +208,8 @@ jQuery(document).ready(function($){
 	};
 	// Disable e-mail and name fields if user is logged in
 	if ($('.half-col:first input[name=user-email]').val() != '' && !$('#profile-tabs').length) {
-		$('.half-col:first input[name=user-name]').prop('disabled', true);
-		$('.half-col:first input[name=user-email]').prop('disabled', true);
+		$('.half-col:first input[name=user-name]').addClass('disabled');
+		$('.half-col:first input[name=user-email]').addClass('disabled');
     }
 	// Address select and field disable
 	if ($('#order select[name=user-address]').length) {

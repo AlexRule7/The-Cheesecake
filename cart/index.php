@@ -70,6 +70,17 @@
 										$bill += $total_price;
 									}
 								}
+								
+								if ($row['discount_5'] > 0 || $row['discount_10'] > 0) {
+									echo "
+										<div class='discount-holder'>
+											<h3>Выберите одну из  ваших скидок:</h3>";
+									echo ($row['discount_5'] > 0) ? '<i class="icn-discount-5 discount-btn selected"></i>' : '';
+									echo ($row['discount_10'] > 0 && $row['discount_5'] == 0) ? '<i class="icn-discount-10 discount-btn selected"></i>' : '';
+									echo ($row['discount_10'] > 0 && $row['discount_5'] > 0) ? '<i class="icn-discount-10 discount-btn"></i>' : '';
+									echo "
+										</div>";
+								}
 							?>
                             <div class="main-cart-sub-total">
                                 <span class="sub-dark-color">Товаров в корзине на:</span><span class="final-sum sub-dark-color">

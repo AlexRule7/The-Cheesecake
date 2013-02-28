@@ -79,7 +79,7 @@
                                 <a href="<?php echo $product_id; ?>" class="big-btn red-btn add-to-cart"><span class="in-btn-price"><?php echo $row['price']; ?> ₷</span><span class="in-btn-text">В корзину</span></a>
                             </div>
                             <div class="grid medium-col">
-                                <small class="bold"><a href="/">Закажите еще 2 чизкейка</a>, и мы доставим их бесплатно!</small>
+                                <small class="bold teaser">Закажите 2 чизкейка, и мы доставим их бесплатно!</small>
                             </div>
                         </div>
                     </article>
@@ -88,50 +88,32 @@
                 <!-- Menu -->
                 <section class="menu-container">
                     <ul class="menu-list group">
-                        <li class="menu-item">
+                        <li class="menu-item info-block">
                             <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/new-york.jpg" alt="Чизкейк New-York"></a>
+                                <img class="menu-photo" src="/images/menu/best-seller.jpg" alt="При заказе 2 чизкейков доставка бесплатна">
                             </div>
-                            <a href="#" class="menu-name">New-York</a>
-                            <a href="#" class="small-btn red-btn">В корзину</a>
                         </li>
                         <?php
 						
-							$query = "SELECT `product_id`, `url`, `name`, `image_thumb`, `price`
+							$query = "SELECT `product_id`, `url`, `name`, `image_thumb`
 										FROM `products`
-										WHERE `product_id`='1'";
+										WHERE `product_id`='1'
+											OR `product_id`='2'
+											OR `product_id`='5'
+											OR `product_id`='6'";
 							$sql = mysql_query($query) or die(mysql_error());
-							$row = mysql_fetch_assoc($sql);
+							while ($row = mysql_fetch_assoc($sql)) {
+								echo "
+									<li class='menu-item'>
+										<div class='menu-photo-holder'>
+											<a href='{$row['url']}'><img class='menu-photo' src='{$row['image_thumb']}' alt='{$row['name']}'></a>
+										</div>
+										<a href='{$row['url']}' class='menu-name'>{$row['name']}</a>
+										<a href='{$row['product_id']}' class='small-btn red-btn add-to-cart'>В корзину</a>
+									</li>";
+							}
 						
 						?>
-                        <li class="menu-item">
-                            <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/mint.jpg" alt="Чизкейк Мятный"></a>
-                            </div>
-                            <a href="#" class="menu-name">Мятный</a>
-                            <a href="#" class="small-btn red-btn">В корзину</a>
-                        </li>
-                        <li class="menu-item">
-                            <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/lime.jpg" alt="Чизкейк Лаймовый"></a>
-                            </div>
-                            <a href="#" class="menu-name">Лаймовый</a>
-                            <a href="#" class="small-btn red-btn">В корзину</a>
-                        </li>
-                        <li class="menu-item">
-                            <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/peanuts.jpg" alt="Чизкейк Арахисовый"></a>
-                            </div>
-                            <a href="#" class="menu-name">Арахисовый</a>
-                            <a href="#" class="small-btn red-btn">В корзину</a>
-                        </li>
-                        <li class="menu-item">
-                            <div class="menu-photo-holder">
-                                <a href="#"><img class="menu-photo" src="/images/menu/raspberry.jpg" alt="Чизкейк Малиновый"></a>
-                            </div>
-                            <a href="#" class="menu-name">Малиновый</a>
-                            <a href="#" class="small-btn red-btn">В корзину</a>
-                        </li>
                     </ul>
                 </section>
                 

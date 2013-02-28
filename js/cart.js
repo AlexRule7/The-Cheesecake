@@ -70,7 +70,8 @@ jQuery(document).ready(function($){
 			}
         });
 		
-		
+		$('.mini-cart-item-qt').trigger('change');
+				
 		e.preventDefault();
     });
 	// Change item qty in mini-cart
@@ -101,6 +102,20 @@ jQuery(document).ready(function($){
 		$.each(qty, function(index) {
 			item_total += Number(qty[index]);
 		});
+		
+		if (item_total == 0) {
+			$('.teaser').text('Закажите 2 чизкейка, и мы доставим их бесплатно!');
+		} else if (item_total == 1) {
+			$('.teaser').text('Закажите еще 1 чизкейк, и мы доставим их бесплатно!');
+		} else if (item_total == 2) {
+			$('.teaser').text('Закажите еще 1 чизкейк, и получите скидку 5% на следующий заказ!');
+		} else if (item_total == 3) {
+			$('.teaser').text('Закажите еще 2 чизкейка, и получите скидку 10% на следующий заказ!');
+		} else if (item_total == 4) {
+			$('.teaser').text('Закажите еще 1 чизкейк, и получите скидку 10% на следующий заказ!');
+		} else {
+			$('.teaser').text('');
+		}
 		
 		if ($('.main-cart-holder').length) {
 			var q = $(this).val();

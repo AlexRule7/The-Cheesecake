@@ -94,6 +94,12 @@ jQuery(document).ready(function($){
         }
     });
 	
+    // Select discount badge
+    $('.discount-btn').click(function(){
+        $('.discount-btn').removeClass('selected');
+        $(this).addClass('selected');
+    });
+
 	$('.order-history-item').click(function() {
 	  $(this).find('.order-history-details').slideToggle();
 	});

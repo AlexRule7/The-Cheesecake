@@ -1,6 +1,6 @@
 <?php include($_SERVER['DOCUMENT_ROOT'].'/user/session.php');
 
-	if (!isset($_SESSION['user_id'])) {
+	if (!isset($_SESSION['order_id'])) {
 		header('Location: ../');
 	}
 
@@ -20,10 +20,29 @@
                     <div class="hor-splitter"></div>
                     <p class="bold">Мы получили ваш заказ и присвоили ему номер: <?php echo $_SESSION['order_id']; ?>.</p>
                     <p>В ближайшее время наш оператор свяжется с вами. <br />Спасибо, что выбрали наши чизкейки.</p>
-                    <p>Для того, чтобы вам не пришлось вводить адрес доставки в следующий раз, мы сохранили его в вашем личном кабинете. Пароль от него — <span class="bold">5 последних цифр вашего телефонного номера</span>. Вы всегда можете его <a href="#">изменить в личном кабинете.</a></p>
+                    <?php if (isset($_SESSION['new_user_discount']) || isset($_SESSION['new_user'])) { ?>
+                    <p>Вы только что оформили свой <span class="bold">первый заказ</span>, и за это <span class="bold">мы дарим вам скидку 5%</span> на следующий!</p>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['new_discount'])) { ?>
+                    <p>Вы только что оформили <span class="bold">заказ на <?php echo $_SESSION['item_total']; ?> чизкейк<?php echo ($_SESSION['item_total'] >= 5 ? 'ов' : 'а'); ?></span>, и за это <span class="bold">мы дарим вам скидку <?php echo $_SESSION['new_discount']; ?>%</span> на следующий!</p>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['new_user'])) { ?>
+                    <p>Для того, чтобы вам не пришлось вводить адрес доставки в следующий раз, мы сохранили его в вашем личном кабинете. Пароль от него — <span class="bold">5 последних цифр вашего телефонного номера</span>. Вы всегда можете его <a href="/profile/">изменить в личном кабинете.</a></p>
+                    <?php } ?>
                 </section><!-- result-holder-->
 
             </div><!-- inner -->
         </section><!-- content -->
 
-	<?php include($_SERVER['DOCUMENT_ROOT'].'/include/footer.php'); ?>
+	<?php
+		
+		unset ($_SESSION['item_total']);
+		unset ($_SESSION['item_list']);
+		unset ($_SESSION['order_id']);
+		unset ($_SESSION['new_user_discount']);
+		unset ($_SESSION['new_discount']);
+		unset ($_SESSION['new_user']);
+    
+		include($_SERVER['DOCUMENT_ROOT'].'/include/footer.php');
+	
+	?>

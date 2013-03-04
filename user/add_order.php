@@ -51,11 +51,20 @@ if (!isset($_SESSION['user_id'])) {
 						`name`='{$user_name}',
 						`email`='{$user_email}',
 						`password`='{$user_pass}',
-						`discount_5`='1',
 						`salt`='{$salt}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
 		$_SESSION['user_id'] = mysql_insert_id();
+		$_SESSION['new_user'] = true;
+		
+		$query = "INSERT
+					INTO `discounts`
+					SET
+						`user_id`='{$_SESSION['user_id']}',
+						`discount`='5',
+						`value`='1'";
+						
+		$sql = mysql_query($query) or die(mysql_error());
 		
 		$query = "INSERT
 					INTO `phones`
@@ -83,6 +92,23 @@ if (!isset($_SESSION['user_id'])) {
 						
 		$sql = mysql_query($query) or die(mysql_error());
 		$address_id = mysql_insert_id();
+		
+		// MAIL
+		
+		$mail_data = array (
+			'file' => 'register',
+			'user_name' => $user_name
+		);
+		
+		$subject = 'Добро пожаловать, '.$user_name;
+		$message = send_mail($mail_data);
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
+		$headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
+		$headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
+		mail($user_email, $subject, $message, $headers);
+		
+		// END OF MAIL
 	} else {
 		$error = array (
 			'id' => '1',
@@ -133,6 +159,24 @@ if (!isset($_SESSION['user_id'])) {
 	}
 }
 
+$query = "SELECT 1
+			FROM `orders`
+			WHERE `user_id` = '{$_SESSION['user_id']}'";
+			
+$sql = mysql_query($query) or die(mysql_error());
+
+if (!mysql_num_rows($sql)) {
+	$query = "INSERT
+				INTO `discounts`
+				SET
+					`user_id`='{$_SESSION['user_id']}',
+					`discount`='5',
+					`value`='1'";
+					
+	$sql = mysql_query($query) or die(mysql_error());
+	$_SESSION['new_user_discount'] = 5;
+}
+
 $query = "INSERT
 			INTO `orders`
 			SET
@@ -146,6 +190,7 @@ $query = "INSERT
 				
 $sql = mysql_query($query) or die(mysql_error());
 $order_id = mysql_insert_id();
+$_SESSION['order_id'] = $order_id;
 
 foreach ($_SESSION['item_list'] as $key => $val) {
 	$query = "INSERT
@@ -158,29 +203,61 @@ foreach ($_SESSION['item_list'] as $key => $val) {
 	$sql = mysql_query($query) or die(mysql_error());
 }
 
+if ($_SESSION['item_total'] >= 3) {
+	$new_discount = 5;
+	if ($_SESSION['item_total'] >= 5) {
+		$new_discount = 10;
+	}
+	$query = "SELECT `discount_id`, `discount`
+				FROM `discounts`
+				WHERE `user_id` = '{$_SESSION['user_id']}'";
+				
+	$sql = mysql_query($query) or die(mysql_error());
+	
+	if (mysql_num_rows($sql)) {
+		while ($row = mysql_fetch_assoc($sql)) {
+			if ($row['discount'] == $new_discount) {
+				$query = "UPDATE `discounts`
+							SET `value`=value+1
+							WHERE `discount_id` = '{$row['discount_id']}'";
+				$sql = mysql_query($query) or die(mysql_error());
+				$created = 1;
+			}
+		}
+	}
+	if ($created != 1) {
+		$query = "INSERT
+					INTO `discounts`
+					SET
+						`user_id`='{$_SESSION['user_id']}',
+						`discount`='{$new_discount}',
+						`value`='1'";
+						
+		$sql = mysql_query($query) or die(mysql_error());
+	}
+	
+	$_SESSION['new_discount'] = $new_discount;
+}
+
 // MAIL
 
 $mail_data = array (
+	'file' => 'order',
 	'user_name' => $user_name,
 	'order_id' => $order_id,
 	'item_list' => $item_list,
 	'order_bill' => $order_bill
 );
 
-$to = $user_email;
 $subject = 'Информация о заказе № '.$order_id;
-$message = mail_order($mail_data);
+$message = send_mail($mail_data);
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
 $headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
 $headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
-mail($to,$subject,$message,$headers);
+mail($user_email, $subject, $message, $headers);
 
 // END OF MAIL
-
-unset ($_SESSION['item_total']);
-unset ($_SESSION['item_list']);
-$_SESSION['order_id'] = $order_id;
 
 $error = array (
 	'id' => '0',

@@ -27,7 +27,7 @@
 	
 	if (isset($_SESSION['user_id']))
 	{
-		$query = "SELECT `name`, `email`, `discount_5`, `discount_10`
+		$query = "SELECT `name`, `email`
 					FROM `users`
 					WHERE `user_id` = '{$_SESSION['user_id']}'
 					LIMIT 1";

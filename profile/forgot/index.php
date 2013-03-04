@@ -1,7 +1,7 @@
 <?php include($_SERVER['DOCUMENT_ROOT'].'/user/session.php');
 
 	if (isset($_SESSION['user_id'])) {
-		header('Location: ../profile/');
+		header('Location: ../../profile/');
 	}
 
 ?>
@@ -44,7 +44,7 @@
                             <a href="#" class="small-btn blue-btn">Сохранить</a>
                             <span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
                         </div>
-                        <p class="forgot-success hidden">Поздравляем, Вы только что сменили пароль!</p>
+                        <p class="forgot-success hidden">Поздравляем, Вы только что сменили пароль! Теперь можете <a class="si-popup-trigger" href="#">войти</a>, используя его.</p>
                     </form>
 				<?php
 						} else {

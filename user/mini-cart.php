@@ -1,4 +1,4 @@
-                        <li class="mini-cart"><a href="#"><i class="icn-cart"></i>Корзина: <?php echo $_SESSION['item_total']; ?></a></li>
+                        <li class="mini-cart"><a href="#"><i class="icn-cart"></i>Корзина: <?php echo ($_SERVER['PHP_SELF'] == '/cart/complete/index.php' ? '0' : $_SESSION['item_total']); ?></a></li>
                         </ul>
                         <section class="mini-cart-container empty-cart">
                             <div class="mini-cart-arrow"></div>

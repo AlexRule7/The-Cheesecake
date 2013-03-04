@@ -10,25 +10,26 @@ header('Content-type: application/json');
 if (!empty($_POST['user-email'])) {
 	$user_email = (!empty($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
 	
-	$query = "SELECT `user_id`
+	$query = "SELECT `user_id`, `name`
 				FROM `users`
 				WHERE `email` = '{$user_email}'";
 	$sql = mysql_query($query) or die(mysql_error());
 	
 	if (mysql_num_rows($sql)) {
 		$row = mysql_fetch_assoc($sql);
+		$user_name = $row['name'];
 		$hash = uniqid();
 		
-		$query2 = "SELECT `change_id`
+		$query = "SELECT `change_id`
 					FROM `password_change`
 					WHERE `user_id`='{$row['user_id']}'";
-		$sql2 = mysql_query($query2) or die(mysql_error());
+		$sql = mysql_query($query) or die(mysql_error());
 		
-		if (mysql_num_rows($sql2)) {
-			$query3 = "DELETE
+		if (mysql_num_rows($sql)) {
+			$query = "DELETE
 						FROM `password_change`
 						WHERE `user_id`='{$row['user_id']}'";
-			$sql3 = mysql_query($query3) or die(mysql_error());
+			$sql = mysql_query($query) or die(mysql_error());
 		}
 		
 		$query = "INSERT
@@ -38,13 +39,24 @@ if (!empty($_POST['user-email'])) {
 						`hash`='{$hash}'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
-				
-		$to = $user_email;
+		
+		// MAIL
+		
+		$mail_data = array (
+			'file' => 'forgot',
+			'user_name' => $user_name,
+			'url_hash' => $hash
+		);
+		
 		$subject = 'Смена пароля';
-		$message = 'http://'.$_SERVER['HTTP_HOST'].'/profile/forgot/?hash='.$hash;
-		$from = 'info@thecheesecake.ru';
-		$headers = 'From:' . $from;
-		mail($to,$subject,$message,$headers);
+		$message = send_mail($mail_data);
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
+		$headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
+		$headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
+		mail($user_email, $subject, $message, $headers);
+		
+		// END OF MAIL
 		
 		echo json_encode('success');
 	} else {

@@ -7,14 +7,12 @@ function addItem(id, qty) {
 	} else {
 		data = 'id='+ id+ '&qty='+ qty;
 	}
-	
 	$.ajax({
 		type: 'POST',
 		url: '/user/add_item.php',
 		data: data,
 		cache: false,
 		dataType: 'json',
-		async: false,
 		success: function(data) {
 			$('.mini-cart a').html('<i class="icn-cart"></i>Корзина: '+ data);
 		}
@@ -36,7 +34,6 @@ jQuery(document).ready(function($){
 				url: '/user/get_cart.php',
 				cache: false,
 				dataType: 'html',
-				async: false,
 				success: function(data) {
 					$('.mini-cart-container').html(data);
 					if ($('.empty-cart-message').length) {
@@ -62,16 +59,17 @@ jQuery(document).ready(function($){
 		
 		id = $(this).attr("href");
 		addItem(id, 1);
-		$('.mini-cart').trigger('click');
 		
-		$('.mini-cart-item-id').each(function(index, element) {
-            if (element.value == id) {
-				$(this).next().focus();
-			}
-        });
+		$('.mini-cart').trigger('click').done(function() {
+			$('.mini-cart-item-qt').trigger('change');
+			$('.mini-cart-item-id').each(function(index, element) {
+				if (element.value == id) {
+					$(this).next().focus();
+				}
+			});
+		});
 		
-		$('.mini-cart-item-qt').trigger('change');
-				
+			
 		e.preventDefault();
     });
 	// Change item qty in mini-cart
@@ -120,8 +118,18 @@ jQuery(document).ready(function($){
 		if ($('.main-cart-holder').length) {
 			var q = $(this).val();
 			var p = $(this).closest('.main-cart-item').find('.mini-cart-item-price').val();
+			if (bill > 1500) {
+				var sum = bill;
+				var delivery = 'Бесплатно';
+			} else {
+				var sum = bill + 250;
+				var delivery = '250 ₷';
+			}
 			$(this).closest('.main-cart-item').find('.main-cart-item-price').text((p*q)+ ' ₷');
-			$('.final-sum').text(bill+ ' ₷');
+			$('.main-cart-sub-total .final-sum:first').text(bill+ ' ₷');
+			$('.main-cart-sub-total .final-sum:eq(1)').text(delivery);
+			$('.total-price .final-sum').text(sum+ ' ₷')
+			$('.discount-btn.selected').trigger('click');
 		} else {
 			$('.mini-cart a').html('<i class="icn-cart"></i>Корзина: '+ item_total);
 			$('.mini-cart-btn .in-btn-price').text(bill+ ' ₷');

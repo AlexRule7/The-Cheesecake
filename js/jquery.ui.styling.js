@@ -58,8 +58,10 @@ jQuery(document).ready(function($){
         closePopup();
     });
 	
+	// Hide AJAX spinner
 	$('.spinner').hide();
 
+	// Show spinner when AJAX is in progress
 	$(document)
 		.ajaxStart(function(){
 			$('.spinner').fadeIn('fast');
@@ -69,6 +71,7 @@ jQuery(document).ready(function($){
 		})
 	;
 	
+	// User logout
 	$('#logout').click(function(e) {
         $.get('/user/logout.php', function() {
 			location.reload();
@@ -96,14 +99,32 @@ jQuery(document).ready(function($){
 	
     // Select discount badge
     $('.discount-btn').click(function(){
-        $('.discount-btn').removeClass('selected');
-        $(this).addClass('selected');
+		if ($('.final-sum:first').text().match(/\d+/) > 1500) {
+			var sum = $('.final-sum:first').text().match(/\d+/);
+		} else {
+			var sum = Number($('.final-sum:first').text().match(/\d+/), 10)+250;
+		}
+		var discount = $(this).prop('class').match(/\d+/);
+		if ($(this).hasClass('selected')) {
+			$('.discount-btn').removeClass('selected');
+			$('#order input[name=discount]').val('');
+			$('.discount-value').text('0 ₷');
+			$('.total-price .final-sum').text(sum+' ₷');
+		} else {
+			$('.discount-btn').removeClass('selected');
+			$(this).addClass('selected');
+			$('#order input[name=discount]').val(discount);
+			$('.discount-value').text(Math.ceil(sum-(sum*('0.'+(100-discount))))+' ₷');
+			$('.total-price .final-sum').text(Math.floor(sum*('0.'+(100-discount)))+' ₷');
+		}
     });
 
+	// Expand/Collapse order info
 	$('.order-history-item').click(function() {
 	  $(this).find('.order-history-details').slideToggle();
 	});
 
+	// Poll text behaviour
 	$('.questions-part :radio').change(function(e) {
 		if ($('.questions-part :radio:checked').length == 1) {
 			$('.answers').text('Спасибо за ответ. Пожалуйста, ответьте на оставшиеся 2 вопроса.');
@@ -118,6 +139,7 @@ jQuery(document).ready(function($){
 		}
 	});
 	
+	// Poll submit
 	$('body').on('click', '#poll_submit', function(e) {
 		var serial = $('#poll').serialize();
 		$.ajax({

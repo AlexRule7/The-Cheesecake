@@ -46,11 +46,11 @@ function GenerateSalt($n=3)
 	return $key;
 }
 
-function mail_order(array $vars) {
+function send_mail(array $vars) {
 	extract($vars);
 	
 	ob_start();
-	include($_SERVER['DOCUMENT_ROOT'].'/mail/mail_order.php');
+	include($_SERVER['DOCUMENT_ROOT'].'/mail/mail_'.$file.'.php');
 	return ob_get_clean();
 }
 ?>

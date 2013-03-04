@@ -71,29 +71,43 @@
 									}
 								}
 								
-								if ($row['discount_5'] > 0 || $row['discount_10'] > 0) {
+								$query4 = "SELECT `discount`
+											FROM `discounts`
+											WHERE `user_id`='{$_SESSION['user_id']}'";
+								$sql4 = mysql_query($query4) or die(mysql_error());
+								if (mysql_num_rows($sql4)) {
 									echo "
 										<div class='discount-holder'>
 											<h3>Выберите одну из  ваших скидок:</h3>";
-									echo ($row['discount_5'] > 0) ? '<i class="icn-discount-5 discount-btn selected"></i>' : '';
-									echo ($row['discount_10'] > 0 && $row['discount_5'] == 0) ? '<i class="icn-discount-10 discount-btn selected"></i>' : '';
-									echo ($row['discount_10'] > 0 && $row['discount_5'] > 0) ? '<i class="icn-discount-10 discount-btn"></i>' : '';
+										while ($row4 = mysql_fetch_assoc($sql4)) {
+											echo "<i class='icn-discount-{$row4['discount']} discount-btn'></i>";
+										}
 									echo "
 										</div>";
 								}
 							?>
                             <div class="main-cart-sub-total">
-                                <span class="sub-dark-color">Товаров в корзине на:</span><span class="final-sum sub-dark-color">
-								<?php echo $bill; ?> ₷</span><br />
-                                <span class="sub-dark-color">Доставка по Москве:</span><span class="final-sum sub-dark-color">
-								<?php echo ($bill > 1500 ? 'Бесплатно' : '250 ₷'); ?></span>
+                                <span class="sub-dark-color">Товаров в корзине на:</span>
+                                <span class="final-sum sub-dark-color"><?php echo $bill; ?> ₷</span><br />
+                                <span class="sub-dark-color">Доставка по Москве:</span>
+                                <span class="final-sum sub-dark-color"><?php echo ($bill > 1500 ? 'Бесплатно' : '250 ₷'); ?></span>
                                 <div class="hor-splitter"></div>
+                                <?php
+									
+									if (mysql_num_rows($sql4)) {
+										echo "
+											<span class='sub-dark-color'>Скидка:</span>
+											<span class='final-sum sub-dark-color discount-value'>0 ₷</span>";
+									}
+									
+								?>
                                 <div class="total-price">Итого к оплате: <span class="final-sum">
 								<?php echo ($bill > 1500 ? $bill.' ₷' : ($bill+250).' ₷'); ?></span></div>
                             </div>
                         </div><!-- text-content-inner  -->
                     </div><!-- main-cart -->
                     <form id="order">
+                    	<input type="hidden" name="discount">
                         <div class="grid half-col multi-form wo-reg">
                             <div class="big-col">
                                 <h2>Личные данные</h2>

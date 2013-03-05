@@ -264,19 +264,19 @@
 											}
 										}
 									?>
-                                    <p><center>
-                                    	<i class='icn-discount-5 discount-btn <?php echo $discount_5; ?>'>
+                                    <p>
+                                    	<i class='icn-discount-5 discount-btn discount-profile <?php echo $discount_5; ?>'>
                                         <span class="discount-qt"><?php echo $discount_5_value; ?></span></i>
-                                    </center></p>
+                                    </p>
                                     <p>Скидка 5% дается каждому зарегистрированному пользователю:</p>
                                     <p>1. После оформления первого заказа;</p>
                                     <p>2. При заказе от 3 чизкейков на следующий заказ.</p>
                                 </div>
                                 <div class="grid half-col">
-                                    <p><center>
-                                    	<i class='icn-discount-10 discount-btn <?php echo $discount_10; ?>'>
+                                    <p>
+                                    	<i class='icn-discount-10 discount-btn discount-profile <?php echo $discount_10; ?>'>
                                         <span class="discount-qt"><?php echo $discount_10_value; ?></span></i>
-                                    </center></p>
+                                    </p>
                                     <p>Скидка 10% дается каждому зарегистрированному пользователю при заказе от 5 чизкейков на следующий заказ.</p>
                                 </div>
                         </div><!-- half-col -->

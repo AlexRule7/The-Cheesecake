@@ -778,12 +778,28 @@ i
         min-height: 0
         margin: 0 0 10px 15px
 .discount-btn
+    position: relative
     +opacity(.25)
     cursor: pointer
     &:hover
         +opacity(.45)
     &.selected
         +opacity(100)
+    &.discount-profile
+        cursor: default
+        +opacity(.45)
+.discount-qt
+    font-size: 1em
+    font-weight: bold
+    color: $main-light-color
+    background: $main-link-color
+    display: block
+    padding: 0px 6px
+    +border-radius(10px)
+    +box-shadow(white 0 0 0 2px, rgba(black,.5) 0 1px 2px 2px)
+    position: absolute
+    top: 5px
+    right: 5px
 
 
 // Result card

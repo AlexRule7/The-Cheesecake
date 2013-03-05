@@ -329,7 +329,10 @@ $(document).ready(function(){
 		jVal.house(that);
 		jVal.date(that);
 		if(!jVal.errors) {
-			var serial = $('#order').serialize()+ '&order-bill='+ parseInt($('.final-sum').text(), 10);
+			var order_raw_bill = '&order-raw-bill='+ parseInt($('.main-cart-sub-total .final-sum:first').text(), 10);
+			var order_delivery = '&order-delivery='+ (parseInt($('.main-cart-sub-total .final-sum:eq(1)').text(), 10) || '');
+			var order_bill = '&order-bill='+ parseInt($('.main-cart-sub-total .total-price .final-sum').text(), 10);
+			var serial = $('#order').serialize() + order_raw_bill + order_delivery + order_bill;
 			$.ajax({
 				type: 'POST',
 				url: '/user/add_order.php',

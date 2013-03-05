@@ -169,7 +169,7 @@
                             <div class="hor-splitter"></div>
                             <div class="order-history-holder">
                         	<?php
-                                $query = "SELECT `order_id`, `order_date`, `delivery_date`, `delivery_time`, `bill`, `comment`
+                                $query = "SELECT `order_id`, `order_date`, `delivery_date`, `delivery_time`, `bill`, `delivery`, `comment`
                                             FROM `orders`
                                             WHERE `user_id` = '{$_SESSION['user_id']}'
                                             ORDER BY `order_date` DESC";
@@ -185,7 +185,7 @@
 											<div class='order-history-item group'>
 												<div class='order-history-number'>Заказ № {$row['order_id']}</div>
 												<div class='order-history-date'>{$row['delivery_date']}</div>
-												<div class='order-history-sum'>Сумма: ".(($row['bill'] > 1500) ? $row['bill'] : $row['bill']+250)." ₷</div>
+												<div class='order-history-sum'>Сумма: {$row['bill']} ₷</div>
 												<div class='order-history-details group'>";
                                                 
                                         $query2 = "SELECT `product_id`, `amount`
@@ -224,7 +224,7 @@
 														<div class='order-history-details-name'>Доставка</div>   
 														<div class='order-history-details-price'>&nbsp;</div>
 														<div class='order-history-details-qt'>&nbsp;</div>
-														<div class='order-history-details-total-price'>".(($row['bill'] > 1500) ? 'Бесплатно' : '250 ₷')."</div>
+														<div class='order-history-details-total-price'>".((empty($row['delivery'])) ? 'Бесплатно' : $row['delivery'].' ₷')."</div>
 													</div>
 												</div>
 											</div>";
@@ -235,9 +235,50 @@
 							?>
                             </div>
                         </div><!-- half-col -->
-                        <div class="half-col centered tab" id="tabs-4">
+                        <div class="big-col centered tab" id="tabs-4">
                             <h2>Ваши скидки и купоны</h2>
                             <div class="hor-splitter"></div>
+                                <div class="grid half-col">
+									<?php
+									
+										$discount_5 = '';
+										$discount_5_value = 0;
+										$discount_10 = '';
+										$discount_10_value = 0;
+									
+                                        $query = "SELECT *
+                                                    FROM `discounts`
+                                                    WHERE `user_id` = '{$_SESSION['user_id']}'";
+                                                        
+                                        $sql = mysql_query($query) or die(mysql_error());
+										
+										if (mysql_num_rows($sql)) {
+											while ($row = mysql_fetch_assoc($sql)) {
+												if ($row['discount'] == 5) {
+													$discount_5 = 'selected';
+													$discount_5_value = $row['value'];
+												} else if ($row['discount'] == 10) {
+													$discount_10 = 'selected';
+													$discount_10_value = $row['value'];
+												}
+											}
+										}
+									?>
+                                    <p><center>
+                                    	<i class='icn-discount-5 discount-btn <?php echo $discount_5; ?>'>
+                                        <span class="discount-qt"><?php echo $discount_5_value; ?></span></i>
+                                    </center></p>
+                                    <p>Скидка 5% дается каждому зарегистрированному пользователю:</p>
+                                    <p>1. После оформления первого заказа;</p>
+                                    <p>2. При заказе от 3 чизкейков на следующий заказ.</p>
+                                </div>
+                                <div class="grid half-col">
+                                    <p><center>
+                                    	<i class='icn-discount-10 discount-btn <?php echo $discount_10; ?>'>
+                                        <span class="discount-qt"><?php echo $discount_10_value; ?></span></i>
+                                    </center></p>
+                                    <p>Скидка 10% дается каждому зарегистрированному пользователю при заказе от 5 чизкейков на следующий заказ.</p>
+                                </div>
                         </div><!-- half-col -->
                     </div>
                 </div>

@@ -128,3 +128,8 @@
 .hidden {
 	display: none;
 }
+
+.spinner_qty_change {
+	margin-top: 30px;
+	display: inline-block;
+}

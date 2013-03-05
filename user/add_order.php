@@ -29,7 +29,10 @@ if (isset($_POST['user-office'])) {
 $order_comment = (isset($_POST['order-comment'])) ? sanitize($_POST['order-comment']) : '';
 $order_time = (isset($_POST['order-time'])) ? sanitize($_POST['order-time']) : '';
 $order_date = (isset($_POST['order-date'])) ? sanitize($_POST['order-date']) : '';
+$order_discount = (isset($_POST['order-discount'])) ? sanitize($_POST['order-discount']) : '';
+$order_raw_bill = (isset($_POST['order-raw-bill'])) ? sanitize($_POST['order-raw-bill']) : '';
 $order_bill = (isset($_POST['order-bill'])) ? sanitize($_POST['order-bill']) : '';
+$order_delivery = (isset($_POST['order-delivery'])) ? sanitize($_POST['order-delivery']) : '';
 
 $order_date = date('d.m.Y', strtotime($order_date));
 
@@ -185,22 +188,48 @@ $query = "INSERT
 				`address_id`='{$address_id}',
 				`delivery_date`='{$order_date}',
 				`delivery_time`='{$order_time}',
+				`discount`='{$order_discount}',
+				`raw_bill`='{$order_raw_bill}',
 				`bill`='{$order_bill}',
+				`delivery`='{$order_delivery}',
 				`comment`='{$order_comment}'";
 				
 $sql = mysql_query($query) or die(mysql_error());
 $order_id = mysql_insert_id();
 $_SESSION['order_id'] = $order_id;
 
-foreach ($_SESSION['item_list'] as $key => $val) {
-	$query = "INSERT
-				INTO `purchases`
-				SET
-					`order_id`='{$order_id}',
-					`product_id`='{$val['id']}',
-					`amount`='{$val['qty']}'";
-					
+if (!empty($order_discount)) {
+	$query = "SELECT *
+				FROM `discounts`
+				WHERE `user_id` = '{$_SESSION['user_id']}' AND `discount` = '{$order_discount}'";
+				
 	$sql = mysql_query($query) or die(mysql_error());
+	$row = mysql_fetch_assoc($sql);
+	
+	if ($row['value'] == 1) {
+		$query = "DELETE
+					FROM `discounts`
+					WHERE `discount_id` = '{$row['discount_id']}'";
+		$sql = mysql_query($query) or die(mysql_error());
+	} else {
+		$query = "UPDATE `discounts`
+					SET `value`=value-1
+					WHERE `discount_id` = '{$row['discount_id']}'";
+		$sql = mysql_query($query) or die(mysql_error());
+	}
+}
+
+foreach ($_SESSION['item_list'] as $key => $val) {
+	if ($val['qty'] != 0) {
+		$query = "INSERT
+					INTO `purchases`
+					SET
+						`order_id`='{$order_id}',
+						`product_id`='{$val['id']}',
+						`amount`='{$val['qty']}'";
+						
+		$sql = mysql_query($query) or die(mysql_error());
+	}
 }
 
 if ($_SESSION['item_total'] >= 3) {
@@ -246,7 +275,10 @@ $mail_data = array (
 	'user_name' => $user_name,
 	'order_id' => $order_id,
 	'item_list' => $item_list,
-	'order_bill' => $order_bill
+	'delivery' => $order_delivery,
+	'bill' => $order_bill,
+	'raw_bill' => $order_raw_bill,
+	'discount' => $order_discount
 );
 
 $subject = 'Информация о заказе № '.$order_id;

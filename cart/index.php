@@ -107,7 +107,7 @@
                         </div><!-- text-content-inner  -->
                     </div><!-- main-cart -->
                     <form id="order">
-                    	<input type="hidden" name="discount">
+                    	<input type="hidden" name="order-discount">
                         <div class="grid half-col multi-form wo-reg">
                             <div class="big-col">
                                 <h2>Личные данные</h2>

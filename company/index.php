@@ -8,17 +8,22 @@
 	<section class="content">
         <div class="inner">
 				<?php include($_SERVER['DOCUMENT_ROOT'].'/user/user_panel.php'); ?>
-                <!-- Full item card -->
-                <section class="main-cart-holder">
-                    <div class="main-cart group">
-                        <div class="text-content-inner group">
-                            <h2>Контакты</h2>
-                            <div class="hor-splitter"></div>
-                            <p>Телефон: 8 (495) 518-54-56</p>
-                            <p>E-Mail: info@thecheesecake.ru</p>
+                <section class="postcard-content group">
+                    <div class="postcard-corener pc-l-t"></div>
+                    <div class="postcard-corener pc-r-t"></div>
+                    <div class="postcard-corener pc-l-b"></div>
+                    <div class="postcard-corener pc-r-b"></div>
+                    <article class="text-content-inner group">
+                        <div class="information-part group">
+                            <div class="grid full-size-col">
+                                <h2>Контакты</h2>
+                                <div class="hor-splitter"></div>
+                                <p>Телефон: 8 (495) 518-54-56</p>
+                                <p>E-Mail: info@thecheesecake.ru</p>
+                        	</div>  
                         </div>
-                    </div>
-                </section><!-- main-cart-holder -->
+                    </article>
+                </section>
 
             </div><!-- inner -->
         </section><!-- content -->

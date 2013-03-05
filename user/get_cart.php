@@ -26,6 +26,7 @@ if ($_SESSION['item_total'] != 0) {
 				<div class='mini-cart-item group'>
 					<div class='mini-cart-photo-holder'>
 						<a href='{$row['url']}'><img class='mini-cart-photo' src='{$row['image_thumb']}' alt='{$row['name']}'></a>
+						<span class='spinner_qty_change'><img src='/images/spinner.gif' class='spinner' title='Loading...'></span>
 					</div>
 					<div class='mini-cart-info'>
 						<span class='mini-cart-item-name'>{$row['name']}</span>

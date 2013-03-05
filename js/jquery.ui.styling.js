@@ -98,7 +98,7 @@ jQuery(document).ready(function($){
     });
 	
     // Select discount badge
-    $('.discount-btn').click(function(){
+    $('.main-cart-holder .discount-btn').click(function(){
 		if ($('.final-sum:first').text().match(/\d+/) > 1500) {
 			var sum = $('.final-sum:first').text().match(/\d+/);
 		} else {
@@ -107,13 +107,13 @@ jQuery(document).ready(function($){
 		var discount = $(this).prop('class').match(/\d+/);
 		if ($(this).hasClass('selected')) {
 			$('.discount-btn').removeClass('selected');
-			$('#order input[name=discount]').val('');
+			$('#order input[name=order-discount]').val('');
 			$('.discount-value').text('0 ₷');
 			$('.total-price .final-sum').text(sum+' ₷');
 		} else {
 			$('.discount-btn').removeClass('selected');
 			$(this).addClass('selected');
-			$('#order input[name=discount]').val(discount);
+			$('#order input[name=order-discount]').val(discount);
 			$('.discount-value').text(Math.ceil(sum-(sum*('0.'+(100-discount))))+' ₷');
 			$('.total-price .final-sum').text(Math.floor(sum*('0.'+(100-discount)))+' ₷');
 		}

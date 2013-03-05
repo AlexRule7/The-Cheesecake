@@ -7,7 +7,8 @@ function addItem(id, qty) {
 	} else {
 		data = 'id='+ id+ '&qty='+ qty;
 	}
-	$.ajax({
+	
+	return $.ajax({
 		type: 'POST',
 		url: '/user/add_item.php',
 		data: data,
@@ -29,7 +30,7 @@ jQuery(document).ready(function($){
 		openMiniCart();
 
 		if ($('.mini-cart-container').hasClass('opened')) {
-			$.ajax({
+			return $.ajax({
 				type: 'POST',
 				url: '/user/get_cart.php',
 				cache: false,
@@ -58,15 +59,8 @@ jQuery(document).ready(function($){
 		}
 		
 		id = $(this).attr("href");
-		addItem(id, 1);
-		
-		$('.mini-cart').trigger('click').done(function() {
-			$('.mini-cart-item-qt').trigger('change');
-			$('.mini-cart-item-id').each(function(index, element) {
-				if (element.value == id) {
-					$(this).next().focus();
-				}
-			});
+		addItem(id, 1).done(function() {
+			$('.mini-cart').trigger('click');
 		});
 		
 			
@@ -115,6 +109,7 @@ jQuery(document).ready(function($){
 			$('.teaser').text('');
 		}
 		
+		var photo = $(this).closest('.mini-cart-item').find('.mini-cart-photo-holder a');
 		if ($('.main-cart-holder').length) {
 			var q = $(this).val();
 			var p = $(this).closest('.main-cart-item').find('.mini-cart-item-price').val();
@@ -131,11 +126,13 @@ jQuery(document).ready(function($){
 			$('.total-price .final-sum').text(sum+ ' ₷')
 			$('.discount-btn.selected').trigger('click');
 		} else {
-			$('.mini-cart a').html('<i class="icn-cart"></i>Корзина: '+ item_total);
 			$('.mini-cart-btn .in-btn-price').text(bill+ ' ₷');
+			photo.hide('fast');
 		}
 		
-		addItem(id, qty);
+		addItem(id, qty).done(function() {
+			photo.show('fast');
+		});
 	});
 	// Click on delete item in main-cart
 	$('.del-item-btn').click(function(e) {

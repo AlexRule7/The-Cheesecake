@@ -29,28 +29,43 @@
                                             <?php
 											
 												foreach ($item_list as $key => $val) {
-													$query = "SELECT `name`, `price`
-																FROM `products`
-																WHERE `product_id`='{$val['id']}'";
-													$sql = mysql_query($query) or die(mysql_error());
-													$row = mysql_fetch_assoc($sql);
-													
-													echo "
-														<tr>
-															<td width='45%' style='border-bottom: solid 1px #e9e4e7'>{$row['name']}</td>
-															<td width='25%' style='border-bottom: solid 1px #e9e4e7' valign='top'>× {$val['qty']} шт.</td>
-															<td width='20%' style='border-bottom: solid 1px #e9e4e7' valign='top' align='right'>".($row['price']*$val['qty'])." р.</td>
-														</tr>";
+													if ($val['qty'] != 0) {
+														$query = "SELECT `name`, `price`
+																	FROM `products`
+																	WHERE `product_id`='{$val['id']}'";
+														$sql = mysql_query($query) or die(mysql_error());
+														$row = mysql_fetch_assoc($sql);
+														
+														echo "
+															<tr>
+																<td width='45%' style='border-bottom: solid 1px #e9e4e7'>{$row['name']}</td>
+																<td width='25%' style='border-bottom: solid 1px #e9e4e7' valign='top'>× {$val['qty']} шт.</td>
+																<td width='20%' style='border-bottom: solid 1px #e9e4e7' valign='top' align='right'>".($row['price']*$val['qty'])." р.</td>
+															</tr>";
+													}
 												}
 											
 											?>
                                             <tr>
                                                 <td width="45%" style="border-bottom: solid 1px #e9e4e7">Доставка</td>
                                                 <td width="25%" style="border-bottom: solid 1px #e9e4e7" valign="top">&nbsp;</td>
-                                                <td width="20%" style="border-bottom: solid 1px #e9e4e7" valign="top" align="right"><?php echo ($order_bill > 1500) ? 'Бесплатно' : '250 р.'; ?></td>
+                                                <td width="20%" style="border-bottom: solid 1px #e9e4e7" valign="top" align="right"><?php echo (empty($delivery)) ? 'Бесплатно' : $delivery.' р.'; ?></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="3" valign="top" align="right"><b>Итого: <?php echo ($order_bill > 1500) ? $order_bill : $order_bill + 250; ?> р.</b></td>
+                                                <td width="45%" style="border-bottom: solid 1px #e9e4e7">Скидка <?php echo (empty($discount) ? '0' : $discount); ?>%</td>
+                                                <td width="25%" style="border-bottom: solid 1px #e9e4e7" valign="top">&nbsp;</td>
+                                                <td width="20%" style="border-bottom: solid 1px #e9e4e7" valign="top" align="right">
+													<?php
+														if ($discount != 0) {
+															echo ($raw_bill + $delivery - $bill).' р.';
+														} else {
+															echo '0 р.';
+														}
+													?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" valign="top" align="right"><b>Итого: <?php echo $bill; ?> р.</b></td>
                                             </tr>
                                         </table>
                                     </td>

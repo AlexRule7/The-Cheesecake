@@ -433,6 +433,7 @@ i
     width: 70px
     height: 70px
 .mini-cart-info
+    text-align: left
     float: left
     width: 115px
 .mini-cart-item-name
@@ -603,9 +604,10 @@ i
     +border-radius(10px)
 .postcard-corener
     background: image-url('postcard-corner.png') no-repeat
+    display: none\9 // IE FIX
     width: 45px
     height: 45px
-    position: absolute 
+    position: absolute
 .pc-l-t
     top: -14px
     left: -10px
@@ -915,4 +917,59 @@ i
 input:disabled, .disabled
     +opacity(.45)
     pointer-events: none
+
+
+// Denis's custom styles
+#spinner_su 
+    display: block
+    position: relative
+    float: right
+    margin-top: 6px
+#spinner_cart 
+    display: inline-block
+    margin: 10px 0px
+.mini-height-scroll-container 
+    text-align: center
+.company 
+    display: none
+.half-field 
+    display: inline-block
+    float: left
+    width: 47.5%
+    margin-right: 15px
+.half-field:last-child 
+    margin-right: 0px
+.mini-field.error .text-input, .half-field.error .text-input 
+    background:rgba(255,0,0,0.15)
+.mini-field.error .caption, .half-field.error .caption 
+    display:block
+#empty-message 
+    display: block
+    text-align: center
+    margin: 30px 0px
+    color: #bb1d1d
+    font-size: 2em
+.field .profile-phone 
+    width: 90%
+.profile-phone-holder 
+    display: block
+.deleterow 
+    background-image: url(/images/icons/delete.png)
+    background-repeat: no-repeat
+    height: 20px
+    width: 20px
+    display: inline-block
+    cursor: pointer
+    float: right
+    margin-top: 4px
+.deleterow:hover 
+    background-image: url(/images/icons/delete_hover.png)
+    background-repeat: no-repeat
+.delete-address 
+    float: right
+.hidden 
+    display: none
+.spinner_qty_change 
+    margin-top: 30px
+    display: inline-block
 

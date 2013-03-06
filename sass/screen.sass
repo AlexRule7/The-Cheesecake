@@ -681,6 +681,9 @@ footer
     &:hover
         border: dashed 1px rgba(black,.3)
         +box-shadow(rgba(black,.25) 0 0 40px 0px inset, rgba(white,.05) 0 0 3px 1px)
+        +breakpoint(phone)
+            border: none
+            +box-shadow(none)
         .small-btn
             +opacity(100)
             +translateY(0)

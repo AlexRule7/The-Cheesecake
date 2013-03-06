@@ -5,7 +5,7 @@
             <td width="450">
                 <table width="100%" cellspacing="0" cellpadding="0" style="margin-top:15px; margin-bottom: 15px;">
                     <tr>
-                        <td align="center"><a href="#"><img width="110px" height="100px" src="http://thecheesecake.ru/images/logo.png" alt=""></a></td>
+                        <td align="center"><a href="#"><img width="110px" height="100px" src="https://dl.dropbox.com/u/37804451/logo.png" alt=""></a></td>
                     </tr>
                     <tr>
                         <td>
@@ -19,7 +19,7 @@
                                         <p>Ваш адрес электронной почты был указан при регистрации в интернет-магазине <a style="color:#bb1d1d; text-decoration:none;" href="http://thecheesecake.ru">The Moscow Cheesecake</a>.</p>
                                         <p>Все зарегистрированные пользователи получают скидку в размере 5% сразу после оформения первого заказа.</p>
 										<?php if (isset($_SESSION['new_user'])) { ?>
-                                        <p>Для того, чтобы вам не пришлось вводить адрес доставки в следующий раз, мы сохранили его в вашем личном кабинете. Пароль от него — <span class="bold">5 последних цифр вашего телефонного номера</span>. Вы всегда можете его <a href="http://thecheesecake.ru/profile/">изменить в личном кабинете.</a></p>
+                                        <p>Для того, чтобы вам не пришлось вводить адрес доставки в следующий раз, мы сохранили его в вашем личном кабинете. Пароль от него — <span class="bold">5 последних цифр вашего телефонного номера</span>. Вы всегда можете его <a href="http://exarium.ru/profile/">изменить в личном кабинете.</a></p>
                                         <?php } ?>
                                         <p>Спасибо, что выбрали наши чизкейки.</p>
                                     </td>

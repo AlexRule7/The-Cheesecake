@@ -1,5 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
+require(dirname(__FILE__).'/../Connections/exarium.php');
 
  
 // if the 'term' variable is not sent with the request, exit

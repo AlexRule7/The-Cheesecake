@@ -24,7 +24,9 @@ $default-border-radius: 5px
 $bs: border-box
 
 $grid-size: 960px
+$grid-phone-size: 98%
 $conrent-size: 800px
+$conrent-phone-size: 95%
 
 
 // Mixins
@@ -36,6 +38,23 @@ $conrent-size: 800px
     border-#{$point}: 0
     height: 0
     width: 0
+=breakpoint($point)  
+    @if $point == phone 
+        @media (max-device-width: 480px)  
+            @content
+        @media (max-width: 480px) 
+            @content 
+
+
+// Icons
+i
+    background: $icons
+    display: inline-block
+
+@each $icon in sprite_names($icons)
+    .icn-#{$icon}
+        +sprite-dimensions($icons, $icon)
+        background-position: sprite-position($icons, $icon)
 
 
 // Text styles
@@ -47,6 +66,7 @@ $conrent-size: 800px
     font-style: normal
 html 
     -webkit-font-smoothing: antialiased
+    -webkit-text-size-adjust: 100%
     font-family: 'PT Sans', sans-serif
     font-size: 62.5%
     line-height: 1.8em
@@ -57,6 +77,7 @@ a
     text-decoration: none
 h2
     font-size: 2.5em
+    line-height: 1em
     color: #149ec5
     padding-top: .3em
     i
@@ -154,28 +175,57 @@ small
     width: $grid-size
     margin: 0 auto
     position: relative
+    +breakpoint(phone) 
+        width: $grid-phone-size
 .text-content-inner
     width: $conrent-size
     margin: 0 auto
     position: relative
+    +breakpoint(phone) 
+        width: $conrent-phone-size
 .small-col
     width: 30%
+    +breakpoint(phone)
+        width: 100%
+        min-height: 0 !important
+        height: auto !important
 .medium-col
     width: 40%
+    +breakpoint(phone)
+        width: 100%
+        min-height: 0 !important
+        height: auto !important
 .half-col
     width: 50%
+    +breakpoint(phone)
+        width: 100%
+        min-height: 0 !important
+        height: auto !important
 .big-col
     width: 60%
+    +breakpoint(phone)
+        width: 100%
+        min-height: 0 !important
+        height: auto !important
     .popup-body &, .profile-holder &
-        width: 70%
+        +breakpoint(phone)
+            width: 100%
+            min-height: 0 !important
+            height: auto !important
 .full-size-col
     width: 100%
     h2
         margin: 0 20px  
 .multi-form
     padding: 0 0 0 80px
+    +breakpoint(phone)
+        margin-bottom: 10px
+        padding: 0
     .big-col
         width: 80%
+        +breakpoint(phone)
+            width: 100%
+            margin-bottom: 20px
     p
         margin: 0
 .hor-splitter 
@@ -196,20 +246,39 @@ body
     width: 100%
     height: 100px
     +single-box-shadow(rgba(0,0,0,.45), 0, 4px, 8px)
+    +breakpoint(phone)
+        height: auto
+        padding: 5px 0
+        overflow: hidden
     .inner
         background: image-url('header-bg.jpg') center bottom no-repeat
         height: 143px
+        +breakpoint(phone)
+            background: none
+            height: auto
 
 .main-navigation li
     font-size: 2.5em
     display: block
     float: left
     margin: 40px 0 0 0
+    +breakpoint(phone)
+        font-size: 1.2em
+        line-height: 1.2em
+        text-align: center
+        width: 23%
+        margin: 0 !important
+        top: 12px
+        position: relative
     &:first-child
         width: 140px
         margin-left: 28px
+        +breakpoint(phone)
+            width: 15%
     &:last-child
         margin-left: 55px
+        +breakpoint(phone)
+            width: 15%
     a
         +link-colors($main-light-color, #f1ecee, #e6e1e3)
         text-shadow: 0 1px 1px $dark-text-shadow, 0 0 13px rgba(255,255,255,.4)
@@ -220,17 +289,30 @@ body
             display: block
             width: 10px
             height: 10px
-            margin-left: -5px
+            margin-left: -1px
             +border-radius()
             +single-box-shadow(rgba(white,.5), 0, 1px, 1px, 0)
             position: absolute
-            top: -8px
-            left: 50% 
+            top: -3px
+            left: 50%
+            +breakpoint(phone)
+                width: 3px
+                height: 3px
+
 
 .logo 
     margin: 0 80px
     position: relative
     top: -32px
+    +breakpoint(phone)
+        margin: 0 
+        top: -12px
+.icn-logo
+    +breakpoint(phone)
+        background: image-url('icons/logo.png')
+        +background-size(cover)
+        width: 55px 
+        height: 50px 
 footer
     font-size: 1.6em
     line-height: 47px
@@ -238,6 +320,8 @@ footer
     text-align: center
     background: image-url('header-bg.jpg') center top no-repeat #9a252d
     width: 100%
+    +breakpoint(phone)
+        font-size: 1.2em
 
 
 // Popups
@@ -264,6 +348,9 @@ footer
     position: absolute
     left: 50%
     z-index: 70
+    +breakpoint(phone)
+        width: 310px
+        margin-left: -155px
 .popup-body
     text-shadow: 0 1px 0px $light-text-shadow
     background: image-url('paper-bg.jpg') repeat #f4f1f2
@@ -271,6 +358,8 @@ footer
     padding: 15px 0
     +border-radius(10px)
     +single-box-shadow(rgba(black,.5), 0, 2px, 6px, 0px)
+    +breakpoint(phone)
+        width: 310px
     h2, p
         margin: 0 10px
     h2
@@ -282,20 +371,10 @@ footer
     position: absolute
     top: 10px
     right: 10px
+    z-index: 5
     +opacity(.5)
     &:hover
         +opacity(.7)
-
-
-// Icons
-i
-    background: $icons
-    display: inline-block
-
-@each $icon in sprite_names($icons)
-    .icn-#{$icon}
-        +sprite-dimensions($icons, $icon)
-        background-position: sprite-position($icons, $icon)
 
 
 // Buttons
@@ -359,35 +438,65 @@ i
     width: 100%
     margin-top: 25px
     position: relative
+    +breakpoint(phone)
+        margin-top: 15px
 .phone-holder 
     float: left
     width: 50%
     position: absolute
+    +breakpoint(phone)
+        width: auto
+        position: relative
+    a 
+        pointer-events: none
+        +breakpoint(phone)
+            pointer-events: auto
 .phone-number
     font-size: 2em
     display: inline-block
+    +breakpoint(phone)
+        display: none
     a
         color: $main-light-color
         cursor: text
-        pointer-events: none
 .icn-phone 
     margin: 0 10px -3px 0
+    +breakpoint(phone)
+        background: image-url('icons/phone.png')
+        +background-size(cover)
+        width: 8px 
+        height: 16px 
+        margin: 6px 7px 0 15px
+        z-index: 55
+        position: relative
 
 .panel-fix-position
     width: $grid-size/2
     margin-left: $grid-size/2 
     z-index: 50
+    +breakpoint(phone)
+        width: auto
+        margin: 10px auto 0
+        position: relative !important
+        top: 0 !important
 .user-panel
     background: image-url('main-bg.jpg') repeat #422710
     float: right
     height: 30px
     +border-radius
     +box-shadow(rgba(black, 0.75) 0 1px 2px, rgba(white, 0.15) 0 -1px 15px 0 inset)
+    +breakpoint(phone)
+        text-align: right
+        float: none
     li
         font-size: 1.4em
         display: block
         float: left
         margin: 7px 10px 0
+        +breakpoint(phone)
+            font-size: 1.2em
+            display: inline-block
+            float: none
         a
             +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
 .icn-cart 
@@ -447,6 +556,9 @@ i
 .mini-height-scroll-container
     max-height: 280px
     overflow-y: auto
+    +breakpoint(phone)
+        height: auto
+        max-height: 1000px
 .mini-cart-arrow
     +arrow-shape(top)
     position: absolute
@@ -471,6 +583,9 @@ i
     height: 250px
     margin-top: 25px
     padding: 10px 0
+    +breakpoint(phone)
+        height: 120px
+        margin-top: 10px
 .main-slider
     width: 100%
     height: 100%
@@ -478,6 +593,9 @@ i
         float: left
         width: 640px
         height: 250px
+        +breakpoint(phone)
+            width: 310px
+            height: 121px
     .photo-slide
         background: rgba(white,.15)
         +background-size(cover)
@@ -488,6 +606,9 @@ i
         +border-radius(10px)
         +single-box-shadow(rgba(black,.5), 0, 1px, 6px, 1px)
         position: relative
+        +breakpoint(phone)
+            width: 310px
+            height: 121px
 .slider-arrow
     background: rgba(white,.75)
     width: 150px
@@ -496,6 +617,8 @@ i
     top: 10px
     z-index: 5
     +single-transition(background, 600ms, ease-in-out, 1ms)
+    +breakpoint(phone)
+        display: none
     i
         position: absolute
         top: 95px
@@ -534,6 +657,8 @@ i
 // Menu
 .menu-container
     margin-top: 20px
+    +breakpoint(phone)
+        margin: 0 
 .menu-item
     display: block
     +box-sizing($bs)
@@ -543,14 +668,22 @@ i
     border: dashed 1px rgba(black,0)
     +border-radius(10px)
     position: relative
+    +breakpoint(phone)
+        width: 50%
+        padding-bottom: 10px
     .small-btn
         display: table
         margin: 7px auto 0 
         +opacity(0)
         +translateY(10px)
+        +breakpoint(phone)
+            display: none
     &:hover
         border: dashed 1px rgba(black,.3)
         +box-shadow(rgba(black,.25) 0 0 40px 0px inset, rgba(white,.05) 0 0 3px 1px)
+        +breakpoint(phone)
+            border: none
+            +box-shadow(none)
         .small-btn
             +opacity(100)
             +translateY(0)
@@ -563,9 +696,15 @@ i
     +border-radius(50%)
     +box-shadow(rgba(238,238,238,.3) 0 0 0 3px, rgba(black,.6) 0 2px 5px 2px)
     overflow: hidden
+    +breakpoint(phone)
+        width: 130px
+        height: 130px
 .menu-photo 
     width: 164px
     height: 164px
+    +breakpoint(phone)
+        width: 130px
+        height: 130px
 .menu-name
     font-size: 1.8em
     +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
@@ -583,12 +722,25 @@ i
     padding: 25px 0
     +single-box-shadow(rgba(black,.5), 0, 1px, 6px, 1px)
     position: relative
+    +breakpoint(phone)
+        width: 94%
+        margin: 30px auto
+        padding-top: 5px
     .hor-splitter 
         margin: 10px
+        +breakpoint(phone)
+            margin: 10px 0
+    h2
+        +breakpoint(phone)
+            margin-top: 20px
 .right-dark-border
     border-right: solid 1px $border-color
+    +breakpoint(phone)
+        border: none
 .left-light-border
     border-left: solid 1px $light-border-color
+    +breakpoint(phone)
+        border: none
 .variants
     p 
         padding-top: .3em
@@ -602,6 +754,9 @@ i
     margin: 15px 20px 0
     padding: 5px 0
     +border-radius(10px)
+    +breakpoint(phone)
+        width: auto
+        padding: 5px
 .postcard-corener
     background: image-url('postcard-corner.png') no-repeat
     display: none\9 // IE FIX
@@ -628,6 +783,8 @@ i
 // Press
 .press-container
     margin: 50px 0 30px
+    +breakpoint(phone)
+        margin: 30px 0
     p
         font-size: 1.6em
         color: $main-light-color  
@@ -636,20 +793,35 @@ i
     width: 450px
     height: 285px
     position: relative
+    +breakpoint(phone)
+        +background-size(cover)
+        width: 295px
+        height: 187px
 .press-link
     display: block
     position: absolute
     width: 127px
     height: 127px
+    +breakpoint(phone)
+        width: 80px
+        height: 80px
 .afisha-link
     top: 1px
     left: 319px
+    +breakpoint(phone)
+        top: 3px
+        left: 210px
 .hopes-link
     top: 151px
     left: 230px
+    +breakpoint(phone)
+        top: 101px
+        left: 153px
 .mail-link
     font-size: .95em
     +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
+    +breakpoint(phone)
+        font-size: .7em
     i
         margin: 0 1px -2px 0
 
@@ -666,11 +838,19 @@ i
     +single-box-shadow(rgba(black,.7), 0, 8px, 12px, -5px)
     overflow: hidden
     position: relative 
+    +breakpoint(phone)
+        margin-top: 20px
+        padding-top: 15px
+        padding-bottom: 20px
 .item-big-photo
     position: absolute
     top: 50px
     left: 0
     z-index: 5
+    +breakpoint(phone)
+        width: 100%
+        position: relative
+        top: auto
 .full-item-description
     h1
         font-size: 5em
@@ -683,8 +863,14 @@ i
     small
         font-size: 1.3em
         line-height: 1em
+        +breakpoint(phone)
+            line-height: 1.2em
+            display: block
+            margin: 10px
     .big-btn
         margin: 0 10px
+        +breakpoint(phone)
+            margin-bottom: 10px
 .nutrition-table
     margin: 25px 0 30px
     .hor-splitter
@@ -722,6 +908,8 @@ i
     @extend .full-item-card
     min-height: 0
     padding: 20px 0
+    +breakpoint(phone)
+        padding-bottom: 0
     .hor-splitter
         margin: 10px 0 0
     h2
@@ -741,6 +929,9 @@ i
 .main-cart-info
     width: 400px
     margin: 30px 0 10px 25px
+    +breakpoint(phone)
+        width: 58%
+        min-height: 70px
 .main-cart-item-link
     font-size: 1.8em
 .main-cart-item-sub-info
@@ -750,15 +941,21 @@ i
 .main-cart-qt
     font-size: 1.5em
     margin: 24px 0 10px 15px
+    +breakpoint(phone)
+        margin-top: 0
 .main-cart-item-price
     font-size: 1.5em
     font-weight: bold
     text-align: right
     width: 100px
     margin: 31px 0 10px 10px
+    +breakpoint(phone)
+        margin-top: 7px
 .main-cart-item-del
     margin: 32px 0 10px 43px
     +opacity(.5)
+    +breakpoint(phone)
+        margin-top: 8px
     &:hover
         +opacity(.9)
 .main-cart-sub-total
@@ -776,6 +973,9 @@ i
     margin: 15px 0 0
 .discount-holder
     float: left
+    +breakpoint(phone)
+        text-align: center
+        float: none
     h3
         min-height: 0
         margin: 0 0 10px 15px
@@ -814,6 +1014,10 @@ i
     margin-left: auto
     padding-right: 50px
     padding-left: 50px
+    +breakpoint(phone)
+        width: 80%
+        padding-right: 20px
+        padding-left: 20px
     .hor-splitter
         margin: 10px 0 0
 
@@ -821,6 +1025,13 @@ i
 // Profile
 .profile-holder
     @extend .main-cart-holder
+    +breakpoint(phone)
+        padding: 10px 0
+    .small-col
+        +breakpoint(phone)
+            margin-bottom: 20px
+            padding-bottom: 5px
+            +single-box-shadow(rgba(black,.3), 0, 5px, 8px, -2px)
 .ver-shadow-splitter
     background: transparent
     width: 5px
@@ -830,12 +1041,17 @@ i
     top: 0
     bottom: 0
     left: 30%
+    +breakpoint(phone)
+        display: none
 .profile-nav-link
     font-size: 2em
     display: block
     +box-sizing($bs)
     padding: 15px 5px 15px 65px
     position: relative
+    +breakpoint(phone)
+        font-size: 1.4em
+        padding: 5px 10px
     &.selected
         color: $main-dark-colot
         +background-image(linear-gradient(left, transparent, rgba(white,.7)))
@@ -846,6 +1062,9 @@ i
     position: absolute
     top: 19px
     right: 25px
+    +breakpoint(phone)
+        top: 10px
+        +rotate(90deg)
 .order-history-holder
     font-size: 1.3em
     margin: 15px 0

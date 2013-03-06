@@ -2,7 +2,7 @@
 
 session_start();
 
-include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
+require(dirname(__FILE__).'/../Connections/exarium.php');
 
 if (isset($_GET['logout']))
 {
@@ -129,6 +129,10 @@ jQuery(document).ready(function($){
 	{
 		print '<div id="error_notification">'.$error.'</div>';
 	}
+	
+		$salt = GenerateSalt();
+		$hashed_password = md5(md5(55555) . $salt);
+		echo "salt = ". $salt . "<br>hash = " . $hashed_password . "<br>";
 	
 	?>
     <label>Логин</label><input id="name" type="text" name="login"><br />

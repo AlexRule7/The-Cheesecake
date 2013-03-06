@@ -11,10 +11,10 @@
                 <!-- Main slider -->
                 <section class="main-slider-container">
                     <div class="main-slider">
-                        <div class="slide"><a class="photo-slide" href="/news/?1" style="background-image: url(/images/deals/1.jpg)"></a></div>
-                        <div class="slide"><span class="photo-slide" style="background-image: url(/images/deals/2.jpg)"></span></div>
-                        <div class="slide"><span class="photo-slide" style="background-image: url(/images/deals/3.jpg)"></span></div>
-                        <div class="slide"><span class="photo-slide" style="background-image: url(/images/deals/4.jpg)"></span></div>
+                        <div class="slide"><a class="photo-slide" href="#" style="background-image: url(/images/deals/1.jpg)"></a></div>
+                        <div class="slide"><a class="photo-slide" href="#" style="background-image: url(/images/deals/1.jpg)"></a></div>
+                        <div class="slide"><a class="photo-slide" href="#" style="background-image: url(/images/deals/1.jpg)"></a></div>
+                        <div class="slide"><a class="photo-slide" href="#" style="background-image: url(/images/deals/1.jpg)"></a></div>
                     </div>
                     <div class="slider-arrow prev-slide"><i class="icn-prev-slide"></i></div>
                     <div class="slider-arrow next-slide"><i class="icn-next-slide"></i></div>

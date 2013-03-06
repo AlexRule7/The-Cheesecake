@@ -5,7 +5,7 @@
             <td width="450">
                 <table width="100%" cellspacing="0" cellpadding="0" style="margin-top:15px; margin-bottom: 15px;">
                     <tr>
-                        <td align="center"><a href="#"><img width="110px" height="100px" src="http://thecheesecake.ru/images/logo.png" alt=""></a></td>
+                        <td align="center"><a href="#"><img width="110px" height="100px" src="http://www.exarium.ru/logo.png" alt=""></a></td>
                     </tr>
                     <tr>
                         <td>
@@ -18,12 +18,6 @@
                                         <p>Привет, <?php echo $user_name; ?>!</p>
                                         <p>Мы успешно получили ваш <b>заказ № <?php echo $order_id; ?></b>. В ближайшее время с вами свяжется наш оператор.</p>
                                         <p>Спасибо, что выбрали наши чизкейки.</p>
-										<?php if (isset($_SESSION['new_user_discount']) || isset($_SESSION['new_user'])) { ?>
-                                        <p>Вы только что оформили свой <span class="bold">первый заказ</span>, и за это <span class="bold">мы дарим вам скидку 5%</span> на следующий!</p>
-                                        <?php } ?>
-                                        <?php if (isset($_SESSION['new_discount'])) { ?>
-                                        <p>Вы только что оформили <span class="bold">заказ на <?php echo $_SESSION['item_total']; ?> чизкейк<?php echo ($_SESSION['item_total'] >= 5 ? 'ов' : 'а'); ?></span>, и за это <span class="bold">мы дарим вам скидку <?php echo $_SESSION['new_discount']; ?>%</span> на следующий!</p>
-                                        <?php } ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -57,15 +51,19 @@
                                                 <td width="25%" style="border-bottom: solid 1px #e9e4e7" valign="top">&nbsp;</td>
                                                 <td width="20%" style="border-bottom: solid 1px #e9e4e7" valign="top" align="right"><?php echo (empty($delivery)) ? 'Бесплатно' : $delivery.' р.'; ?></td>
                                             </tr>
-                                            <?php if (!empty($discount)) { ?>
                                             <tr>
-                                                <td width="45%" style="border-bottom: solid 1px #e9e4e7">Скидка <?php echo $discount; ?>%</td>
+                                                <td width="45%" style="border-bottom: solid 1px #e9e4e7">Скидка <?php echo (empty($discount) ? '0' : $discount); ?>%</td>
                                                 <td width="25%" style="border-bottom: solid 1px #e9e4e7" valign="top">&nbsp;</td>
                                                 <td width="20%" style="border-bottom: solid 1px #e9e4e7" valign="top" align="right">
-													<?php echo ($raw_bill + $delivery - $bill).' р.'; ?>
+													<?php
+														if ($discount != 0) {
+															echo ($raw_bill + $delivery - $bill).' р.';
+														} else {
+															echo '0 р.';
+														}
+													?>
                                                 </td>
                                             </tr>
-                                            <?php } ?>
                                             <tr>
                                                 <td colspan="3" valign="top" align="right"><b>Итого: <?php echo $bill; ?> р.</b></td>
                                             </tr>

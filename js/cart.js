@@ -57,7 +57,9 @@ jQuery(document).ready(function($){
 		if ($('.mini-cart-container').hasClass('opened')) {
 			openMiniCart();
 		}
-		
+		$('html, body').animate({
+			scrollTop: $('.user-panel').offset().top-15
+		}, 500);
 		id = $(this).attr("href");
 		addItem(id, 1).done(function() {
 			$('.mini-cart').trigger('click');

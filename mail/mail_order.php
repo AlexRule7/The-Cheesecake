@@ -67,8 +67,47 @@
                                             <tr>
                                                 <td colspan="3" valign="top" align="right"><b>Итого: <?php echo $bill; ?> р.</b></td>
                                             </tr>
+                                            <?php if (!empty($comment)) { ?>
+                                            <tr>
+                                                <td colspan="3"><h3 style="margin-bottom: 3px; margin-top: 10px">Комментарий</h3></td>
+                                            </tr>
+                                            <tr>
+                                            	<td colspan="3"><?php echo $comment; ?></td>
+                                            </tr>
+                                            <?php } ?>
                                         </table>
                                     </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" cellspacing="0" cellpadding="15px" style="background: white; margin-top:20px; padding-top: 15px; -webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px;">
+                            	<tr>
+                                	<td width="30%" style="border-bottom: solid 1px #e9e4e7"><h3 style="margin-bottom: 3px; margin-top: 10px">Адрес:</h3></td>
+                                	<td width="70%" style="border-bottom: solid 1px #e9e4e7">
+										<?php echo "м. {$address['metro']}, {$address['street']} {$address['house']}".
+											(!empty($address['building']) ? 'к'.$address['building'].'' : '').
+											(!empty($address['flat']) ? ', кв. '.$address['flat'].'' : '').
+											(!empty($address['enter']) ? ', подъезд '.$address['enter'].'' : '').
+											(!empty($address['floor']) ? ', этаж '.$address['floor'].'' : '').
+											(!empty($address['domofon']) ? ', домофон '.$address['domofon'].'' : '').".";
+										?>
+                                    </td>
+                                </tr>
+                                <?php
+									if ($address['office'] == 1 && !empty($address['company'])) {
+										echo "
+											<tr>
+												<td width='30%' style='border-bottom: solid 1px #e9e4e7'><h3 style='margin-bottom: 3px; margin-top: 10px'>Компания:</h3></td>
+												<td width='70%' style='border-bottom: solid 1px #e9e4e7'>{$address['company']}</td>
+											</tr>";
+									}
+								?>
+                                <tr>
+                                	<td width="30%" style="border-bottom: solid 1px #e9e4e7"><h3 style="margin-bottom: 3px; margin-top: 10px">Телефон:</h3></td>
+                                    <td width="70%"><?php echo $address['phone']; ?></td>
                                 </tr>
                             </table>
                         </td>

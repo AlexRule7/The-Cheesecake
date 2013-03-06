@@ -233,11 +233,11 @@ jQuery(document).ready(function($){
     }
 	// Address select and field disable
 	if ($('#order select[name=user-address]').length) {
-		$('#address :input').prop('disabled', true);
+		$('#address :input').addClass('disabled');
 	}
 	$('select[name=user-address]').change(function(e) {
 		if ($(this).val() == '0') {
-			$('#address :input').val('').prop('disabled', false);
+			$('#address :input').val('').removeClass('disabled');
 			$('#to-office').prop('checked', false).trigger('change');
 		} else {
 			$.ajax({
@@ -247,7 +247,7 @@ jQuery(document).ready(function($){
 				cache: false,
 				dataType: 'json',
 				success: function(data) {
-					$('#order #address :input').prop('disabled', true);
+					$('#order #address :input').addClass('disabled');
 					if (data.office == 1) {
 						$('#to-office').prop('checked', true).trigger('change');
 					} else {

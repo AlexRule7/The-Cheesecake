@@ -278,7 +278,21 @@ $mail_data = array (
 	'delivery' => $order_delivery,
 	'bill' => $order_bill,
 	'raw_bill' => $order_raw_bill,
-	'discount' => $order_discount
+	'discount' => $order_discount,
+	'comment' => $order_comment,
+	'address' => array (
+		'metro' => $user_metro,
+		'street' => $user_street,
+		'house' =>  $user_house,
+		'building' => $user_building,
+		'office' => $user_office,
+		'flat' => $user_flat,
+		'enter' => $user_enter,
+		'floor' => $user_floor,
+		'domofon' => $user_domofon,
+		'company' => $user_company,
+		'phone' => $user_phone
+	)
 );
 
 $subject = 'Информация о заказе № '.$order_id;

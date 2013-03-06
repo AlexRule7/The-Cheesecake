@@ -1,5 +1,3 @@
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
-    <meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no">
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
     <link href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
     <!--[if IE]>

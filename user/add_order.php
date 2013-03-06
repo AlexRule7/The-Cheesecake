@@ -295,13 +295,14 @@ $mail_data = array (
 	)
 );
 
+$to = $user_email.', info@thecheesecake.ru';
 $subject = 'Информация о заказе № '.$order_id;
 $message = send_mail($mail_data);
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
 $headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
 $headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
-mail($user_email, $subject, $message, $headers);
+mail($to, $subject, $message, $headers);
 
 // END OF MAIL
 

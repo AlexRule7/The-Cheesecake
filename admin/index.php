@@ -2,7 +2,7 @@
 
 session_start();
 
-require(dirname(__FILE__).'/../Connections/exarium.php');
+include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 // если пользователь не авторизован
 
@@ -180,47 +180,7 @@ jQuery(document).ready(function($){
 			};
 		});
 	});
-				
-	jQuery.validator.addMethod("mydate", function(value, element) { 
-		return this.optional(element) || /^([0]?[1-9]|[1|2][0-9]|[3][0|1])[.]([0]?[1-9]|[1][0-2])[.]([0-9]{4})$/.test(value); 
-	}, "Введите дату рождения в формате: 01.01.2013");
-	
-	$( "#user" ).validate({
-		rules: {
-			phone: {
-				required: true,
-				rangelength: [10, 10]
-			},
-			name: "required",
-			mail: "email",
-			birthday: "mydate"
-		},
-		messages: {
-			phone: {
-				required: "Введите номер телефона",
-				rangelength: "Формат: 9251112233"
-			},
-			name: "Введите имя",
-			mail: "Формат: info@thecheesecake.ru",
-			birthday: "Формат: 01.01.2013"
-		}
-	});
-	
-	$(".address").each(function() {
-		$( this ).validate({
-			rules: {
-				metro: "required",
-				street: "required",
-				house: "required",
-			},
-			messages: {
-				metro: "Выберите метро из списка",
-				street: "Введите улицу",
-				house: "Введите номер дома",
-			}
-		});
-	});
-	
+		
 	$( "#birthday" ).datepicker({
 		yearRange: "-80:+0",
 		showOn: "button",
@@ -381,38 +341,7 @@ jQuery(document).ready(function($){
 		$( "input[name=bill]" ).val(bill + ".00");
 	});
 	
-/*	$( "#comment" ).on('click', function(e) {
-        if ($( this ).val() == "Комментарий...") {
-			$( this ).val("");
-			$( this ).css({ "color": "#000;" });
-		}
-    });
-	
-	$( "#comment" ).on('blur', function(e) {
-        if ($( this ).val() == "") {
-			$( this ).val("Комментарий...");
-			$( this ).css({ "color": "#999;" });
-		}
-    });
-*/
-/*	$.ajax({
-		url: "inc/metro.xml",
-		dataType: "xml",
-			success: function( xmlResponse ) {
-			var data = $( "geoname", xmlResponse ).map(function() {
-				return {
-					value: $( "name", this ).text() + ", " +
-					( $.trim( $( "countryName", this ).text() ) || "(unknown country)" ),
-					id: $( "geonameId", this ).text()
-				};
-			}).get();
-			$( "#birds" ).autocomplete({
-				source: data,
-				minLength: 0,
-			});
-		}
-	});
-*/});
+});
 </script>
 </head>
 

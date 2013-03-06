@@ -3,7 +3,7 @@
 // Use session_start() in all pages that are working with sessions
 session_start();
 
-include($_SERVER['DOCUMENT_ROOT'].'/Connections/exarium.php');
+include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 function addItem($id, $qty) {
 	array_push($_SESSION['item_list'], array(

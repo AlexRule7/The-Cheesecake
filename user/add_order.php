@@ -3,7 +3,7 @@
 // Use session_start() in all pages that are working with sessions
 session_start();
 
-include($_SERVER['DOCUMENT_ROOT'].'/Connections/exarium.php');
+include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 header('Content-type: application/json');
 
@@ -68,6 +68,7 @@ if (!isset($_SESSION['user_id'])) {
 						`value`='1'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
+		
 		
 		$query = "INSERT
 					INTO `phones`
@@ -168,7 +169,7 @@ $query = "SELECT 1
 			
 $sql = mysql_query($query) or die(mysql_error());
 
-if (!mysql_num_rows($sql)) {
+if (!mysql_num_rows($sql) && !isset($_SESSION['new_user'])) {
 	$query = "INSERT
 				INTO `discounts`
 				SET
@@ -295,13 +296,14 @@ $mail_data = array (
 	)
 );
 
+$to = $user_email.', info@thecheesecake.ru';
 $subject = 'Информация о заказе № '.$order_id;
 $message = send_mail($mail_data);
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=utf8' . "\r\n";
 $headers .= 'To: '.$user_name.' <'.$user_email.'>' . "\r\n";
 $headers .= 'From: Moscow Cheesecake <info@thecheesecake.ru>' . "\r\n";
-mail($user_email, $subject, $message, $headers);
+mail($to, $subject, $message, $headers);
 
 // END OF MAIL
 

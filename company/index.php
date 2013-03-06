@@ -19,7 +19,7 @@
                                 <h2>Контакты</h2>
                                 <div class="hor-splitter"></div>
                                 <p>Телефон: 8 (495) 518-54-56</p>
-                                <p>E-Mail: info@thecheesecake.ru</p>
+                                <p>E-Mail: <a href="mailto:info@thecheesecake.ru">info@thecheesecake.ru</a></p>
                         	</div>  
                         </div>
                     </article>

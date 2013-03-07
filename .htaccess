@@ -1,3 +1,5 @@
+ErrorDocument 404 /404.html
+
 AuthUserFile /home/d/denjer/exarium.ru/public_html/.htpasswd
 AuthName "Please Log In"
 AuthType Basic

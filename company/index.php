@@ -19,6 +19,9 @@
                                 <h2>Для связи</h2>
                                 <p>Оформить заказ, задать вопрос или обсудить сотрудничество можно по этому телефону: <span class="bold">+7 (495) 518-54-56</span></p>
                                 <p>Для пожеланий, рекомендаций и предложений о сотрудничестве используйте этот email: <a href="mailto:info@thecheesecake.ru">info@thecheesecake.ru</a></p>
+                                <p>Наши официальные группы в социальных сетях:</p>
+                                <p><a href="http://vk.com/moscowcheesecake"><i class="icn-vk"></i></a>
+                                    <a href="https://www.facebook.com/MoscowCheesecake"><i class="icn-fb"></i></a></p>
                             </div>
                             <div class="grid half-col">
                                 <h2>Магазины в Москве</h2>

@@ -20,6 +20,9 @@
                                 <div class="hor-splitter"></div>
                                 <p>Телефон: 8 (495) 518-54-56</p>
                                 <p>E-Mail: <a href="mailto:info@thecheesecake.ru">info@thecheesecake.ru</a></p>
+                                <h2>Магазины, в которых представлена наша продукция:</h2>
+                                <div class="hor-splitter"></div>
+                                <p>1. ТД "Универсам" (г. Москва, Петровско-разумовский пр-д, д. 23/1)</p>
                         	</div>  
                         </div>
                     </article>

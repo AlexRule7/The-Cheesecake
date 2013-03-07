@@ -15,7 +15,7 @@ function addItem(id, qty) {
 		cache: false,
 		dataType: 'json',
 		success: function(data) {
-			$('.mini-cart a').html('<i class="icn-cart"></i>Корзина: '+ data);
+			$('.mini-cart span').html('<i class="icn-cart"></i>Корзина:  '+ data);
 		}
 	});
 };

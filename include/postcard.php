@@ -11,8 +11,8 @@
                                 <p>Основной принцип нашей компании — это высокое качество продукта. Все наши Чизкейки готовятся только по оригинальным американским рецептам.</p>
                                 <p>Ассортимент и конечная рецептура разрабатывались при участии американского кондитера с опытом работы более 20 лет.</p>
                                 <p>Присоединяйтесь к нам:</p>
-                                <p><a href="http://vk.com/moscowcheesecake"><i class="icn-vk"></i></a>
-                                    <a href="https://www.facebook.com/MoscowCheesecake"><i class="icn-fb"></i></a></p>
+                                <p><a href="http://vk.com/moscowcheesecake" target="_blank"><i class="icn-vk"></i></a>
+                                    <a href="https://www.facebook.com/MoscowCheesecake" target="_blank"><i class="icn-fb"></i></a></p>
                             </div>
                             <div class="grid small-col right-dark-border left-light-border">
                                 <h2><i class="icn-delivery"></i>Доставка</h2>

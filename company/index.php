@@ -20,13 +20,13 @@
                                 <p>Оформить заказ, задать вопрос или обсудить сотрудничество можно по этому телефону: <span class="bold">+7 (495) 518-54-56</span></p>
                                 <p>Для пожеланий, рекомендаций и предложений о сотрудничестве используйте этот email: <a href="mailto:info@thecheesecake.ru">info@thecheesecake.ru</a></p>
                                 <p>Наши официальные группы в социальных сетях:</p>
-                                <p><a href="http://vk.com/moscowcheesecake"><i class="icn-vk"></i></a>
-                                    <a href="https://www.facebook.com/MoscowCheesecake"><i class="icn-fb"></i></a></p>
+                                <p><a href="http://vk.com/moscowcheesecake" target="_blank"><i class="icn-vk"></i></a>
+                                    <a href="https://www.facebook.com/MoscowCheesecake" target="_blank"><i class="icn-fb"></i></a></p>
                             </div>
                             <div class="grid half-col">
                                 <h2>Магазины в Москве</h2>
                                 <p>Адреса москвоских магазинов, в которых всегда можно приобрести наши свежие чизкейки:</p>
-                                <p>1. ТД «Универсам» — <a href="http://maps.yandex.ru/-/CVRleVjQ">Яндекс.Карты</a><br />г. Москва, Петровско-разумовский пр-д, д. 1/23с1</p>
+                                <p>1. ТД «Универсам» — <a href="http://maps.yandex.ru/-/CVRliRIw" target="_blank" rel="nofollow">Яндекс.Карты</a><br />г. Москва, Старый Петровско-разумовский пр-д, д. 1/23с1</p>
                             </div>  
                         </div>
                     </article>

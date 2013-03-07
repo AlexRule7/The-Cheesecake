@@ -257,7 +257,7 @@
                                     <p>В конце мы предложим вам зарегистрироваться, чтобы не вводить адрес при следующей покупке.</p>
                                 </div>
                                 <div class="field">
-                                    <a href="#" class="small-btn blue-btn">Продолжить</a>
+                                    <a href="#" class="small-btn blue-btn wo-reg-continue">Продолжить</a>
                                 </div>
                             </div>
                         </div>

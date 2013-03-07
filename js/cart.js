@@ -166,7 +166,7 @@ jQuery(document).ready(function($){
 	} else {
 		$('.wo-reg').hide();
 	}
-	$('.grid:last a').click(function(e) {
+	$('.wo-reg-continue').click(function(e) {
 		$('.w-reg').slideUp('normal', function (){
 			$('.wo-reg').slideDown('normal');
 		});

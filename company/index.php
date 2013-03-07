@@ -15,15 +15,16 @@
                     <div class="postcard-corener pc-r-b"></div>
                     <article class="text-content-inner group">
                         <div class="information-part group">
-                            <div class="grid full-size-col">
-                                <h2>Контакты</h2>
-                                <div class="hor-splitter"></div>
-                                <p>Телефон: 8 (495) 518-54-56</p>
-                                <p>E-Mail: <a href="mailto:info@thecheesecake.ru">info@thecheesecake.ru</a></p>
-                                <h2>Магазины, в которых представлена наша продукция:</h2>
-                                <div class="hor-splitter"></div>
-                                <p>1. ТД "Универсам" (г. Москва, Петровско-разумовский пр-д, д. 23/1)</p>
-                        	</div>  
+                            <div class="grid half-col right-dark-border">
+                                <h2>Для связи</h2>
+                                <p>Оформить заказ, задать вопрос или обсудить сотрудничество можно по этому телефону: <span class="bold">+7 (495) 518-54-56</span></p>
+                                <p>Для пожеланий, рекомендаций и предложений о сотрудничестве используйте этот email: <a href="mailto:info@thecheesecake.ru">info@thecheesecake.ru</a></p>
+                            </div>
+                            <div class="grid half-col">
+                                <h2>Магазины в Москве</h2>
+                                <p>Адреса москвоских магазинов, в которых всегда можно приобрести наши свежие чизкейки:</p>
+                                <p>1. ТД «Универсам» — <a href="http://maps.yandex.ru/-/CVRleVjQ">Яндекс.Карты</a><br />г. Москва, Петровско-разумовский пр-д, д. 1/23с1</p>
+                            </div>  
                         </div>
                     </article>
                 </section>

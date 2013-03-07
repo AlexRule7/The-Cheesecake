@@ -27,7 +27,7 @@
                                 <p><a class="su-popup-trigger" href="#">Зарегистрируйтесь сейчас</a> или во время оформления первого заказа.</p>
                                 <div class="hor-splitter"></div>
                                 <h2><i class="icn-case"></i>Для ресторанов</h2>
-                                <p>Мы любим сотрудничать. Если вы тоже, то, пожалуйста, посмотрите на <a href="/MoscowCheesecake.docx">наше коммерческое предложение</a> <small>(docx, 720 kb)</small>.</p>
+                                <p>Мы любим сотрудничать. Если вы тоже, то, пожалуйста, посмотрите на <a href="/Moscow-Cheesecake.pdf">наше коммерческое предложение</a> <small>(pdf, 780 kb)</small>.</p>
                             </div>
                         </div>
                         <?php if ($_SERVER['PHP_SELF'] == '/index.php') { ?>

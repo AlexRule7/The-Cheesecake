@@ -150,7 +150,6 @@ if (!isset($_SESSION['user_id'])) {
 						`street`='{$user_street}',
 						`house`='{$user_house}',
 						`building`='{$user_building}',
-						`office`='0',
 						`office`='{$user_office}',
 						`company`='{$user_company}',
 						`flat`='{$user_flat}',

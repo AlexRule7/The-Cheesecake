@@ -21,11 +21,9 @@
                     <div class="postcard-corener pc-l-b"></div>
                     <div class="postcard-corener pc-r-b"></div>
                     <article class="text-content-inner group">
-                        <div class="information-part group">
                         <?php
 							include($_SERVER['DOCUMENT_ROOT'].'/include/news/'.key($_GET).'.php');
 						?>
-                        </div>
                     </article>
                 </section>
 

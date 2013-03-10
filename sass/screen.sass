@@ -40,11 +40,16 @@ $conrent-phone-size: 95%
     height: 0
     width: 0
 =breakpoint($point)  
-    @if $point == phone 
-        @media (max-device-width: 480px)  
+    @if $point == mobile 
+        @media (max-device-width: 1024px)  
             @content
-        @media (max-width: 480px) 
-            @content 
+        @media (max-width: 1024px) 
+            @content
+    @if $point == tablet 
+        @media (min-device-width: 480px) and (max-device-width: 1024px)  
+            @content
+        @media (min-width: 480px) and (max-width: 1024px) 
+            @content  
 
 
 // Icons
@@ -181,40 +186,40 @@ small
     width: $grid-size
     margin: 0 auto
     position: relative
-    +breakpoint(phone) 
+    +breakpoint(mobile) 
         width: $grid-phone-size
 .text-content-inner
     width: $conrent-size
     margin: 0 auto
     position: relative
-    +breakpoint(phone) 
+    +breakpoint(mobile) 
         width: $conrent-phone-size
 .small-col
     width: 30%
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 100%
         min-height: 0 !important
         height: auto !important
 .medium-col
     width: 40%
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 100%
         min-height: 0 !important
         height: auto !important
 .half-col
     width: 50%
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 100%
         min-height: 0 !important
         height: auto !important
 .big-col
     width: 60%
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 100%
         min-height: 0 !important
         height: auto !important
     .popup-body &, .profile-holder &
-        +breakpoint(phone)
+        +breakpoint(mobile)
             width: 100%
             min-height: 0 !important
             height: auto !important
@@ -224,12 +229,12 @@ small
         margin: 0 20px  
 .multi-form
     padding: 0 0 0 80px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin-bottom: 10px
         padding: 0
     .big-col
         width: 80%
-        +breakpoint(phone)
+        +breakpoint(mobile)
             width: 100%
             margin-bottom: 20px
     p
@@ -252,14 +257,14 @@ body
     width: 100%
     height: 100px
     +single-box-shadow(rgba(0,0,0,.45), 0, 4px, 8px)
-    +breakpoint(phone)
+    +breakpoint(mobile)
         height: auto
         padding: 5px 0
         overflow: hidden
     .inner
         background: image-url('header-bg.jpg') center bottom no-repeat
         height: 143px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             background: none
             height: auto
 
@@ -268,7 +273,7 @@ body
     display: block
     float: left
     margin: 40px 0 0 0
-    +breakpoint(phone)
+    +breakpoint(mobile)
         font-size: 1.2em
         line-height: 1.2em
         text-align: center
@@ -276,14 +281,16 @@ body
         margin: 0 !important
         top: 12px
         position: relative
+    +breakpoint(tablet)
+        top: 17px
     &:first-child
         width: 140px
         margin-left: 28px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             width: 15%
     &:last-child
         margin-left: 55px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             width: 15%
     a
         +link-colors($main-light-color, #f1ecee, #e6e1e3)
@@ -301,20 +308,21 @@ body
             position: absolute
             top: -5px
             left: 50%
-            +breakpoint(phone)
+            +breakpoint(mobile)
                 width: 3px
                 height: 3px
-
 
 .logo 
     margin: 0 80px
     position: relative
     top: -32px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin: 0 
         top: -12px
+    +breakpoint(tablet)
+        top: -17px
 .icn-logo
-    +breakpoint(phone)
+    +breakpoint(mobile)
         background: image-url('icons/logo.png')
         +background-size(cover)
         width: 55px 
@@ -326,7 +334,7 @@ footer
     text-align: center
     background: image-url('header-bg.jpg') center top no-repeat #9a252d
     width: 100%
-    +breakpoint(phone)
+    +breakpoint(mobile)
         font-size: 1.2em
 
 
@@ -354,7 +362,7 @@ footer
     position: absolute
     left: 50%
     z-index: 70
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 310px
         margin-left: -155px
 .popup-body
@@ -364,7 +372,7 @@ footer
     padding: 15px 0
     +border-radius(10px)
     +single-box-shadow(rgba(black,.5), 0, 2px, 6px, 0px)
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 310px
     h2, p
         margin: 0 10px
@@ -444,30 +452,36 @@ footer
     width: 100%
     margin-top: 25px
     position: relative
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin-top: 15px
 .phone-holder 
     float: left
     width: 50%
     position: absolute
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: auto
         position: relative
     a 
         pointer-events: none
-        +breakpoint(phone)
+        +breakpoint(mobile)
             pointer-events: auto
 .phone-number
     font-size: 2em
     display: inline-block
-    +breakpoint(phone)
+    +breakpoint(mobile)
         display: none
+    +breakpoint(tablet)
+        font-size: 1.2em
+        display: inline-block
+        position: relative
+        top: -2px
+        z-index: 55
     a
         color: $main-light-color
         cursor: text
 .icn-phone 
     margin: 0 10px -3px 0
-    +breakpoint(phone)
+    +breakpoint(mobile)
         background: image-url('icons/phone.png')
         +background-size(cover)
         width: 8px 
@@ -480,7 +494,7 @@ footer
     width: $grid-size/2
     margin-left: $grid-size/2 
     z-index: 50
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: auto
         margin: 10px auto 0
         position: relative !important
@@ -491,7 +505,7 @@ footer
     height: 30px
     +border-radius
     +box-shadow(rgba(black, 0.75) 0 1px 2px, rgba(white, 0.15) 0 -1px 15px 0 inset)
-    +breakpoint(phone)
+    +breakpoint(mobile)
         text-align: right
         float: none
     li
@@ -500,7 +514,7 @@ footer
         float: left
         margin: 7px 10px 0
         +user-select(none)
-        +breakpoint(phone)
+        +breakpoint(mobile)
             font-size: 1.2em
             display: inline-block
             float: none
@@ -564,7 +578,7 @@ footer
 .mini-height-scroll-container
     max-height: 280px
     overflow-y: auto
-    +breakpoint(phone)
+    +breakpoint(mobile)
         height: auto
         max-height: 1000px
 .mini-cart-arrow
@@ -591,9 +605,11 @@ footer
     height: 250px
     margin-top: 25px
     padding: 10px 0
-    +breakpoint(phone)
+    +breakpoint(mobile)
         height: 120px
         margin-top: 10px
+    +breakpoint(tablet)
+        height: 190px
 .main-slider
     width: 100%
     height: 100%
@@ -601,9 +617,12 @@ footer
         float: left
         width: 640px
         height: 250px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             width: 310px
             height: 121px
+        +breakpoint(tablet)
+            width: 480px
+            height: 188px
     .photo-slide
         background: rgba(white,.15)
         +background-size(cover)
@@ -614,9 +633,12 @@ footer
         +border-radius(10px)
         +single-box-shadow(rgba(black,.5), 0, 1px, 6px, 1px)
         position: relative
-        +breakpoint(phone)
+        +breakpoint(mobile)
             width: 310px
             height: 121px
+        +breakpoint(tablet)
+            width: 480px
+            height: 188px
 .slider-arrow
     background: rgba(white,.75)
     width: 150px
@@ -625,7 +647,7 @@ footer
     top: 10px
     z-index: 5
     +single-transition(background, 600ms, ease-in-out, 1ms)
-    +breakpoint(phone)
+    +breakpoint(mobile)
         display: none
     i
         position: absolute
@@ -665,7 +687,7 @@ footer
 // Menu
 .menu-container
     margin-top: 20px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin: 0 
 .menu-item
     display: block
@@ -676,20 +698,22 @@ footer
     border: dashed 1px rgba(black,0)
     +border-radius(10px)
     position: relative
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 50%
         padding-bottom: 10px
+    +breakpoint(tablet)
+        width: 33%
     .small-btn
         display: table
         margin: 7px auto 0 
         +opacity(0)
         +translate(0,10px,0)
-        +breakpoint(phone)
+        +breakpoint(mobile)
             display: none
     &:hover
         border: dashed 1px rgba(black,.3)
         +box-shadow(rgba(black,.25) 0 0 40px 0px inset, rgba(white,.05) 0 0 3px 1px)
-        +breakpoint(phone)
+        +breakpoint(mobile)
             border-color: transparent
             +box-shadow(none)
         .small-btn
@@ -704,13 +728,13 @@ footer
     +border-radius(50%)
     +box-shadow(rgba(238,238,238,.3) 0 0 0 3px, rgba(black,.6) 0 2px 5px 2px)
     overflow: hidden
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 130px
         height: 130px
 .menu-photo 
     width: 164px
     height: 164px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 130px
         height: 130px
 x:-o-prefocus, .menu-photo // opera fix
@@ -732,24 +756,24 @@ x:-o-prefocus, .menu-photo // opera fix
     padding: 25px 0
     +single-box-shadow(rgba(black,.5), 0, 1px, 6px, 1px)
     position: relative
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 94%
         margin: 30px auto
         padding-top: 5px
     .hor-splitter 
         margin: 10px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             margin: 10px 0
     h2
-        +breakpoint(phone)
+        +breakpoint(mobile)
             margin-top: 20px
 .right-dark-border
     border-right: solid 1px $border-color
-    +breakpoint(phone)
+    +breakpoint(mobile)
         border: none
 .left-light-border
     border-left: solid 1px $light-border-color
-    +breakpoint(phone)
+    +breakpoint(mobile)
         border: none
 .variants
     p 
@@ -764,7 +788,7 @@ x:-o-prefocus, .menu-photo // opera fix
     margin: 15px 20px 0
     padding: 5px 0
     +border-radius(10px)
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: auto
         padding: 5px
 .postcard-corener
@@ -793,7 +817,7 @@ x:-o-prefocus, .menu-photo // opera fix
 // Press
 .press-container
     margin: 50px 0 30px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin: 30px 0
     p
         font-size: 1.6em
@@ -803,7 +827,7 @@ x:-o-prefocus, .menu-photo // opera fix
     width: 450px
     height: 285px
     position: relative
-    +breakpoint(phone)
+    +breakpoint(mobile)
         +background-size(cover)
         width: 295px
         height: 187px
@@ -812,25 +836,25 @@ x:-o-prefocus, .menu-photo // opera fix
     position: absolute
     width: 127px
     height: 127px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 80px
         height: 80px
 .afisha-link
     top: 1px
     left: 319px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         top: 3px
         left: 210px
 .hopes-link
     top: 151px
     left: 230px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         top: 101px
         left: 153px
 .mail-link
     font-size: .95em
     +link-colors($main-light-color, adjust-lightness($main-light-color, -10%))
-    +breakpoint(phone)
+    +breakpoint(mobile)
         font-size: .7em
     i
         margin: 0 1px -2px 0
@@ -848,7 +872,7 @@ x:-o-prefocus, .menu-photo // opera fix
     +single-box-shadow(rgba(black,.7), 0, 8px, 12px, -5px)
     overflow: hidden
     position: relative 
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin-top: 20px
         padding-top: 15px
         padding-bottom: 20px
@@ -857,7 +881,7 @@ x:-o-prefocus, .menu-photo // opera fix
     top: 50px
     left: 0
     z-index: 5
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 100%
         position: relative
         top: auto
@@ -867,7 +891,7 @@ x:-o-prefocus, .menu-photo // opera fix
         line-height: .95em
         color: $red-button-bg
         margin: 0 10px 15px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             font-size: 4.2em
             line-height: 1em
     p
@@ -876,13 +900,13 @@ x:-o-prefocus, .menu-photo // opera fix
     small
         font-size: 1.3em
         line-height: 1em
-        +breakpoint(phone)
+        +breakpoint(mobile)
             line-height: 1.2em
             display: block
             margin: 10px
     .big-btn
         margin: 0 10px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             margin-bottom: 10px
 .nutrition-table
     margin: 25px 0 30px
@@ -921,7 +945,7 @@ x:-o-prefocus, .menu-photo // opera fix
     @extend .full-item-card
     min-height: 0
     padding: 20px 0
-    +breakpoint(phone)
+    +breakpoint(mobile)
         padding-bottom: 0
     .hor-splitter
         margin: 10px 0 0
@@ -942,7 +966,7 @@ x:-o-prefocus, .menu-photo // opera fix
 .main-cart-info
     width: 400px
     margin: 30px 0 10px 25px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 58%
         min-height: 70px
 .main-cart-item-link
@@ -954,7 +978,7 @@ x:-o-prefocus, .menu-photo // opera fix
 .main-cart-qt
     font-size: 1.5em
     margin: 24px 0 10px 15px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin-top: 0
 .main-cart-item-price
     font-size: 1.5em
@@ -962,12 +986,12 @@ x:-o-prefocus, .menu-photo // opera fix
     text-align: right
     width: 100px
     margin: 31px 0 10px 10px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin-top: 7px
 .main-cart-item-del
     margin: 32px 0 10px 43px
     +opacity(.5)
-    +breakpoint(phone)
+    +breakpoint(mobile)
         margin-top: 8px
     &:hover
         +opacity(.9)
@@ -986,7 +1010,7 @@ x:-o-prefocus, .menu-photo // opera fix
     margin: 15px 0 0
 .discount-holder
     float: left
-    +breakpoint(phone)
+    +breakpoint(mobile)
         text-align: center
         float: none
     h3
@@ -1027,7 +1051,7 @@ x:-o-prefocus, .menu-photo // opera fix
     margin-left: auto
     padding-right: 50px
     padding-left: 50px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         width: 80%
         padding-right: 20px
         padding-left: 20px
@@ -1038,10 +1062,10 @@ x:-o-prefocus, .menu-photo // opera fix
 // Profile
 .profile-holder
     @extend .main-cart-holder
-    +breakpoint(phone)
+    +breakpoint(mobile)
         padding: 10px 0
     .small-col
-        +breakpoint(phone)
+        +breakpoint(mobile)
             margin-bottom: 20px
             padding-bottom: 5px
             +single-box-shadow(rgba(black,.3), 0, 5px, 8px, -2px)
@@ -1054,7 +1078,7 @@ x:-o-prefocus, .menu-photo // opera fix
     top: 0
     bottom: 0
     left: 30%
-    +breakpoint(phone)
+    +breakpoint(mobile)
         display: none
 .profile-nav-link
     font-size: 2em
@@ -1062,7 +1086,7 @@ x:-o-prefocus, .menu-photo // opera fix
     +box-sizing($bs)
     padding: 15px 5px 15px 65px
     position: relative
-    +breakpoint(phone)
+    +breakpoint(mobile)
         font-size: 1.4em
         padding: 5px 10px
     &.selected
@@ -1075,7 +1099,7 @@ x:-o-prefocus, .menu-photo // opera fix
     position: absolute
     top: 19px
     right: 25px
-    +breakpoint(phone)
+    +breakpoint(mobile)
         top: 10px
         +rotate(90deg)
 .order-history-holder
@@ -1134,7 +1158,7 @@ x:-o-prefocus, .menu-photo // opera fix
     background: white
     .error-text-holder
         margin-top: 200px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             margin-top: 30px
     h1, h2, p
         color: $main-dark-colot
@@ -1143,7 +1167,7 @@ x:-o-prefocus, .menu-photo // opera fix
     img
         width: 100%
         margin-top: 50px
-        +breakpoint(phone)
+        +breakpoint(mobile)
             margin-top: 0
 
 

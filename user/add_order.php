@@ -46,19 +46,69 @@ if (!isset($_SESSION['user_id'])) {
 		preg_match('/\d-\d+-\d+$/', $user_phone, $match);
 		$pass = str_replace('-', '', $match[0]);
 		$salt = GenerateSalt();
-		$user_pass = md5(md5($pass) . $salt);
+		$password = md5(md5($pass) . $salt);
 		
-		$query = "INSERT
-					INTO `users`
-					SET
-						`name`='{$user_name}',
-						`email`='{$user_email}',
-						`password`='{$user_pass}',
-						`salt`='{$salt}'";
-						
+		$query = "SELECT *
+					FROM `phones`
+					WHERE `phone` = '{$user_phone}'";
+	
 		$sql = mysql_query($query) or die(mysql_error());
-		$_SESSION['user_id'] = mysql_insert_id();
-		$_SESSION['new_user'] = true;
+		
+		if (!mysql_num_rows($sql)) {
+			$query = "INSERT
+						INTO `users`
+						SET
+							`name`='{$user_name}',
+							`email`='{$user_email}',
+							`password`='{$password}',
+							`bonus_received`='1',
+							`salt`='{$salt}'";
+							
+			$sql = mysql_query($query) or die(mysql_error());
+			$_SESSION['user_id'] = mysql_insert_id();
+			$_SESSION['new_user'] = true;
+			
+			$query = "INSERT
+						INTO `phones`
+						SET
+							`user_id`='{$_SESSION['user_id']}',
+							`phone`='{$user_phone}'";
+							
+			$sql = mysql_query($query) or die(mysql_error());
+			$phone_id = mysql_insert_id();
+		} else {
+			$row = mysql_fetch_assoc($sql);
+			$user_id = $row['user_id'];
+			
+			$query = "SELECT *
+						FROM `users`
+						WHERE `user_id` = '{$user_id}'";
+		
+			$sql = mysql_query($query) or die(mysql_error());
+			$row = mysql_fetch_assoc($sql);
+			
+			if (empty($row['email'])) {
+				$query = "UPDATE `users`
+							SET
+								`name`='{$user_name}',
+								`email`='{$user_email}',
+								`password`='{$password}',
+								`bonus_received`='1',
+								`salt`='{$salt}'
+							WHERE `user_id`='{$user_id}'";
+				
+				$sql = mysql_query($query) or die(mysql_error());
+				$_SESSION['user_id'] = $user_id;
+				$_SESSION['new_user'] = true;
+			} else {
+				$error = array (
+					'id' => '2',
+					'text' => 'Пользователь с таким телефоном уже зарегистрирован'
+				);
+				echo json_encode($error);
+				exit;
+			}
+		}
 		
 		$query = "INSERT
 					INTO `discounts`
@@ -68,16 +118,6 @@ if (!isset($_SESSION['user_id'])) {
 						`value`='1'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
-		
-		
-		$query = "INSERT
-					INTO `phones`
-					SET
-						`user_id`='{$_SESSION['user_id']}',
-						`phone`='{$user_phone}'";
-						
-		$sql = mysql_query($query) or die(mysql_error());
-		$phone_id = mysql_insert_id();
 		
 		$query = "INSERT
 					INTO `addresses`
@@ -162,22 +202,43 @@ if (!isset($_SESSION['user_id'])) {
 	}
 }
 
-$query = "SELECT 1
-			FROM `orders`
+$query = "SELECT `bonus_received`
+			FROM `users`
 			WHERE `user_id` = '{$_SESSION['user_id']}'";
 			
 $sql = mysql_query($query) or die(mysql_error());
+$row = mysql_fetch_assoc($sql);
 
-if (!mysql_num_rows($sql) && !isset($_SESSION['new_user'])) {
-	$query = "INSERT
-				INTO `discounts`
-				SET
-					`user_id`='{$_SESSION['user_id']}',
-					`discount`='5',
-					`value`='1'";
-					
+if ($row['bonus_received'] == 0 && !isset($_SESSION['new_user'])) {
+	$query = "SELECT *
+				FROM `discounts`
+				WHERE `user_id` = '{$_SESSION['user_id']}' AND `discount` = '5'";
+				
 	$sql = mysql_query($query) or die(mysql_error());
+	
+	if (mysql_num_rows($sql)) {
+		$row = mysql_fetch_assoc($sql);
+		$query = "UPDATE `discounts`
+					SET `value`=value+1
+					WHERE `discount_id` = '{$row['discount_id']}'";
+		$sql = mysql_query($query) or die(mysql_error());
+	} else {
+		$query = "INSERT
+					INTO `discounts`
+					SET
+						`user_id`='{$_SESSION['user_id']}',
+						`discount`='5',
+						`value`='1'";
+						
+		$sql = mysql_query($query) or die(mysql_error());
+	}
 	$_SESSION['new_user_discount'] = 5;
+	
+	$query = "UPDATE `users`
+				SET `bonus_received`='1'
+				WHERE `user_id`='{$_SESSION['user_id']}'";
+	
+	$sql = mysql_query($query) or die(mysql_error());
 }
 
 $query = "INSERT
@@ -308,10 +369,6 @@ mail($to, $subject, $message, $headers);
 
 // END OF MAIL
 
-$error = array (
-	'id' => '0',
-	'text' => 'Success'
-);
-echo json_encode($error);
+echo json_encode('success');
 
 ?>

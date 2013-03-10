@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
 				}
 			});
 		} else {
-			$('.mini-height-scroll-container').html('<span id="spinner_cart"><img src="images/spinner.gif" class="spinner" title="Loading..."></span>');
+			$('.mini-height-scroll-container').html('<span id="spinner_cart"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>');
 			$('.mini-cart-btn').remove();
 		}
 		
@@ -201,7 +201,7 @@ jQuery(document).ready(function($){
 		}
 	}
 	// Metro autocomplete
-	$.get('../js/metro.txt', function(file) {
+	$.get('/js/metro.txt', function(file) {
 		var data = file.split(', ');
 		$('input[name=user-metro]').autocomplete({
 			source: function(req, response) { 

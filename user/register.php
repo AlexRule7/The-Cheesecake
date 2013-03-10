@@ -11,29 +11,77 @@ if (!empty($_POST))
 {
 	$user_name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
 	$user_email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
+	$user_phone = (isset($_POST['user-phone'])) ? sanitize($_POST['user-phone']) : '';
 	$pass = (isset($_POST['user-pass'])) ? sanitize($_POST['user-pass']) : '';
-	
+		
 	$salt = GenerateSalt();
 	$password = md5(md5($pass) . $salt);
 		
-	$query = "SELECT 1
+	$query = "SELECT *
 				FROM `users`
 				WHERE `email` = '{$user_email}'";
 
 	$sql = mysql_query($query) or die(mysql_error());
 	
 	if (!mysql_num_rows($sql)) {
-		$query = "INSERT
-					INTO `users`
-					SET
-						`name`='{$user_name}',
-						`email`='{$user_email}',
-						`password`='{$password}',
-						`salt`='{$salt}'";
-						
+		$query = "SELECT *
+					FROM `phones`
+					WHERE `phone` = '{$user_phone}'";
+	
 		$sql = mysql_query($query) or die(mysql_error());
-		$_SESSION['user_id'] = mysql_insert_id();
 		
+		if (!mysql_num_rows($sql)) {
+			$query = "INSERT
+						INTO `users`
+						SET
+							`name`='{$user_name}',
+							`email`='{$user_email}',
+							`password`='{$password}',
+							`bonus_received`='0',
+							`salt`='{$salt}'";
+							
+			$sql = mysql_query($query) or die(mysql_error());
+			$_SESSION['user_id'] = mysql_insert_id();
+			
+			$query = "INSERT
+						INTO `phones`
+						SET
+							`user_id`='{$_SESSION['user_id']}',
+							`phone`='{$user_phone}'";
+							
+			$sql = mysql_query($query) or die(mysql_error());
+		} else {
+			$row = mysql_fetch_assoc($sql);
+			$user_id = $row['user_id'];
+			
+			$query = "SELECT *
+						FROM `users`
+						WHERE `user_id` = '{$user_id}'";
+		
+			$sql = mysql_query($query) or die(mysql_error());
+			$row = mysql_fetch_assoc($sql);
+			
+			if (empty($row['email'])) {
+				$query = "UPDATE `users`
+							SET
+								`name`='{$user_name}',
+								`email`='{$user_email}',
+								`password`='{$password}',
+								`bonus_received`='0',
+								`salt`='{$salt}'
+							WHERE `user_id`='{$user_id}'";
+				
+				$sql = mysql_query($query) or die(mysql_error());
+				$_SESSION['user_id'] = $user_id;
+			} else {
+				$error = array (
+					'id' => '2',
+					'text' => 'Пользователь с таким телефоном уже зарегистрирован'
+				);
+				echo json_encode($error);
+				exit;
+			}
+		}
 		// MAIL
 		
 		$mail_data = array (

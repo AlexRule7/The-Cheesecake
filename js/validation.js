@@ -227,6 +227,30 @@ $(document).ready(function(){
 				dateCaption.hide('normal');
 				ele.parent().removeClass('error');
 			}
+		},
+		
+		'product' : function(button) {
+			
+			if (!button.length) {
+				var ele = $(this);
+			} else {
+				var ele = button.closest('form').find('input[name=product-name]');
+			}
+						
+			if (!ele.next('.productCaption').length) {
+				ele.after('<span class="caption productCaption"></span>');
+			}
+						
+			var productCaption = ele.next('.productCaption');
+					
+			if(ele.val().length < 10) {
+				jVal.errors = true;
+				productCaption.html('Выберите продукт из списка').show('normal');
+				ele.parent().addClass('error');
+			} else {
+				productCaption.hide('normal');
+				ele.parent().removeClass('error');
+			}
 		}
 
 	};
@@ -254,6 +278,18 @@ $(document).ready(function(){
 	$('#forgot').keypress(function(e) {
 		if ((e.keyCode || e.which) == 13) {
 			$('#forgot a').trigger('click');
+		}
+	});
+	
+	$('#admin-add-user').keypress(function(e) {
+		if ((e.keyCode || e.which) == 13) {
+			$('.admin-add-user').trigger('click');
+		}
+	});
+	
+	$('#admin-order-products').keypress(function(e) {
+		if ((e.keyCode || e.which) == 13) {
+			$('.admin-order-products').trigger('click');
 		}
 	});
 	
@@ -295,6 +331,7 @@ $(document).ready(function(){
 		jVal.errors = false;
 		jVal.name(that);
 		jVal.mail(that);
+		jVal.phone(that);
 		jVal.pass(that);
 		jVal.pass_conf(that);
 		if(!jVal.errors) {
@@ -309,6 +346,9 @@ $(document).ready(function(){
 					if (data.id == 1) {
 						form.find('input[name=user-email]').parent().addClass('error');
 						form.find('.mailCaption').html(data.text).show();
+					} else if (data.id == 2) {
+						form.find('input[name=user-phone]').parent().addClass('error');
+						form.find('.phoneCaption').html(data.text).show();
 					} else {
 						location.reload();
 					}
@@ -343,6 +383,9 @@ $(document).ready(function(){
 					if (data.id == 1) {
 						$('input[name=user-email]').parent().addClass('error');
 						$('.mailCaption').html(data.text).show();
+					} else if (data.id == 2) {
+						$('input[name=user-phone]').parent().addClass('error');
+						$('.phoneCaption').html(data.text).show();
 					} else {
 						window.location.href = that.prop('href');
 					}
@@ -404,6 +447,64 @@ $(document).ready(function(){
 		}
 		e.preventDefault();
     });
+	
+	$('.admin-add-user').click(function (e){
+		var that = $(this);
+		jVal.errors = false;
+		jVal.name(that);
+		jVal.phone(that);
+		jVal.metro(that);
+		jVal.street(that);
+		jVal.house(that);
+		if(!jVal.errors) {
+			var serial = $('#admin-add-user').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '/admin/script/add_user.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					if (data.id == 1) {
+						$('input[name=user-phone]').parent().addClass('error');
+						$('.phoneCaption').html(data.text).show();
+					} else {
+						$('.add-success').slideDown();
+					}
+				}
+			});
+		}
+		e.preventDefault();
+	});
+	
+	// Add order button click
+	$('.admin-add-order').click(function(e) {
+        var that = $(this);
+		jVal.name(that);
+		jVal.phone(that);
+		jVal.metro(that);
+		jVal.street(that);
+		jVal.house(that);
+		jVal.product(that);
+		jVal.date(that);
+		if(!jVal.errors) {
+			var order_raw_bill = '&order-raw-bill='+ parseInt($('.order-products .raw-bill').text(), 10);
+			var order_delivery = '&order-delivery='+ (parseInt($('.order-products .delivery').text(), 10) || '');
+			var order_bill = '&order-bill='+ parseInt($('.order-products .bill').text(), 10);
+			var serial = $('#admin-add-order').serialize()+order_raw_bill+order_delivery+order_bill;
+			$.ajax({
+				type: 'POST',
+				url: '/admin/script/add_order.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					$('.add-success').slideDown();
+				}
+			});
+		}
+		e.preventDefault();
+    });
 		
 	$('input[name=user-email]').change(jVal.mail);
 	$('input[name=user-pass]').change(jVal.pass);
@@ -415,6 +516,7 @@ $(document).ready(function(){
 	$('input[name=user-street]').change(jVal.street);
 	$('input[name=user-house]').change(jVal.house);
 	$('input[name=order-date]').change(jVal.date);
+	$('input[name=product-name]').change(jVal.product);
 	
 	if ($('input[name="user-phone[]"]').length || $('input[name=user-phone]').length) {
 		$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');

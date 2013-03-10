@@ -8,7 +8,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 header('Content-type: application/json');
 
 if (isset($_POST)) {
-	$query = "SELECT `metro`, `street`, `house`, `building`, `office`, `company`, `flat`, `enter`, `floor`, `domofon`
+	$query = "SELECT *
 				FROM `addresses`
 				WHERE `address_id` = '{$_POST['id']}'";
 

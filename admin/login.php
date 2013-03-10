@@ -2,12 +2,12 @@
 
 session_start();
 
-require(dirname(__FILE__).'/../Connections/exarium.php');
+include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 if (isset($_GET['logout']))
 {
-	if (isset($_SESSION['user_id']))
-		unset($_SESSION['user_id']);
+	if (isset($_SESSION['admin_id']))
+		unset($_SESSION['admin_id']);
 	
 	setcookie('login', '', 0, "/");
 	setcookie('password', '', 0, "/");
@@ -16,7 +16,7 @@ if (isset($_GET['logout']))
 	exit;
 }
 
-if (isset($_SESSION['user_id']))
+if (isset($_SESSION['admin_id']))
 {
 	// юзер уже залогинен, перекидываем его отсюда на закрытую страницу
 	
@@ -66,7 +66,7 @@ if (!empty($_POST))
 			// то мы ставим об этом метку в сессии (допустим мы будем ставить ID пользователя)
 
 			$row = mysql_fetch_assoc($sql);
-			$_SESSION['user_id'] = $row['id'];
+			$_SESSION['admin_id'] = $row['id'];
 			
 			
 			// если пользователь решил "запомнить себя"
@@ -104,16 +104,13 @@ if (!empty($_POST))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Admin Login</title>
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="css/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-<script>
-jQuery(document).ready(function($){
-	$( ".button" ).button();
-});
-</script>
+<link href="/admin/stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="/admin/stylesheets/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="/admin/stylesheets/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+<script src="/admin/js/jquery.ui.touch-punch.min.js"></script>
+<script src="/admin/js/jquery.ui.styling.js"></script>
 </head>
 <body>
 
@@ -125,14 +122,9 @@ jQuery(document).ready(function($){
 	<fieldset class="ui-corner-all"><legend class="ui-corner-all">Авторизация</legend>
     <?php
 	
-	if(!$error == '')
-	{
+	if (!empty($error)) {
 		print '<div id="error_notification">'.$error.'</div>';
 	}
-	
-		$salt = GenerateSalt();
-		$hashed_password = md5(md5(55555) . $salt);
-		echo "salt = ". $salt . "<br>hash = " . $hashed_password . "<br>";
 	
 	?>
     <label>Логин</label><input id="name" type="text" name="login"><br />

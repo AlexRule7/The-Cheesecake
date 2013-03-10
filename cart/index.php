@@ -190,7 +190,7 @@
                                         </div>
                                         <div class="mini-field">
                                             <label for="user-domofon">Домофон:</label>
-                                            <input class="text-input" type="text" tabindex="12" name="user-domofon" <?php echo $row1['domofon']; ?>>
+                                            <input class="text-input" type="text" tabindex="12" name="user-domofon" value="<?php echo $row1['domofon']; ?>">
                                         </div>
                                     </div>
                                     <div class="field company">

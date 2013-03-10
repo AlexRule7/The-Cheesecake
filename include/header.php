@@ -1,6 +1,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="viewport" content="target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no">
     <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/add.css" media="screen, projection" rel="stylesheet" type="text/css" />
     <link href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
     <!--[if IE]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -82,6 +83,10 @@
                         <div class="field">
                             <label for="user-email">Email:</label>
                             <input class="text-input" type="email" name="user-email">
+                        </div>
+                        <div class="field">
+                            <label for="user-phone">Телефон:</label>
+                            <input class="text-input" type="tel" name="user-phone">
                         </div>
                         <div class="field">
                             <label for="user-pass">Пароль:</label>

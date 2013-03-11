@@ -78,6 +78,7 @@ if (!isset($_SESSION['user_id'])) {
 			$phone_id = mysql_insert_id();
 		} else {
 			$row = mysql_fetch_assoc($sql);
+			$phone_id = $row['phone_id'];
 			$user_id = $row['user_id'];
 			
 			$query = "SELECT *

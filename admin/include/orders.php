@@ -1,8 +1,10 @@
+<div class="ver-shadow-splitter"></div>
 <div class="grid small-col">
     <aside class="progile-nav">
     <ul>
         <li><a href="#tabs-1" class="profile-nav-link selected">Добавить заказ <i class="icn-selected-nav"></i></a></li>
         <li><a href="#tabs-2" class="profile-nav-link">История заказов <i class="icn-selected-nav"></i></a></li>
+        <li><a href="#tabs-3" class="profile-nav-link">Редактировать заказ <i class="icn-selected-nav"></i></a></li>
     </ul>
     </aside>
 </div>
@@ -15,8 +17,8 @@
             	<div class="small-col grid">
                     <input type="hidden" name="user-id" />
                     <div class="field">
-                        <input type="hidden" name="user-phone-id" />
                         <label for="user-phone">Телефон:</label>
+                        <input type="hidden" name="user-phone-id" />
                         <input class="text-input" type="tel" name="user-phone" id="user_search">
                     </div>
                     <div class="field">
@@ -62,11 +64,11 @@
                     </div>
                     <div class="field group">
                         <div class="mini-field">
-                            <label for="user-enter disabled">Подъезд:</label>
+                            <label for="user-enter">Подъезд:</label>
                             <input class="text-input disabled" type="text" tabindex="10" name="user-enter">
                         </div>
                         <div class="mini-field">
-                            <label for="user-floor disabled">Этаж:</label>
+                            <label for="user-floor">Этаж:</label>
                             <input class="text-input disabled" type="text" tabindex="11" name="user-floor">
                         </div>
                         <div class="mini-field">
@@ -75,8 +77,8 @@
                         </div>
                     </div>
                     <div class="field company">
-                        <label for="user-company disabled">Название компании:</label>
-                        <input class="text-input" type="text" tabindex="13" name="user-company">
+                        <label for="user-company">Название компании:</label>
+                        <input class="text-input disabled" type="text" tabindex="13" name="user-company">
                     </div>
                 </div>
             </div>

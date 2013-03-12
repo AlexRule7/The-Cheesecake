@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 header('Content-type: application/json');
@@ -28,6 +30,7 @@ if (!empty($_POST)) {
 					`user_id`='{$user_id}',
 					`phone_id`='{$phone_id}',
 					`address_id`='{$address_id}',
+					`admin_id`='{$_SESSION['admin_id']}',
 					`delivery_date`='{$order_date}',
 					`delivery_time`='{$order_time}',
 					`discount`='{$order_discount}',
@@ -105,6 +108,10 @@ if (!empty($_POST)) {
 							
 			$sql = mysql_query($query) or die(mysql_error());
 		}
+		$query = "UPDATE `orders`
+					SET `discounts_given`='{$new_discount}'
+					WHERE `order_id` = '{$order_id}'";
+		$sql = mysql_query($query) or die(mysql_error());
 	}
 	
 	echo json_encode('success');

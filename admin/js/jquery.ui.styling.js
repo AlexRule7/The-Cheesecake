@@ -36,15 +36,20 @@ jQuery(document).ready(function($){
 			var form = $(this).closest('form');
 			$.getJSON('/admin/script/user_search.php?phone=' + $('#user_search').val(),
 			function(data){
+				$('.add_success').slideUp();
 				form.find('input[name=user-id]').val(data.user_id);
-				form.find('input[name=user-phone-id]').val(data.phone_id);
+				form.find('input[name="user-phone-id[]"]:first, input[name="user-phone-id"]:first').val(data.phone_id);
 				form.find('input[name=user-name]').val(data.user_name);
 				form.find('input[name=user-email]').val(data.user_email);
-				form.find('select[name=user-address]').html('');
+				form.find('select[name=user-address] option:not([value=0])').remove();
+				form.find('input[name="user-phone[]"]:not(:first, :last)').parent().remove();
+				
 				if (!$.isEmptyObject(data.addresses)) {
+					form.find('.address-group input').prop('disabled', false);
 					$.each(data.addresses, function(element) {
-						form.find('select[name=user-address]').append('<option value="'+data['addresses'][element]['address_id']+'">'+data['addresses'][element]['title']+'</option>');
+						form.find('select[name=user-address]').prepend('<option value="'+data['addresses'][element]['address_id']+'">'+data['addresses'][element]['title']+'</option>');
 					});
+					form.find('select[name=user-address]').val(data['addresses'][0]['address_id']);
 					if (data['addresses'][0]['office'] == 1) {
 						form.find('#to-office').prop('checked', true).trigger('change');
 					}
@@ -54,8 +59,9 @@ jQuery(document).ready(function($){
 						$(element).val(data['addresses'][0][matches[0]]);
 					});
 				} else {
-					form.find('select[name=user-address]').html('<option value="0">У пользователя нет адреса</option>');
-					form.find('.address-group input').val('');
+					form.find('select[name=user-address]').prepend('<option value="-1">У пользователя нет адреса</option>');
+					form.find('select[name=user-address]').val('-1');
+					form.find('.address-group input').val('').prop('disabled', true);
 				}
 				if (!$.isEmptyObject(data.discounts)) {
 					$.each(data.discounts, function(element) {
@@ -63,6 +69,16 @@ jQuery(document).ready(function($){
 					});
 				} else {
 					form.find('.discount-btn').remove();
+				}
+				if (!$.isEmptyObject(data.phones)) {
+					$.each(data.phones, function(element) {
+						form.find('div:first div:last').before('\
+							<div class="field">\
+								<input type="hidden" name="user-phone-id[]" value="'+element+'">\
+								<input class="text-input" type="tel" name="user-phone[]" value="'+data['phones'][element]+'">\
+							</div>');
+						$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');
+					});
 				}
 			});
 		}
@@ -85,36 +101,47 @@ jQuery(document).ready(function($){
 	
 	// Change and get address
 	$('select[name=user-address]').change(function(e) {
-        $.ajax({
-			type: 'POST',
-			url: '/user/get_address.php',
-			data: 'id='+ $(this).val(),
-			cache: false,
-			dataType: 'json',
-			success: function(data) {
-				if (data.office == 1) {
-					$(this).closest('form').find('#to-office').prop('checked', true).trigger('change');
-				} else {
-					$(this).closest('form').find('#to-office').prop('checked', false).trigger('change');
+		var that = $(this);
+		if (that.val() == '0') {
+			$('.address-group input').val('').prop('disabled', false);
+			$('#to-office').prop('checked', false).trigger('change');
+		} else if (that.val() == '-1') {
+			$('.address-group input').val('').prop('disabled', true);
+			$('#to-office').prop('checked', false).trigger('change');
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '/user/get_address.php',
+				data: 'id='+ $(this).val(),
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					$('.address-group input').prop('disabled', false);
+					if (data.office == 1) {
+						that.closest('form').find('#to-office').prop('checked', true).trigger('change');
+					} else {
+						that.closest('form').find('#to-office').prop('checked', false).trigger('change');
+					}
+					var patt = /[a-z]+$/;
+					that.closest('form .address-group').find('input').each(function(index, element) {
+						var matches = patt.exec($(element).prop('name'));
+						$(element).val(data[matches[0]]);
+					});
 				}
-				var patt = /[a-z]+$/;
-				$(this).closest('form').find('input').each(function(index, element) {
-					var matches = patt.exec($(element).prop('name'));
-					$(element).val(data[matches[0]]);
-				});
-			}
-		});
+			});
+		}
     });
 	
 	
 	// Office checkbox behaviour
-	$('#to-office').change(function() {
+	$('input[name=user-office]').change(function() {
+		var form = $(this).closest('form');
 		if(this.checked) {
-			$('.field.group:eq(1), .field.group:first .mini-field:last').hide('normal');
-			$('.field.company').show('normal');
+			form.find('.field.group:eq(1), .field.group:first .mini-field:last').hide('normal');
+			form.find('.field.company').show('normal');
 		} else {
-			$('.field.group:eq(1), .field.group:first .mini-field:last').show('normal');
-			$('.field.company').hide('normal');
+			form.find('.field.group:eq(1), .field.group:first .mini-field:last').show('normal');
+			form.find('.field.company').hide('normal');
 		}
 	});
 	
@@ -130,7 +157,7 @@ jQuery(document).ready(function($){
 			});
 		}
 	}
-	
+
 	// ========== Orders ========== //
 	
 	// Add new order counter function
@@ -198,7 +225,7 @@ jQuery(document).ready(function($){
 	
 	// Expand/Collapse order info
 	$('body').on('click', '.order-history-item', (function() {
-		$(this).find('.order-history-details').slideToggle();
+		$(this).next('.order-history-details').slideToggle();
 	}));
 	
 	// Product search init
@@ -278,6 +305,45 @@ jQuery(document).ready(function($){
 			add_order_counter();
 		}
     });
+	
+	// Cancel order
+    $('.order-history').on('click', '.order-history-cancel', function(e){
+		var that = $(this);
+		var data = 'cancel-id='+that.attr('href');
+        $.ajax({
+			type: 'POST',
+			url: '/admin/script/change_order.php',
+			data: data,
+			cache: false,
+			dataType: 'json',
+			success: function(data) {
+				that.removeClass('order-history-cancel red-btn').addClass('order-history-approve green-btn').text('Подтвердить');
+				that.closest('.order-history-details').prev('.order-history-item').addClass('order_status_canceled');
+			}
+		});
+		e.preventDefault();
+    });
+	
+	// Approve order
+    $('.order-history').on('click', '.order-history-approve', function(e){
+		var that = $(this);
+		var data = 'approve-id='+that.attr('href');
+        $.ajax({
+			type: 'POST',
+			url: '/admin/script/change_order.php',
+			data: data,
+			cache: false,
+			dataType: 'json',
+			success: function(data) {
+				that.removeClass('order-history-approve green-btn').addClass('order-history-cancel red-btn').text('Отменить');
+				that.closest('.order-history-details').prev('.order-history-item').removeClass('order_status_canceled');
+			}
+		});
+		e.preventDefault();
+    });
+	
+	// ========== Users ========== //
+	
 		
 	/*
 	$( "#street_search" ).autocomplete({

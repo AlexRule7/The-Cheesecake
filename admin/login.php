@@ -54,7 +54,7 @@ if (!empty($_POST))
 		// делаем запрос к БД
 		// и ищем юзера с таким логином и паролем
 
-		$query = "SELECT `id`
+		$query = "SELECT `admin_id`
 					FROM `admin`
 					WHERE `login`='{$login}' AND `password`='{$password}'
 					LIMIT 1";
@@ -66,7 +66,7 @@ if (!empty($_POST))
 			// то мы ставим об этом метку в сессии (допустим мы будем ставить ID пользователя)
 
 			$row = mysql_fetch_assoc($sql);
-			$_SESSION['admin_id'] = $row['id'];
+			$_SESSION['admin_id'] = $row['admin_id'];
 			
 			
 			// если пользователь решил "запомнить себя"
@@ -104,13 +104,8 @@ if (!empty($_POST))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Admin Login</title>
-<link href="/admin/stylesheets/main.css" rel="stylesheet" type="text/css" />
-<link href="/admin/stylesheets/jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="/admin/stylesheets/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-<script src="/admin/js/jquery.ui.touch-punch.min.js"></script>
-<script src="/admin/js/jquery.ui.styling.js"></script>
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="/admin/stylesheets/admin_screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 </head>
 <body>
 

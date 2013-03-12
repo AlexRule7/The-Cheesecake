@@ -215,7 +215,7 @@ jQuery(document).ready(function($){
 		})
 	});
 	// Phone autocomplete
-	$('input[name=user-phone]').autocomplete({
+	$('input[name=user-phone].user-search').autocomplete({
 		source: '/user/phone_search.php',
 		minLength: 0
 	})

@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin_id'])) {
 		$login = sanitize($_COOKIE['login']);
 		$password = sanitize($_COOKIE['password']);
 
-		$query = "SELECT `id`
+		$query = "SELECT `admin_id`
 					FROM `admin`
 					WHERE `login`='{$login}' AND `password`='{$password}'
 					LIMIT 1";
@@ -26,7 +26,7 @@ if (!isset($_SESSION['admin_id'])) {
 if (isset($_SESSION['admin_id'])) {
 	$query = "SELECT `login`
 				FROM `admin`
-				WHERE `id` = '{$_SESSION['admin_id']}'
+				WHERE `admin_id` = '{$_SESSION['admin_id']}'
 				LIMIT 1";
 	$sql = mysql_query($query) or die(mysql_error());
 	
@@ -82,7 +82,6 @@ if (!isset($_SESSION['admin_id'])) {
             <div class="inner">
                 <section class="profile-holder group">
                 <div id="profile-tabs">
-                    <div class="ver-shadow-splitter"></div>
 					<?php include ($include); ?>
                 </div><!-- profile tabs -->
                 </section>

@@ -2,9 +2,11 @@
 <dwsync>
 <file name="address_search.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144910269" remote="130074333600000000" Dst="0" />
 <file name="product_search.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144920270" remote="130074333600000000" Dst="0" />
-<file name="user_search.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144920270" remote="130074333600000000" Dst="0" />
-<file name="functions.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144910269" remote="130074333600000000" Dst="0" />
-<file name="get_orders.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144910269" remote="130074333600000000" Dst="0" />
+<file name="user_search.php" server="92.53.112.193//exarium.ru/public_html/" local="130074367063217482" remote="130074366600000000" Dst="0" />
+<file name="functions.php" server="92.53.112.193//exarium.ru/public_html/" local="130075397439641643" remote="130075397400000000" Dst="0" />
+<file name="get_orders.php" server="92.53.112.193//exarium.ru/public_html/" local="130075423937557237" remote="130075423800000000" Dst="0" />
 <file name="add_user.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144910269" remote="130074333600000000" Dst="0" />
-<file name="add_order.php" server="92.53.112.193//exarium.ru/public_html/" local="130074332144910269" remote="130074333600000000" Dst="0" />
+<file name="add_order.php" server="92.53.112.193//exarium.ru/public_html/" local="130075389583722310" remote="130075389000000000" Dst="0" />
+<file name="change_user.php" server="92.53.112.193//exarium.ru/public_html/" local="130075113818949467" remote="130075113600000000" Dst="0" />
+<file name="change_order.php" server="92.53.112.193//exarium.ru/public_html/" local="130075409836910726" remote="130075409400000000" Dst="0" />
 </dwsync>

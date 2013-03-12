@@ -106,23 +106,32 @@ $(document).ready(function(){
 			if (!button.length) {
 				var ele = $(this);
 			} else {
-				var ele = button.closest('form').find('input[name=user-phone]');
+				if (button.closest('form').find('input[name=user-phone]').length) {
+					var ele = button.closest('form').find('input[name=user-phone]');
+				} else if (button.closest('form').find('input[name="user-phone[]"]')) {
+					var ele = button.closest('form').find('input[name="user-phone[]"]')
+				}
 			}
 						
 			if (!ele.next('.phoneCaption').length) {
 				ele.after('<span class="caption phoneCaption"></span>');
 			}
 						
-			var phoneCaption = ele.next('.phoneCaption');
-					
-			if(ele.val().length < 5) {
-				jVal.errors = true;
-				phoneCaption.html('Формат: +7(999)999-99-99').show('normal');
-				ele.parent().addClass('error');
-			} else {
-				phoneCaption.hide('normal');
-				ele.parent().removeClass('error');
-			}
+			//var phoneCaption = ele.next('.phoneCaption');
+			
+			$.each(ele, function(element) {
+				if ($(ele[element]).prev('input').val() != 0) {
+					var phoneCaption = $(ele[element]).next('.phoneCaption');
+					if($(ele[element]).val().length < 5) {
+						jVal.errors = true;
+						phoneCaption.html('Формат: +7(999)999-99-99').show('normal');
+						$(ele[element]).parent().addClass('error');
+					} else {
+						phoneCaption.hide('normal');
+						$(ele[element]).parent().removeClass('error');
+					}
+				}
+			});
 		},
 		
 		'metro' : function(button) {
@@ -448,6 +457,35 @@ $(document).ready(function(){
 		e.preventDefault();
     });
 	
+	// Add order button click
+	$('.admin-add-order').click(function(e) {
+        var that = $(this);
+		jVal.name(that);
+		jVal.phone(that);
+		jVal.metro(that);
+		jVal.street(that);
+		jVal.house(that);
+		jVal.product(that);
+		jVal.date(that);
+		if(!jVal.errors) {
+			var order_raw_bill = '&order-raw-bill='+ parseInt($('.order-products .raw-bill').text(), 10);
+			var order_delivery = '&order-delivery='+ (parseInt($('.order-products .delivery').text(), 10) || '');
+			var order_bill = '&order-bill='+ parseInt($('.order-products .bill').text(), 10);
+			var serial = $('#admin-add-order').serialize()+order_raw_bill+order_delivery+order_bill;
+			$.ajax({
+				type: 'POST',
+				url: '/admin/script/add_order.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					$('.add-success').slideDown();
+				}
+			});
+		}
+		e.preventDefault();
+    });
+	
 	$('.admin-add-user').click(function (e){
 		var that = $(this);
 		jVal.errors = false;
@@ -477,34 +515,33 @@ $(document).ready(function(){
 		e.preventDefault();
 	});
 	
-	// Add order button click
-	$('.admin-add-order').click(function(e) {
-        var that = $(this);
+	$('.admin-change-user').click(function (e){
+		var that = $(this);
+		jVal.errors = false;
 		jVal.name(that);
-		jVal.phone(that);
 		jVal.metro(that);
 		jVal.street(that);
 		jVal.house(that);
-		jVal.product(that);
-		jVal.date(that);
 		if(!jVal.errors) {
-			var order_raw_bill = '&order-raw-bill='+ parseInt($('.order-products .raw-bill').text(), 10);
-			var order_delivery = '&order-delivery='+ (parseInt($('.order-products .delivery').text(), 10) || '');
-			var order_bill = '&order-bill='+ parseInt($('.order-products .bill').text(), 10);
-			var serial = $('#admin-add-order').serialize()+order_raw_bill+order_delivery+order_bill;
+			var serial = $('#admin-change-user').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '/admin/script/add_order.php',
+				url: '/admin/script/change_user.php',
 				data: serial,
 				cache: false,
 				dataType: 'json',
 				success: function(data) {
-					$('.add-success').slideDown();
+					if (data.id == 1) {
+						$('input[name=user-phone-id]').parent().addClass('error');
+						$('.phoneCaption').html(data.text).show();
+					} else {
+						$('.add-success').slideDown();
+					}
 				}
 			});
 		}
 		e.preventDefault();
-    });
+	});
 		
 	$('input[name=user-email]').change(jVal.mail);
 	$('input[name=user-pass]').change(jVal.pass);
@@ -518,7 +555,7 @@ $(document).ready(function(){
 	$('input[name=order-date]').change(jVal.date);
 	$('input[name=product-name]').change(jVal.product);
 	
-	if ($('input[name="user-phone[]"]').length || $('input[name=user-phone]').length) {
+	if (($('input[name="user-phone[]"]').length || $('input[name=user-phone]').length) && !$('section.su-popup').is(':visible')) {
 		$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');
 	}
 	

@@ -63,7 +63,7 @@
                         <div class="grid half-col full-item-description">
                             <h1 class="agora-font"><?php echo $row['name']; ?></h1>
                             <p><?php echo $row['annotation']; ?></p>
-                            <p>Чизкейк весит 1500 грамм и разделен на 12 порций.</p>
+                            <p>Чизкейк весит 1500 грамм.</p>
                             <div class="nutrition-table">
                                 <div class="hor-splitter"></div>
                                 <div class="centered-text italic"><small>В 100 граммах содержится:</small></div>

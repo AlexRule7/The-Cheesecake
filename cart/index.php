@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="field">
                                     <label for="user-phone">Телефон:</label>
-                                    <input class="text-input" type="tel" tabindex="3" name="user-phone" value="<?php echo $row3['phone']; ?>">
+                                    <input class="text-input user-search" type="tel" tabindex="3" name="user-phone" value="<?php echo $row3['phone']; ?>">
                                 </div>
                                 <div class="field">
                                     <label for="order-comment">Комментарий к заказу:</label>

@@ -46,7 +46,8 @@ if ( isset($_REQUEST['term'])) {
 		'user_name' => $row['name'],
 		'user_email' => $row['email'],
 		'addresses' => array(),
-		'discounts' => array()
+		'discounts' => array(),
+		'phones' => array()
 	);
 	
 	$query = "SELECT *
@@ -78,6 +79,17 @@ if ( isset($_REQUEST['term'])) {
 	if ( $sql && mysql_num_rows($sql) ) {
 		while( $row = mysql_fetch_assoc($sql)) {
 			$data['discounts'][$row['discount']] = $row['value'];
+		}
+	}
+	
+	$query = "SELECT *
+				FROM `phones`
+				WHERE `user_id` = '{$user_id}'";
+	
+	$sql = mysql_query($query) or die(mysql_error());
+	if ( $sql && mysql_num_rows($sql) ) {
+		while( $row = mysql_fetch_assoc($sql)) {
+			$data['phones'][$row['phone_id']] = $row['phone'];
 		}
 	}
 

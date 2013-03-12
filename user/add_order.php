@@ -119,6 +119,7 @@ if (!isset($_SESSION['user_id'])) {
 						`value`='1'";
 						
 		$sql = mysql_query($query) or die(mysql_error());
+		$_SESSION['new_user_discount'] = 5;
 		
 		$query = "INSERT
 					INTO `addresses`
@@ -330,6 +331,20 @@ if ($_SESSION['item_total'] >= 3) {
 	$_SESSION['new_discount'] = $new_discount;
 }
 
+if (isset($_SESSION['new_user_discount']) || isset($_SESSION['new_discount'])) {
+	if (isset($_SESSION['new_user_discount']) && !isset($_SESSION['new_discount'])) {
+		$discounts_given = $_SESSION['new_user_discount'];
+	} else if (!isset($_SESSION['new_user_discount']) && isset($_SESSION['new_discount'])) {
+		$discounts_given = $_SESSION['new_discount'];
+	} else if (isset($_SESSION['new_user_discount']) && isset($_SESSION['new_discount'])) {
+		$discounts_given = $_SESSION['new_discount'].','.$_SESSION['new_discount'];
+	}
+	
+	$query = "UPDATE `orders`
+				SET `discounts_given`='{$discounts_given}'
+				WHERE `order_id` = '{$order_id}'";
+	$sql = mysql_query($query) or die(mysql_error());
+}
 // MAIL
 
 $mail_data = array (

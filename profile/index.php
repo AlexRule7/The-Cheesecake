@@ -174,7 +174,7 @@
                                 <div class="hor-splitter"></div>
                                 <div class="order-history-holder">
                                 <?php
-                                    $query = "SELECT `order_id`, `order_date`, `delivery_date`, `delivery_time`, `bill`, `delivery`, `comment`
+                                    $query = "SELECT *
                                                 FROM `orders`
                                                 WHERE `user_id` = '{$_SESSION['user_id']}'
                                                 ORDER BY `order_date` DESC";
@@ -185,10 +185,18 @@
                                         for ($i = mysql_num_rows($sql); $i > 0; $i--)
                                         {
                                             $row = mysql_fetch_assoc($sql);
+											
+											if ($row['canceled'] == 0) {
+												$order_status_canceled = '';
+												$order_title_canceled = '';
+											} else {
+												$order_status_canceled = 'order-status-canceled';
+												$order_title_canceled = '(Отменен)';
+											}
                                             
                                             echo "
-                                                <div class='order-history-item group'>
-                                                    <div class='order-history-number'>Заказ № {$row['order_id']}</div>
+                                                <div class='order-history-item group $order_status_canceled'>
+                                                    <div class='order-history-number'>Заказ № {$row['order_id']} $order_title_canceled</div>
                                                     <div class='order-history-date'>{$row['delivery_date']}</div>
                                                     <div class='order-history-sum'>Сумма: {$row['bill']} ₷</div>
                                                     <div class='order-history-details group'>";

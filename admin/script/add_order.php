@@ -64,16 +64,18 @@ if (!empty($_POST)) {
 	}
 	
 	foreach ($product_id as $key => $val) {
-		$query = "INSERT
-					INTO `purchases`
-					SET
-						`order_id`='{$order_id}',
-						`product_id`='{$val}',
-						`amount`='{$product_amount[$key]}'";
-		
-		$sql = mysql_query($query) or die(mysql_error());
-		
-		$item_total += $product_amount[$key];
+		if (!empty($product_amount[$key])) {
+			$query = "INSERT
+						INTO `purchases`
+						SET
+							`order_id`='{$order_id}',
+							`product_id`='{$val}',
+							`amount`='{$product_amount[$key]}'";
+			
+			$sql = mysql_query($query) or die(mysql_error());
+			
+			$item_total += $product_amount[$key];
+		}
 	}
 	
 	if ($item_total >= 3) {

@@ -28,13 +28,13 @@ jQuery(document).ready(function($){
 	;
 	
 	// User search init
-	$('#user_search').autocomplete({
+	$('.user-search').autocomplete({
 		source: '/admin/script/user_search.php',
 		minLength: 2,
 		delay: 500,
 		close: function( event, ui ) {
 			var form = $(this).closest('form');
-			$.getJSON('/admin/script/user_search.php?phone=' + $('#user_search').val(),
+			$.getJSON('/admin/script/user_search.php?phone=' + form.find('.user-search').val(),
 			function(data){
 				$('.add_success').slideUp();
 				form.find('input[name=user-id]').val(data.user_id);
@@ -70,14 +70,31 @@ jQuery(document).ready(function($){
 				} else {
 					form.find('.discount-btn').remove();
 				}
-				if (!$.isEmptyObject(data.phones)) {
-					$.each(data.phones, function(element) {
-						form.find('div:first div:last').before('\
-							<div class="field">\
-								<input type="hidden" name="user-phone-id[]" value="'+element+'">\
-								<input class="text-input" type="tel" name="user-phone[]" value="'+data['phones'][element]+'">\
-							</div>');
-						$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');
+				if (form.attr('id') == 'admin-change-user') {
+					if (!$.isEmptyObject(data.phones)) {
+						$.each(data.phones, function(element) {
+							form.find('div:first div:last').before('\
+								<div class="field">\
+									<input type="hidden" name="user-phone-id[]" value="'+element+'">\
+									<input class="text-input" type="tel" name="user-phone[]" value="'+data['phones'][element]+'">\
+								</div>');
+							$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');
+						});
+					}
+					var data = 'user-id='+data.user_id;
+					$.ajax({
+						type: 'POST',
+						url: '/admin/script/get_orders.php',
+						data: data,
+						cache: false,
+						dataType: 'html',
+						success: function(data) {
+							if (!data) {
+								$('.order-history').addClass('centered-text whiteboard').html('<h2>У пользователя пока нет заказов</h2>');
+							} else {
+								$('.order-history').removeClass('centered-text whiteboard').html(data);
+							}
+						}
 					});
 				}
 			});
@@ -161,23 +178,27 @@ jQuery(document).ready(function($){
 	// ========== Orders ========== //
 	
 	// Add new order counter function
-	var add_order_counter = function () {
-		$('.order-products tbody tr:not(:nth-last-child(-n+4)) td:first-child').each(function(index, element) {
+	var add_order_counter = function (that) {
+		var form = that.closest('form');
+		form.find('.order-products tbody tr:not(:nth-last-child(-n+4)) td:first-child').each(function(index, element) {
             $(this).text( index + 1 );
         });
-		if ($('.order-products tbody tr').length == 5) {
-			$('.deleterow').hide();
+		if (form.find('.admin-change-order-product').length < 2) {
+			form.find('.deleterow').hide();
+		} else {
+			form.find('.deleterow').show();
 		}
+		
 		var discount = 0;
 		var raw_bill = 0;
 		var delivery = 0;
 		var difference = 0;
-		$('.order-products .discount-btn').each(function(index, element) {
+		form.find('.order-products .discount-btn').each(function(index, element) {
             if ($(element).hasClass('selected')) {
 				discount = $(this).prop('class').match(/\d+/);
 			}
         });
-		$('.order-products').find('input[name=product-price-total]').each(function() {
+		form.find('.order-products').find('input[name=product-price-total]').each(function() {
 			var product_price = parseInt($(this).closest('tr').find('input[name=product-price]').val(), 10);
 			var product_amount = parseInt($(this).closest('tr').find('input[name="product-amount[]"]').val(), 10);
 			if ($(this).val() != '') {
@@ -199,18 +220,71 @@ jQuery(document).ready(function($){
 			var bill = raw_bill + delivery;
 		}
 		if (delivery == 0 && raw_bill != 0) {
-			$('.order-products .delivery').text('Бесплатно');
+			form.find('.order-products .delivery').text('Бесплатно');
 		} else {
-			$('.order-products .delivery').text(delivery+'.00');
+			form.find('.order-products .delivery').text(delivery+'.00');
 		}
-		$('.order-products .raw-bill').text(raw_bill+'.00');
-		$('.order-products .discount').text(difference+'.00');
-		$('.order-products .bill').text(bill+'.00');
+		form.find('.order-products .raw-bill').text(raw_bill+'.00');
+		form.find('.order-products .discount').text(difference+'.00');
+		form.find('.order-products .bill').text(bill+'.00');
 	};
+	
+	// Calculate day order summary
+	var day_order_summary = function (form) {
+		var cakes = new Array();
+		var summary = new Array();
+		summary['total_cake_qty'] = 0;
+		summary['total_sum'] = 0;
+		summary['courier_wage'] = 0;
+		summary['total_profit'] = 0;
+		var order_history_item = form.find('.order-history .order-history-item:not(.order-status-canceled)');
+		var order_history_details = order_history_item.next('.order-history-details');
+		order_history_item.each(function(index, element) {
+			summary['total_sum'] += Number($(element).find('.order-history-sum').text().replace( /[^\d]+/g, ''));
+		});
+		order_history_details.each(function(index, element) {
+			var order_cake_qty = 0;
+			$(element).find('.order-history-details-qt').each(function(index, element) {
+				$(element).siblings('.order-history-details-product-name').each(function(index, element) {
+					if (cakes[$(element).text()]) {
+						cakes[$(element).text()] += 1;
+					} else {
+						cakes[$(element).text()] = 1;
+					}
+                });
+				order_cake_qty += Number($(element).text().replace( /[^\d]+/g, ''));
+			});
+			if (order_cake_qty < 3) {
+				summary['courier_wage'] += 250;
+			} else {
+				summary['courier_wage'] += 100*order_cake_qty;
+			}
+			summary['total_cake_qty'] += order_cake_qty;
+		});
+		summary['total_profit'] = summary['total_sum'] - summary['courier_wage'];
+		form.find('.admin-order-history-summary div .one-quater-field').each(function(index, element) {
+			var order_history_classes = $(element).attr('class').split(/\s+/);
+			var that = $(element);
+			$.each(order_history_classes, function(index, element) {
+				that.text(summary[element]);
+			});
+		});
+		form.find('.admin-order-history-cakes').html('');
+		for(var key in cakes) {
+			if(cakes.hasOwnProperty(key)) {
+				form.find('.admin-order-history-cakes').slideDown().append('\
+                	<div class="field group">\
+                        <div class="three-quaters-field">'+key+':</div>\
+                        <div class="one-quater-field">'+cakes[key]+'</div>\
+                    </div>');
+			}
+		}	
+	}
 	
 	// Show orders
 	$('.order-datepicker input[name=order-date]').change(function(e) {
-		var data = 'order_date='+$(this).val();
+		var form = $(this).closest('form');
+		var data = 'order-date='+$(this).val();
         $.ajax({
 			type: 'POST',
 			url: '/admin/script/get_orders.php',
@@ -219,6 +293,7 @@ jQuery(document).ready(function($){
 			dataType: 'html',
 			success: function(data) {
 				$('.order-history').html(data);
+				day_order_summary(form);
 			}
 		});
     });
@@ -229,7 +304,7 @@ jQuery(document).ready(function($){
 	}));
 	
 	// Product search init
-	$(document).on('keydown.autocomplete','.product_search',function(e){
+	$(document).on('keydown.autocomplete, focus','.product_search',function(e){
 		$(this).autocomplete({
 			source: '/admin/script/product_search.php',
 			minLength: 0,
@@ -238,11 +313,10 @@ jQuery(document).ready(function($){
 					var that = $(this);
 					$.getJSON('/admin/script/product_search.php?name=' + ($(that).closest('tr').find('.product_search').val()),
 					function(data){
-						$(that).closest('tr').find('input[name="product-id[]"]').val(data.product_id);
-						$(that).closest('tr').find('input[name=product-price], input[name=product-price-total]').val(data.price + ".00");
-						$(that).closest('tr').find('input[name="product-amount[]"]').val('1');
-						if ($('.order-products .discount-btn'))
-						add_order_counter();
+						that.closest('tr').find('input[name="product-id[]"]').val(data.product_id);
+						that.closest('tr').find('input[name=product-price], input[name=product-price-total]').val(data.price + ".00");
+						that.closest('tr').find('input[name="product-amount[]"]').val('1');
+						add_order_counter(that);
 					});
 			}
 		}).each(function() {
@@ -253,12 +327,15 @@ jQuery(document).ready(function($){
 					.appendTo(ul);
 			};
 		});
+		$(this).autocomplete('search');
 	});
 	
 	// Add new product to order
-	$('.order-products .addrow').click(function(e) {
-		$('.order-products tbody tr:nth-last-child(4)').before('\
-						<tr>\
+	$('.order-products').on('click', '.addrow', function(e) {
+		var that = $(this);
+		var form = that.closest('form');
+		form.find('.order-products tbody tr:nth-last-child(4)').before('\
+						<tr class="admin-change-order-product">\
 							<td>&nbsp;</td>\
                             <td>\
 								<div class="field">\
@@ -271,38 +348,39 @@ jQuery(document).ready(function($){
                             <td><div class="field"><input type="text" class="text-input disabled" name="product-price-total"></div></td>\
                             <td><span class="deleterow"></span></td>\
 						</tr>');
-		add_order_counter();
-		$('.order-products .deleterow').show();
+		add_order_counter(that);
 	});
 	
 	// Change product quantity
-	$('.order-products').on('change', 'input[name="product-amount[]"]', function() {
+	$('.order-products').on('change', 'input[name="product-amount[]"]', function(e) {
+		var that = $(this);
 		if (this.value < 0 || !$.isNumeric(this.value)) {
 			this.value = 0;
 		}
-		add_order_counter();
+		add_order_counter(that);
 	});
-	
-	// Hide delete row button
-	$('.order-products .deleterow').hide();
-	
+		
 	// Deleterow click
-	$('.order-products').on('click', '.deleterow', function() {
-		$( this ).closest('tr').remove();
-		add_order_counter();
+	$('.order-products').on('click', '.deleterow', function(e) {
+		var that = $(this);
+		var table = that.closest('table');
+		that.closest('tr').remove();
+		add_order_counter(table);
 	});
 	
     // Select discount badge
-    $('.order-products').on('click', '.discount-btn', function(){
-		if ($(this).hasClass('selected')) {
-			$('.order-products .discount-btn').removeClass('selected');
-			$('.order-products input[name=order-discount]').val('0');
-			add_order_counter();
+    $('.order-products').on('click', '.discount-btn', function(e){
+		var that = $(this);
+		var form = that.closest('form');
+		if (that.hasClass('selected')) {
+			form.find('.order-products .discount-btn').removeClass('selected');
+			form.find('.order-products input[name=order-discount]').val('0');
+			add_order_counter(that);
 		} else {
-			$('.order-products .discount-btn').removeClass('selected');
-			$(this).addClass('selected');
-			$('.order-products input[name=order-discount]').val($(this).prop('class').match(/\d+/));
-			add_order_counter();
+			form.find('.order-products .discount-btn').removeClass('selected');
+			that.addClass('selected');
+			form.find('.order-products input[name=order-discount]').val(that.prop('class').match(/\d+/));
+			add_order_counter(that);
 		}
     });
 	
@@ -318,7 +396,8 @@ jQuery(document).ready(function($){
 			dataType: 'json',
 			success: function(data) {
 				that.removeClass('order-history-cancel red-btn').addClass('order-history-approve green-btn').text('Подтвердить');
-				that.closest('.order-history-details').prev('.order-history-item').addClass('order_status_canceled');
+				that.closest('.order-history-details').prev('.order-history-item').addClass('order-status-canceled');
+				day_order_summary(that.closest('form'));
 			}
 		});
 		e.preventDefault();
@@ -336,12 +415,35 @@ jQuery(document).ready(function($){
 			dataType: 'json',
 			success: function(data) {
 				that.removeClass('order-history-approve green-btn').addClass('order-history-cancel red-btn').text('Отменить');
-				that.closest('.order-history-details').prev('.order-history-item').removeClass('order_status_canceled');
+				that.closest('.order-history-details').prev('.order-history-item').removeClass('order-status-canceled');
+				day_order_summary(that.closest('form'));
 			}
 		});
 		e.preventDefault();
     });
 	
+	// History change order
+    $('.order-history').on('click', '.order-history-change', function(e){
+		var that = $(this);
+		var form = $('#admin-change-order');
+		var data = 'order-id='+that.attr('href');
+        $.ajax({
+			type: 'POST',
+			url: '/admin/script/get_orders.php',
+			data: data,
+			cache: false,
+			dataType: 'html',
+			success: function(data) {
+				form.find('.order-products').show().html(data);
+				add_order_counter(form.find('input[name=user-phone]'));
+			}
+		});
+		$('.profile-nav-link:eq(2)').click();
+		form.find('input[name=user-phone]').val(that.closest('.order-history-details').find('.order-history-details-phone').text()).autocomplete( 'option', 'autoFocus', true ).autocomplete('search').focus();
+		
+		e.preventDefault();
+    });
+		
 	// ========== Users ========== //
 	
 		

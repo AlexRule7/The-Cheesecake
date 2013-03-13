@@ -92,7 +92,7 @@
                     <div class="field">
                         <label for="user-phone">Телефон:</label>
                         <input type="hidden" name="user-phone-id[]" />
-                        <input class="text-input" type="tel" name="user-phone[]" id="user_search">
+                        <input class="text-input user-search" type="tel" name="user-phone[]">
                     </div>
                     <div class="field">
                         <label for="user-name">Имя:</label>
@@ -170,6 +170,8 @@
         </div>
         <div class="whiteboard grid full-size-col centered-text add-success">
             <h2>Данные сохранены</h2>
+        </div>
+        <div class="grid full-size-col order-history">
         </div>
     </div>
 </div>

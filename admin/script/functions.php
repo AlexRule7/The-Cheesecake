@@ -45,5 +45,5 @@
 			$sql = mysql_query($query) or die(mysql_error());
 		}
 	}
-
+	
 ?>

@@ -486,6 +486,36 @@ $(document).ready(function(){
 		e.preventDefault();
     });
 	
+	// Add change order
+	$('.order-products').on('click', '.admin-change-order', function(e){
+		var that = $(this);
+		var form = $('#admin-change-order');
+		jVal.name(that);
+		jVal.phone(that);
+		jVal.metro(that);
+		jVal.street(that);
+		jVal.house(that);
+		jVal.product(that);
+		jVal.date(that);
+		if(!jVal.errors) {
+			var order_raw_bill = '&order-raw-bill='+ parseInt(form.find('.order-products .raw-bill').text(), 10);
+			var order_delivery = '&order-delivery='+ (parseInt(form.find('.order-products .delivery').text(), 10) || '');
+			var order_bill = '&order-bill='+ parseInt(form.find('.order-products .bill').text(), 10);
+			var serial = form.serialize()+order_raw_bill+order_delivery+order_bill;
+			$.ajax({
+				type: 'POST',
+				url: '/admin/script/change_order.php',
+				data: serial,
+				cache: false,
+				dataType: 'json',
+				success: function(data) {
+					$('.add-success').slideDown();
+				}
+			});
+		}
+		e.preventDefault();
+    });
+	
 	$('.admin-add-user').click(function (e){
 		var that = $(this);
 		jVal.errors = false;

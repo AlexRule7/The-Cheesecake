@@ -91,11 +91,41 @@
 	text-align: center;
 }
 
+.order-history-details-phone {
+	width: 20%;
+	text-align: right;
+}
+
+.order-history-details-comment {
+	width: 95%;
+}
+
+.order-history-details-product-name {
+	width: 50%;
+}
+
+.three-quaters-field {
+	display: inline-block;
+	float: left;
+	width: 75%;
+	margin: 0px;
+	font-size: 1.4em;
+}
+
+.one-quater-field {
+	text-align: right;
+	display: inline-block;
+	float: left;
+	width: 25%;
+	margin: 0px;
+	font-size: 1.4em;
+}
+
 .order-history-details-row .small-btn {
 	font-size: 1em;
 }
 
-.order_status_canceled {
+.order-status-canceled {
 	background: #F99;
 }
 
@@ -118,4 +148,8 @@
 	-o-transition:top 0ms ease-in-out 1ms;
 	transition:top 0ms ease-in-out 1ms;
 	top:1px
+}
+
+.deleterow {
+	display: none;
 }

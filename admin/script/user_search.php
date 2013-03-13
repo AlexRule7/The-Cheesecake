@@ -56,8 +56,8 @@ if ( isset($_REQUEST['term'])) {
 	
 	$sql = mysql_query($query) or die(mysql_error());
 	$i = 0;
-	if ( $sql && mysql_num_rows($sql) ) {
-		while( $row = mysql_fetch_assoc($sql)) {
+	if ($sql && mysql_num_rows($sql)) {
+		while($row = mysql_fetch_assoc($sql)) {
 			$address = "м. {$row['metro']}, {$row['street']} {$row['house']}".
 				(!empty($row['building']) ? 'к'.$row['building'].'' : '').
 				(!empty($row['flat']) ? ', кв. '.$row['flat'].'' : '').
@@ -68,6 +68,7 @@ if ( isset($_REQUEST['term'])) {
 			foreach ($row as $key => $val) {
 				$data['addresses'][$i][$key] = $val;
 			}
+			$i++;
 		}
 	}
 	

@@ -1,0 +1,32 @@
+.order-status-canceled {
+	background-color: #FFDFE0;
+}
+
+.almost-full-size-col {
+	width: 95%;
+}
+
+.green-btn,
+.green-btn:hover {
+	color: #FFF;
+	background: #23BB1D;
+	-webkit-box-shadow: 0 2px 0 0 #137923;
+	-moz-box-shadow: 0 2px 0 0 #791313;
+	box-shadow: 0 2px 0 0 #137923;
+}
+
+.green-btn:active {
+	-webkit-box-shadow:inset 0 1px 2px 0px #791313;
+	-moz-box-shadow:inset 0 1px 2px 0px #791313;
+	box-shadow:inset 0 1px 2px 0px #791313;
+	-webkit-transition:top 0ms ease-in-out;
+	-webkit-transition-delay:1ms;
+	-moz-transition:top 0ms ease-in-out 1ms;
+	-o-transition:top 0ms ease-in-out 1ms;
+	transition:top 0ms ease-in-out 1ms;
+	top:1px
+}
+
+.deleterow {
+	display: none;
+}

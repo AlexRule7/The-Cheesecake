@@ -19,7 +19,7 @@
                     <div class="field">
                         <label for="user-phone">Телефон:</label>
                         <input type="hidden" name="user-phone-id" />
-                        <input class="text-input" type="tel" name="user-phone" id="user_search">
+                        <input class="text-input user-search" type="tel" name="user-phone">
                     </div>
                     <div class="field">
                         <label for="user-name">Имя:</label>
@@ -95,7 +95,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class='admin-change-order-product'>
                             <td>1</td>
                             <td>
                                 <div class="field">
@@ -181,13 +181,117 @@
 	<div class="almost-full-size-col centered tab" id="tabs-2">
         <h2>История заказов<span id="spinner-top"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span></h2>
         <div class="hor-splitter"></div>
-        <div class="whiteboard grid">
-            <div class="field order-datepicker">
-                <label for="order-date">Выберите дату доставки:</label>
-                <input class="text-input" type="date" name="order-date">
+        <form id="admin-order-history">
+            <div class="whiteboard grid half-col">
+                <div class="full-size-col">
+                    <div class="field order-datepicker">
+                        <label for="order-date">Выберите дату доставки:</label>
+                        <input class="text-input" type="date" name="order-date">
+                    </div>
+                </div>
+                <div class="full-size-col admin-order-history-summary">
+                	<div class="field group">
+                        <div class="three-quaters-field">Количество кейков:</div>
+                        <div class="one-quater-field total_cake_qty">0</div>
+                    </div>
+                	<div class="field group">
+                        <div class="three-quaters-field">Общая сумма:</div>
+                        <div class="one-quater-field total_sum">0</div>
+                    </div>
+                	<div class="field group">
+                        <div class="three-quaters-field">Зарплата курьерам:</div>
+                        <div class="one-quater-field courier_wage">0</div>
+                    </div>
+                	<div class="field group">
+                        <div class="three-quaters-field">Прибыль:</div>
+                        <div class="one-quater-field total_profit">0</div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="grid full-size-col order-history">
-        </div>
+            <div class="whiteboard grid half-col hidden admin-order-history-cakes">
+            </div>
+            <div class="grid full-size-col order-history">
+            </div>
+        </form>
+    </div>
+	<div class="almost-full-size-col centered tab" id="tabs-3">
+        <form id="admin-change-order">
+            <h2>Редактировать заказ<span id="spinner-top"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span></h2>
+            <div class="hor-splitter"></div>
+            <div class="whiteboard grid">
+            	<div class="small-col grid">
+                    <input type="hidden" name="user-id" />
+                    <div class="field">
+                        <label for="user-phone">Телефон:</label>
+                        <input type="hidden" name="user-phone-id" />
+                        <input class="text-input user-search" type="tel" name="user-phone">
+                    </div>
+                    <div class="field">
+                        <label for="user-name">Имя:</label>
+                        <input class="text-input disabled" type="text" name="user-name">
+                    </div>
+                    <div class="field">
+                        <label for="user-email">Email:</label>
+                        <input class="text-input disabled" type="email" name="user-email">
+                    </div>
+                </div>
+                <div class="big-col grid address-group">
+                    <div class='field'>
+                        <label for='user-address'>Адреса:</label>
+                        <select class='text-input' name='user-address'>
+                        </select>
+                    </div>
+                    <div class="field checkbox-field">
+                        <input class="checkbox-input disabled" type="checkbox" id="to-office" name="user-office">
+                        <label for="user-office">Доставка в офис</label>
+                    </div>
+                    <div class="field">
+                        <label for="user-metro">Ближайшая станция метро:</label>
+                        <input class="text-input disabled" type="text" tabindex="5" name="user-metro">
+                    </div>
+                    <div class="field">
+                        <label for="user-street">Улица:</label>
+                        <input class="text-input disabled" type="text" tabindex="6" name="user-street">
+                    </div>
+                    <div class="field group">
+                        <div class="mini-field">
+                            <label for="user-house">Дом:</label>
+                            <input class="text-input disabled" type="text" tabindex="7" name="user-house">
+                        </div>
+                        <div class="mini-field">
+                            <label for="user-building">Корпус:</label>
+                            <input class="text-input disabled" type="text" tabindex="8" name="user-building">
+                        </div>
+                        <div class="mini-field">
+                            <label for="user-flat">Квартира:</label>
+                            <input class="text-input disabled" type="text" tabindex="9" name="user-flat">
+                        </div>
+                    </div>
+                    <div class="field group">
+                        <div class="mini-field">
+                            <label for="user-enter">Подъезд:</label>
+                            <input class="text-input disabled" type="text" tabindex="10" name="user-enter">
+                        </div>
+                        <div class="mini-field">
+                            <label for="user-floor">Этаж:</label>
+                            <input class="text-input disabled" type="text" tabindex="11" name="user-floor">
+                        </div>
+                        <div class="mini-field">
+                            <label for="user-domofon">Домофон:</label>
+                            <input class="text-input disabled" type="text" tabindex="12" name="user-domofon">
+                        </div>
+                    </div>
+                    <div class="field company">
+                        <label for="user-company">Название компании:</label>
+                        <input class="text-input disabled" type="text" tabindex="13" name="user-company">
+                    </div>
+                </div>
+            </div>
+            <div class="whiteboard grid order-products hidden">
+            </div>
+            <div class="whiteboard grid full-size-col centered-text add-success">
+            	<h2>Изменения сохранены</h2>
+            </div>
+        </form>
     </div>
 </div>

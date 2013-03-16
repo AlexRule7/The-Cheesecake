@@ -29,7 +29,7 @@
                     </div>
                     <div class="grid big-col group">
                         <div class="almost-full-size-col centered tab" id="tabs-1">
-                        	<div class="half-col centered">
+                        	<div class="big-col centered">
                                 <form id="profile-personal">
                                     <h2>Личные данные</h2>
                                     <div class="hor-splitter"></div>
@@ -172,7 +172,7 @@
                         	</div>
                         </div><!-- tab-2 -->
                         <div class="almost-full-size-col centered tab" id="tabs-3">
-                            <div class="full-size-col centered">
+                            <div class="big-col centered">
                                 <h2>История ваших заказов</h2>
                                 <div class="hor-splitter"></div>
                                 <div class="order-history-holder">
@@ -253,7 +253,7 @@
                             </div>
                         </div><!-- tab-3 -->
                         <div class="almost-full-size-col centered tab" id="tabs-4">
-                        	<div class="full-size-col centered">
+                        	<div class="big-col centered">
                                 <h2>Ваши скидки и купоны</h2>
                                 <div class="hor-splitter"></div>
                                 <div class="grid half-col">

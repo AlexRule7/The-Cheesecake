@@ -219,6 +219,7 @@ small
         min-height: 0 !important
         height: auto !important
     .popup-body &, .profile-holder &
+        width: 70%
         +breakpoint(mobile)
             width: 100%
             min-height: 0 !important
@@ -1279,4 +1280,25 @@ input:disabled, .disabled
 .spinner_qty_change 
     margin-top: 30px
     display: inline-block
+.order-status-canceled
+    background-color: #FFDFE0
+.green-btn, .green-btn:hover
+    color: white
+    background: #23BB1D
+    +box-shadow(#137923 0 2px 0 0)
+    &:active 
+        +box-shadow(#791313 0 1px 2px 0px)   
+        top: 1px
+        +single-transition(top, 0ms, ease-in-out, 1ms)
+.deleterow 
+    display: none
+.whiteboard 
+    background: #fff
+    padding: 10px
+    +border-radius
+    border-radius: 5px
+    border: solid 1px rgba(194,194,194,0.5)
+    margin-top: 15px
+
+
 

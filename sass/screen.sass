@@ -284,7 +284,8 @@ body
         top: 12px
         position: relative
     +breakpoint(tablet)
-        top: 17px
+        font-size: 1.8em
+        top: 25px
     &:first-child
         width: 140px
         margin-left: 28px
@@ -322,13 +323,16 @@ body
         margin: 0 
         top: -12px
     +breakpoint(tablet)
-        top: -17px
+        top: -24px
 .icn-logo
     +breakpoint(mobile)
         background: image-url('icons/logo.png')
         +background-size(cover)
         width: 55px 
-        height: 50px 
+        height: 50px
+    +breakpoint(tablet)
+        width: 77px
+        height: 70px 
 footer
     font-size: 1.6em
     line-height: 47px
@@ -565,6 +569,7 @@ footer
 .mini-cart-photo
     width: 70px
     height: 70px
+    +border-radius(70px)
 .mini-cart-info
     text-align: left
     float: left
@@ -879,6 +884,7 @@ x:-o-prefocus, .menu-photo // opera fix
         padding-top: 15px
         padding-bottom: 20px
 .item-big-photo
+    max-width: 480px
     position: absolute
     top: 50px
     left: 0
@@ -959,6 +965,7 @@ x:-o-prefocus, .menu-photo // opera fix
     +single-box-shadow(rgba(black,.3), 0, 5px, 8px, -2px)
 .main-cart-item
     border-bottom: solid 1px $border-color
+    position: relative
 .main-cart-cell
     float: left
 .main-cart-photo-holder
@@ -969,8 +976,11 @@ x:-o-prefocus, .menu-photo // opera fix
     width: 400px
     margin: 30px 0 10px 25px
     +breakpoint(mobile)
-        width: 58%
-        min-height: 70px
+        width: 55%
+        min-height: 45px
+        margin-bottom: 25px
+    +breakpoint(tablet)
+        width: 40%
 .main-cart-item-link
     font-size: 1.8em
 .main-cart-item-sub-info
@@ -979,22 +989,41 @@ x:-o-prefocus, .menu-photo // opera fix
     display: block
 .main-cart-qt
     font-size: 1.5em
-    margin: 24px 0 10px 15px
+    position: absolute
+    top: 24px
+    right: 100px
     +breakpoint(mobile)
-        margin-top: 0
+        position: relative
+        top: -20px
+        right: auto
+        left: 120px
+    +breakpoint(tablet)
+        position: absolute
+        top: 24px
+        right: 100px
+        left: auto
 .main-cart-item-price
     font-size: 1.5em
     font-weight: bold
     text-align: right
     width: 100px
-    margin: 31px 0 10px 10px
+    position: absolute
+    top: 31px
+    right: 10px
     +breakpoint(mobile)
-        margin-top: 7px
+        top: auto
+        bottom: 27px
+        right: 10px
+    +breakpoint(tablet)
+        top: 31px
+        right: 10px
+        bottom: auto
 .main-cart-item-del
-    margin: 32px 0 10px 43px
+    position: absolute
+    top: 15px
+    left: 70px
+    z-index: 5
     +opacity(.5)
-    +breakpoint(mobile)
-        margin-top: 8px
     &:hover
         +opacity(.9)
 .main-cart-sub-total
@@ -1015,6 +1044,9 @@ x:-o-prefocus, .menu-photo // opera fix
     +breakpoint(mobile)
         text-align: center
         float: none
+    +breakpoint(tablet)
+        float: left
+
     h3
         min-height: 0
         margin: 0 0 10px 15px

@@ -4,15 +4,13 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 if ( isset($_REQUEST['term'])) {
 	$query = "SELECT `name`
 				FROM `products`
-				WHERE `name` like '%".sanitize($_REQUEST['term'])."%'
+				WHERE `name` like '%".Database::sanitize($_REQUEST['term'])."%'
 				ORDER BY name ASC LIMIT 0,10";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	 
 	$data = array();
-	if ( $sql && mysql_num_rows($sql) )
-	{
-		while( $row = mysql_fetch_assoc($sql) )
-		{
+	if ($result->num_rows) {
+		while($row = $result->fetch_assoc()) {
 			$data[] = array('value' => $row['name']);
 		}
 	}
@@ -22,14 +20,13 @@ if ( isset($_REQUEST['term'])) {
 } else if (isset($_REQUEST['name']) ) {
 	$query = "SELECT `product_id`, `price`
 				FROM `products`
-				WHERE `name` = '".sanitize($_REQUEST['name'])."'
+				WHERE `name` = '".Database::sanitize($_REQUEST['name'])."'
 				LIMIT 1";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	 
 	$data = array();
-	if ( $sql && mysql_num_rows($sql) )
-	{
-		$row = mysql_fetch_assoc($sql);
+	if ($result->num_rows) {
+		$row = $result->fetch_assoc();
 		$data = array(
 			'product_id' => $row['product_id'],
 			'price' => $row['price']

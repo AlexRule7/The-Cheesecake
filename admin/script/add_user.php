@@ -1,21 +1,23 @@
 <?php
 
+session_start();
+
 include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 header('Content-type: application/json');
 
-if (!empty($_POST)) {
-	$user_name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
-	$user_phone = (isset($_POST['user-phone'])) ? sanitize($_POST['user-phone']) : '';
-	$user_metro = (isset($_POST['user-metro'])) ? sanitize($_POST['user-metro']) : '';
-	$user_street = (isset($_POST['user-street'])) ? sanitize($_POST['user-street']) : '';
-	$user_house = (isset($_POST['user-house'])) ? sanitize($_POST['user-house']) : '';
-	$user_building = (isset($_POST['user-building'])) ? sanitize($_POST['user-building']) : '';
-	$user_flat = (isset($_POST['user-flat'])) ? sanitize($_POST['user-flat']) : '';
-	$user_enter = (isset($_POST['user-enter'])) ? sanitize($_POST['user-enter']) : '';
-	$user_floor = (isset($_POST['user-floor'])) ? sanitize($_POST['user-floor']) : '';
-	$user_domofon = (isset($_POST['user-domofon'])) ? sanitize($_POST['user-domofon']) : '';
-	$user_company = (isset($_POST['user-company'])) ? sanitize($_POST['user-company']) : '';
+if (!empty($_POST['user-name'])) {
+	$user_name = (isset($_POST['user-name'])) ? Database::sanitize($_POST['user-name']) : '';
+	$user_phone = (isset($_POST['user-phone'])) ? Database::sanitize($_POST['user-phone']) : '';
+	$user_metro = (isset($_POST['user-metro'])) ? Database::sanitize($_POST['user-metro']) : '';
+	$user_street = (isset($_POST['user-street'])) ? Database::sanitize($_POST['user-street']) : '';
+	$user_house = (isset($_POST['user-house'])) ? Database::sanitize($_POST['user-house']) : '';
+	$user_building = (isset($_POST['user-building'])) ? Database::sanitize($_POST['user-building']) : '';
+	$user_flat = (isset($_POST['user-flat'])) ? Database::sanitize($_POST['user-flat']) : '';
+	$user_enter = (isset($_POST['user-enter'])) ? Database::sanitize($_POST['user-enter']) : '';
+	$user_floor = (isset($_POST['user-floor'])) ? Database::sanitize($_POST['user-floor']) : '';
+	$user_domofon = (isset($_POST['user-domofon'])) ? Database::sanitize($_POST['user-domofon']) : '';
+	$user_company = (isset($_POST['user-company'])) ? Database::sanitize($_POST['user-company']) : '';
 	if (isset($_POST['user-office'])) {
 		$user_office = 1;
 	} else {
@@ -26,17 +28,18 @@ if (!empty($_POST)) {
 				FROM `phones`
 				WHERE `phone` = '{$user_phone}'";
 
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
-	if (!mysql_num_rows($sql)) {
+	if (!$result->num_rows) {
 		$query = "INSERT
 					INTO `users`
 					SET
 						`name`='{$user_name}',
+						`admin_id`='{$_SESSION['admin_id']}',
 						`bonus_received`='0'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
-		$user_id = mysql_insert_id();
+		$result = $mysqli->query($query) or die($mysqli->error);
+		$user_id = $mysqli->insert_id;
 		
 		$query = "INSERT
 					INTO `phones`
@@ -44,7 +47,7 @@ if (!empty($_POST)) {
 						`user_id`='{$user_id}',
 						`phone`='{$user_phone}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		
 		$query = "INSERT
 					INTO `addresses`
@@ -61,7 +64,7 @@ if (!empty($_POST)) {
 						`floor`='{$user_floor}',
 						`domofon`='{$user_domofon}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		echo json_encode('success');
 	} else {
 		$error = array (

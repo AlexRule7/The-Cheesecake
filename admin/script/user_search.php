@@ -4,18 +4,18 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 if ( isset($_REQUEST['term'])) {
 	$query = "SELECT `user_id`, `phone`
 				FROM `phones`
-				WHERE `phone` like '".sanitize($_REQUEST['term'])."%'
+				WHERE `phone` like '".Database::sanitize($_REQUEST['term'])."%'
 				ORDER BY phone ASC LIMIT 0,10";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	 
 	$data = array();
-	if ( $sql && mysql_num_rows($sql)) {
-		while( $row = mysql_fetch_assoc($sql) ) {
+	if ($result->num_rows) {
+		while($row = $result->fetch_assoc()) {
 			$query2 = "SELECT `name`
 						FROM `users`
 						WHERE `user_id`='{$row['user_id']}'";
-			$sql2 = mysql_query($query2) or die(mysql_error());
-			$row2 = mysql_fetch_assoc($sql2);
+			$result2 = $mysqli->query($query2) or die($mysqli->error);
+			$row2 = $result2->fetch_assoc();
 			$data[] = array(
 				'label' => $row['phone'] .', '. $row2['name'],
 				'value' => $row['phone']
@@ -28,17 +28,17 @@ if ( isset($_REQUEST['term'])) {
 } else if (isset($_REQUEST['phone'])) {
 	$query = "SELECT `phone_id`, `user_id`
 				FROM `phones`
-				WHERE `phone` like '%".sanitize($_REQUEST['phone'])."'";
-	$sql = mysql_query($query) or die(mysql_error());
-	$row = mysql_fetch_assoc($sql);
+				WHERE `phone` like '%".Database::sanitize($_REQUEST['phone'])."'";
+	$result = $mysqli->query($query) or die($mysqli->error);
+	$row = $result->fetch_assoc();
 	$user_id = $row['user_id'];
 	$phone_id = $row['phone_id'];
 	
 	$query = "SELECT *
 				FROM `users`
 				WHERE `user_id`='{$user_id}'";
-	$sql = mysql_query($query) or die(mysql_error());
-	$row = mysql_fetch_assoc($sql);
+	$result = $mysqli->query($query) or die($mysqli->error);
+	$row = $result->fetch_assoc();
 	
 	$data = array (
 		'user_id' => $user_id,
@@ -54,17 +54,11 @@ if ( isset($_REQUEST['term'])) {
 				FROM `addresses`
 				WHERE `user_id` = '{$user_id}'";
 	
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	$i = 0;
-	if ($sql && mysql_num_rows($sql)) {
-		while($row = mysql_fetch_assoc($sql)) {
-			$address = "м. {$row['metro']}, {$row['street']} {$row['house']}".
-				(!empty($row['building']) ? 'к'.$row['building'].'' : '').
-				(!empty($row['flat']) ? ', кв. '.$row['flat'].'' : '').
-				(!empty($row['enter']) ? ', подъезд '.$row['enter'].'' : '').
-				(!empty($row['floor']) ? ', этаж '.$row['floor'].'' : '').
-				(!empty($row['domofon']) ? ', домофон '.$row['domofon'].'' : '');
-			$data['addresses'][$i]['title'] = $address;
+	if ($result->num_rows) {
+		while($row = $result->fetch_assoc()) {
+			$data['addresses'][$i]['title'] = address_title($row);
 			foreach ($row as $key => $val) {
 				$data['addresses'][$i][$key] = $val;
 			}
@@ -76,9 +70,9 @@ if ( isset($_REQUEST['term'])) {
 				FROM `discounts`
 				WHERE `user_id` = '{$user_id}'";
 	
-	$sql = mysql_query($query) or die(mysql_error());
-	if ( $sql && mysql_num_rows($sql) ) {
-		while( $row = mysql_fetch_assoc($sql)) {
+	$result = $mysqli->query($query) or die($mysqli->error);
+	if ($result->num_rows) {
+		while($row = $result->fetch_assoc()) {
 			$data['discounts'][$row['discount']] = $row['value'];
 		}
 	}
@@ -87,9 +81,9 @@ if ( isset($_REQUEST['term'])) {
 				FROM `phones`
 				WHERE `user_id` = '{$user_id}'";
 	
-	$sql = mysql_query($query) or die(mysql_error());
-	if ( $sql && mysql_num_rows($sql) ) {
-		while( $row = mysql_fetch_assoc($sql)) {
+	$result = $mysqli->query($query) or die($mysqli->error);
+	if ($result->num_rows) {
+		while($row = $result->fetch_assoc()) {
 			$data['phones'][$row['phone_id']] = $row['phone'];
 		}
 	}

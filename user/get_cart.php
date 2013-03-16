@@ -19,8 +19,8 @@ if ($_SESSION['item_total'] != 0) {
 						FROM `products`
 						WHERE `product_id`='".$item['id']."'
 						LIMIT 1";
-			$sql = mysql_query($query) or die(mysql_error());
-			$row = mysql_fetch_assoc($sql);
+			$result = $mysqli->query($query) or die($mysqli->error);
+			$row = $result->fetch_assoc();
 			
 			echo "
 				<div class='mini-cart-item group'>

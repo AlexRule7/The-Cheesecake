@@ -12,8 +12,8 @@ if (isset($_POST)) {
 				FROM `addresses`
 				WHERE `address_id` = '{$_POST['id']}'";
 
-	$sql = mysql_query($query) or die(mysql_error());
-	$row = mysql_fetch_assoc($sql);
+	$result = $mysqli->query($query) or die($mysqli->error);
+	$row = $result->fetch_assoc();
 
 	echo json_encode($row);
 }

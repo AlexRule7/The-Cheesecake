@@ -12,17 +12,17 @@ if (isset($_POST['order-date']) || isset($_POST['user-id'])) {
 					WHERE `delivery_date` = '{$order_date}'
 					ORDER BY `delivery_time` ASC";
 	} else if (isset($_POST['user-id'])) {
-		$user_id = sanitize($_POST['user-id']);
+		$user_id = Database::sanitize($_POST['user-id']);
 		$query = "SELECT *
 					FROM `orders`
 					WHERE `user_id` = '{$user_id}'
 					ORDER BY `delivery_time` ASC";
 	}
 
-	$sql = mysql_query($query) or die(mysql_error());
-	if (mysql_num_rows($sql)) {
+	$result = $mysqli->query($query) or die($mysqli->error);
+	if ($result->num_rows) {
 		echo"<div class='order-history-holder'>";
-		while ($row = mysql_fetch_assoc($sql)) {
+		while ($row = $result->fetch_assoc()) {
 			if ($row['canceled'] == 0) {
 				$order_status_change_class = 'order-history-cancel';
 				$order_status_change_title = 'Отменить';
@@ -47,20 +47,20 @@ if (isset($_POST['order-date']) || isset($_POST['user-id'])) {
 						WHERE `order_id` = '{$row['order_id']}'
 						ORDER BY `id` ASC";
 							
-			$sql2 = mysql_query($query2) or die(mysql_error());
+			$result2 = $mysqli->query($query2) or die($mysqli->error);
 			
-			if (mysql_num_rows($sql2)) {
-				for ($p = 1; $p <= mysql_num_rows($sql2); $p++)
+			if ($result2->num_rows) {
+				for ($p = 1; $p <= $result2->num_rows; $p++)
 				{
-					$row2 = mysql_fetch_assoc($sql2);
+					$row2 = $result2->fetch_assoc();
 					
 					$query3 = "SELECT `name`, `price`
 								FROM `products`
 								WHERE `product_id` = '{$row2['product_id']}'";
 									
-					$sql3 = mysql_query($query3) or die(mysql_error());
+					$result3 = $mysqli->query($query3) or die($mysqli->error);
 					
-					$row3 = mysql_fetch_assoc($sql3);
+					$row3 = $result3->fetch_assoc();
 					
 					echo "
 						<div class='order-history-details-row order-history-product group'>
@@ -86,29 +86,24 @@ if (isset($_POST['order-date']) || isset($_POST['user-id'])) {
 						FROM `users`
 						WHERE `user_id` = '{$row['user_id']}'";
 							
-			$sql2 = mysql_query($query2) or die(mysql_error());
-			$row2 = mysql_fetch_assoc($sql2);
+			$result2 = $mysqli->query($query2) or die($mysqli->error);
+			$row2 = $result2->fetch_assoc();
 			
 			$query3 = "SELECT *
 						FROM `phones`
 						WHERE `phone_id` = '{$row['phone_id']}'";
 							
-			$sql3 = mysql_query($query3) or die(mysql_error());
-			$row3 = mysql_fetch_assoc($sql3);
+			$result3 = $mysqli->query($query3) or die($mysqli->error);
+			$row3 = $result3->fetch_assoc();
 			
 			$query4 = "SELECT *
 						FROM `addresses`
 						WHERE `address_id` = '{$row['address_id']}'";
 							
-			$sql4 = mysql_query($query4) or die(mysql_error());
-			$row4 = mysql_fetch_assoc($sql4);
+			$result4 = $mysqli->query($query4) or die($mysqli->error);
+			$row4 = $result4->fetch_assoc();
 			
-			$address = "м. {$row4['metro']}, {$row4['street']} {$row4['house']}".
-				(!empty($row4['building']) ? 'к'.$row4['building'].'' : '').
-				(!empty($row4['flat']) ? ', кв. '.$row4['flat'].'' : '').
-				(!empty($row4['enter']) ? ', подъезд '.$row4['enter'].'' : '').
-				(!empty($row4['floor']) ? ', этаж '.$row4['floor'].'' : '').
-				(!empty($row4['domofon']) ? ', домофон '.$row4['domofon'].'' : '');
+			$address = address_title($row4);
 						
 			echo "
 				<div class='hor-splitter'></div>
@@ -143,14 +138,14 @@ if (isset($_POST['order-date']) || isset($_POST['user-id'])) {
 		echo "</div>";
 	}
 } else if (isset($_POST['order-id'])) {
-	$order_id = sanitize($_POST['order-id']);
+	$order_id = Database::sanitize($_POST['order-id']);
 	
 	$query = "SELECT *
 				FROM `orders`
 				WHERE `order_id` = '{$order_id}'";
 
-	$sql = mysql_query($query) or die(mysql_error());
-	$row = mysql_fetch_assoc($sql);
+	$result = $mysqli->query($query) or die($mysqli->error);
+	$row = $result->fetch_assoc();
 	
 	$order_date = date('Y-m-d', strtotime($row['delivery_date']));
 	
@@ -182,17 +177,17 @@ if (isset($_POST['order-date']) || isset($_POST['user-id'])) {
 				WHERE `order_id` = '{$order_id}'
 				ORDER BY `id` ASC";
 					
-	$sql2 = mysql_query($query2) or die(mysql_error());
-	if (mysql_num_rows($sql2)) {
-		for ($p = 1; $p <= mysql_num_rows($sql2); $p++) {
-			$row2 = mysql_fetch_assoc($sql2);
+	$result2 = $mysqli->query($query2) or die($mysqli->error);
+	if ($result2->num_rows) {
+		for ($p = 1; $p <= $result2->num_rows; $p++) {
+			$row2 = $result2->fetch_assoc();
 			
 			$query3 = "SELECT `name`, `price`
 						FROM `products`
 						WHERE `product_id` = '{$row2['product_id']}'";
 							
-			$sql3 = mysql_query($query3) or die(mysql_error());
-			$row3 = mysql_fetch_assoc($sql3);
+			$result3 = $mysqli->query($query3) or die($mysqli->error);
+			$row3 = $result3->fetch_assoc();
 			
 			echo "
 				<tr class='admin-change-order-product'>

@@ -9,15 +9,13 @@ if (isset($_REQUEST['term']))
 {
 	$query = "SELECT `phone`
 				FROM `phones`
-				WHERE `user_id`='{$_SESSION['user_id']}' AND `phone` like '".sanitize($_REQUEST['term'])."%'
+				WHERE `user_id`='{$_SESSION['user_id']}' AND `phone` like '".Database::sanitize($_REQUEST['term'])."%'
 				LIMIT 0,10";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	 
 	$data = array();
-	if ( $sql && mysql_num_rows($sql) )
-	{
-		while( $row = mysql_fetch_array($sql, MYSQL_ASSOC) )
-		{
+	if ($result->num_rows) {
+		while($row = $result->fetch_assoc()) {
 			$data[] = array(
 				'label' => $row['phone'],
 				'value' => $row['phone']

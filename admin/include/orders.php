@@ -292,6 +292,8 @@
             <div class="whiteboard grid full-size-col centered-text add-success">
             	<h2>Изменения сохранены</h2>
             </div>
+            <div class="grid full-size-col order-history">
+            </div>
         </form>
     </div>
 </div>

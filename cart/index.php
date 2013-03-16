@@ -4,19 +4,19 @@
 		header('Location: ../');
 	}
   
-	$query1 = "SELECT `address_id`, `metro`, `street`, `house`, `building`, `office`, `company`, `flat`, `enter`, `floor`, `domofon`
+	$query1 = "SELECT *
 				FROM `addresses`
 				WHERE `user_id` = '{$_SESSION['user_id']}'";
 	
-	$sql1 = mysql_query($query1) or die(mysql_error());
+	$result1 = $mysqli->query($query1) or die($mysqli->error);
 	
 	$query3 = "SELECT `phone`
 				FROM `phones`
 				WHERE `user_id` = '{$_SESSION['user_id']}'
 				ORDER BY `phone_id` ASC LIMIT 1";
 	
-	$sql3 = mysql_query($query3) or die(mysql_error());
-	$row3 = mysql_fetch_assoc($sql3);
+	$result3 = $mysqli->query($query3) or die($mysqli->error);
+	$row3 = $result3->fetch_assoc();
   
 ?>
 
@@ -37,12 +37,11 @@
                             <?php
 								foreach ($_SESSION['item_list'] as $key => $item) {
 									if ($item['qty'] != 0) {
-										$query2 = "SELECT `product_id`, `url`, `name`, `image_thumb`, `price`
+										$query2 = "SELECT *
 													FROM `products`
-													WHERE `product_id`='".$item['id']."'
-													LIMIT 1";
-										$sql2 = mysql_query($query2) or die(mysql_error());
-										$row2 = mysql_fetch_assoc($sql2);
+													WHERE `product_id`='{$item['id']}'";
+										$result2 = $mysqli->query($query2) or die($mysqli->error);
+										$row2 = $result2->fetch_assoc();
 										
 										$total_price = $row2['price'] * $item['qty'];
 										
@@ -74,12 +73,12 @@
 								$query4 = "SELECT `discount`
 											FROM `discounts`
 											WHERE `user_id`='{$_SESSION['user_id']}'";
-								$sql4 = mysql_query($query4) or die(mysql_error());
-								if (mysql_num_rows($sql4)) {
+								$result4 = $mysqli->query($query4) or die($mysqli->error);
+								if ($result4->num_rows) {
 									echo "
 										<div class='discount-holder'>
 											<h3>Выберите одну из  ваших скидок:</h3>";
-										while ($row4 = mysql_fetch_assoc($sql4)) {
+										while ($row4 = $result4->fetch_assoc()) {
 											echo "<i class='icn-discount-{$row4['discount']} discount-btn'></i>";
 										}
 									echo "
@@ -94,7 +93,7 @@
                                 <div class="hor-splitter"></div>
                                 <?php
 									
-									if (mysql_num_rows($sql4)) {
+									if ($result4->num_rows) {
 										echo "
 											<span class='sub-dark-color'>Скидка:</span>
 											<span class='final-sum sub-dark-color discount-value'>0 ₷</span>";
@@ -135,21 +134,22 @@
                                 <h2>Адрес и время доставки</h2>
                                 <div class="hor-splitter"></div>
                                 <?php
-									if (mysql_num_rows($sql1) != 0) {
+									if ($result1->num_rows != 0) {
 										echo "
 											<div class='field'>
 												<label for='user-address'>На эти адреса Вы уже делали заказ:</label>
 												<select class='text-input' name='user-address'>";
-										while ($row1 = mysql_fetch_assoc($sql1)) {
+										while ($row1 = $result1->fetch_assoc()) {
+											$address_title = address_title($row1);
 											echo "
-													<option value='{$row1['address_id']}'>м. {$row1['metro']}, {$row1['street']}, {$row1['house']}</option>";
+													<option value='{$row1['address_id']}'>{$address_title}</option>";
 										}
 										echo "
 													<option value='0'>-- Добавить новый адрес --</option>
 												</select>
 											</div>";
-										mysql_data_seek($sql1, 0);
-										$row1 = mysql_fetch_assoc($sql1);
+										$result1->data_seek(0);
+										$row1 = $result1->fetch_assoc();
 									}
 								?>
                                 <div id="address">

@@ -5,43 +5,52 @@ session_start();
 include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 include($_SERVER['DOCUMENT_ROOT'].'/admin/script/functions.php');
 
-if (!isset($_SESSION['admin_id'])) {
+if (!isset($_SESSION['admin_hashed_id'])) {
 	if (isset($_COOKIE['login']) && isset($_COOKIE['password'])) {
-		$login = sanitize($_COOKIE['login']);
-		$password = sanitize($_COOKIE['password']);
+		$login = Database::sanitize($_COOKIE['login']);
+		$password = Database::sanitize($_COOKIE['password']);
 
-		$query = "SELECT `admin_id`
+		$query = "SELECT *
 					FROM `admin`
 					WHERE `login`='{$login}' AND `password`='{$password}'
 					LIMIT 1";
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 
-		if (mysql_num_rows($sql) == 1) {
-			$row = mysql_fetch_assoc($sql);
-			$_SESSION['admin_id'] = $row['id'];
+		if ($result->num_rows == 1) {
+			$row = $result->fetch_assoc();
+			$hashed_id = md5(md5($row['admin_id']) . $row['salt']);
+			$_SESSION['admin_hashed_id'] = $hashed_id;
+			$_SESSION['admin_id'] = $row['admin_id'];
 		}
 	}
 }
 
-if (isset($_SESSION['admin_id'])) {
-	$query = "SELECT `login`
+if (isset($_SESSION['admin_hashed_id']) && $_SESSION['admin_id']) {
+	$query = "SELECT *
 				FROM `admin`
 				WHERE `admin_id` = '{$_SESSION['admin_id']}'
 				LIMIT 1";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
-	if (mysql_num_rows($sql) != 1) {
+	if ($result->num_rows != 1) {
 		header('Location: login.php?logout');
 		exit;
+	} else {
+		$row = $result->fetch_assoc();
+		$hashed_id = md5(md5($row['admin_id']) . $row['salt']);
+		if ($_SESSION['admin_hashed_id'] != $hashed_id) {
+			header('Location: login.php?logout');
+			exit;
+		}
 	}
 }
 
-if (!isset($_SESSION['admin_id'])) {
+if (!isset($_SESSION['admin_hased_id']) && !isset($_SESSION['admin_id'])) {
 	header('Location: login.php');
 } else {
 	
 	if (!empty($_GET)) {
-		$include = $_SERVER['DOCUMENT_ROOT'].'/admin/include/'.sanitize(array_shift(array_keys($_GET))).'.php';
+		$include = $_SERVER['DOCUMENT_ROOT'].'/admin/include/'.Database::sanitize(array_shift(array_keys($_GET))).'.php';
 	} else {
 		$include = $_SERVER['DOCUMENT_ROOT'].'/admin/include/orders.php';
 	}

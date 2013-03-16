@@ -11,21 +11,21 @@ if (isset($_POST['id'])) {
 	$query = "DELETE
 			  FROM `addresses`
 			  WHERE `address_id` = '{$_POST['id']}'";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
 	echo json_encode('success');
 	exit;
-} else {
-	$address_id = (isset($_POST['user-address'])) ? sanitize($_POST['user-address']) : '';
-	$user_metro = (isset($_POST['user-metro'])) ? sanitize($_POST['user-metro']) : '';
-	$user_street = (isset($_POST['user-street'])) ? sanitize($_POST['user-street']) : '';
-	$user_house = (isset($_POST['user-house'])) ? sanitize($_POST['user-house']) : '';
-	$user_building = (isset($_POST['user-building'])) ? sanitize($_POST['user-building']) : '';
-	$user_flat = (isset($_POST['user-flat'])) ? sanitize($_POST['user-flat']) : '';
-	$user_enter = (isset($_POST['user-enter'])) ? sanitize($_POST['user-enter']) : '';
-	$user_floor = (isset($_POST['user-floor'])) ? sanitize($_POST['user-floor']) : '';
-	$user_domofon = (isset($_POST['user-domofon'])) ? sanitize($_POST['user-domofon']) : '';
-	$user_company = (isset($_POST['user-company'])) ? sanitize($_POST['user-company']) : '';
+} else if (isset($_POST['user-address'])) {
+	$address_id = (isset($_POST['user-address'])) ? Database::sanitize($_POST['user-address']) : '';
+	$user_metro = (isset($_POST['user-metro'])) ? Database::sanitize($_POST['user-metro']) : '';
+	$user_street = (isset($_POST['user-street'])) ? Database::sanitize($_POST['user-street']) : '';
+	$user_house = (isset($_POST['user-house'])) ? Database::sanitize($_POST['user-house']) : '';
+	$user_building = (isset($_POST['user-building'])) ? Database::sanitize($_POST['user-building']) : '';
+	$user_flat = (isset($_POST['user-flat'])) ? Database::sanitize($_POST['user-flat']) : '';
+	$user_enter = (isset($_POST['user-enter'])) ? Database::sanitize($_POST['user-enter']) : '';
+	$user_floor = (isset($_POST['user-floor'])) ? Database::sanitize($_POST['user-floor']) : '';
+	$user_domofon = (isset($_POST['user-domofon'])) ? Database::sanitize($_POST['user-domofon']) : '';
+	$user_company = (isset($_POST['user-company'])) ? Database::sanitize($_POST['user-company']) : '';
 	if (isset($_POST['user-office'])) {
 		$user_office = 1;
 	} else {
@@ -62,7 +62,7 @@ if (isset($_POST['id'])) {
 						`floor`='{$user_floor}',
 						`domofon`='{$user_domofon}'";
 	}
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 
 	echo json_encode('success');
 }

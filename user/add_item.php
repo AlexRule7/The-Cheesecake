@@ -5,13 +5,6 @@ session_start();
 
 include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
-function addItem($id, $qty) {
-	array_push($_SESSION['item_list'], array(
-		'id' => $id,
-		'qty' => $qty
-	));
-}
-
 header('Content-type: application/json');
 
 if (isset($_POST['id'])) {
@@ -26,11 +19,11 @@ if (isset($_POST['id'])) {
 			}
 		}
 	} else {
-		addItem($_POST['id'], $_POST['qty']);
+		add_item($_POST['id'], $_POST['qty']);
 	}
 	
 	if ($counter == count($_SESSION['item_list'])) {
-		addItem($_POST['id'], $_POST['qty']);
+		add_item($_POST['id'], $_POST['qty']);
 	}
 } else {
 	$update_list = array();
@@ -57,12 +50,12 @@ if (isset($_POST['id'])) {
 				}
 			}
 			if($counter == count($_SESSION['item_list'])) {
-				addItem($item['id'], $item['qty']);
+				add_item($item['id'], $item['qty']);
 			}
 		}
 	} else {
 		foreach($update_list as $item) {
-			addItem($item['id'], $item['qty']);
+			add_item($item['id'], $item['qty']);
 		}
 	}
 }

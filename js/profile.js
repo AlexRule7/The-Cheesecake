@@ -53,7 +53,8 @@ jQuery(document).ready(function($){
 						form.find('input[name=user-pass-old]').parent().addClass('error').find('.passCaption').html(data.text).show();
 					}
 				} else {
-					location.reload();
+					form.find('.change-success').slideDown().html('<h2>Изменения сохранены</h2>');
+					form.find('input[name=user-pass-old], input[name=user-pass], input[name=user-pass-conf]').val('');
 				}
 			}
 		});

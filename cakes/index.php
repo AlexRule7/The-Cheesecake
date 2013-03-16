@@ -34,13 +34,11 @@
 				header('Location: ../');
 		}
 		
-		$query = "SELECT `name`, `image`, `price`, `annotation`,
-					`protein`, `fat`, `carbohydrate`, `calories`
+		$query = "SELECT *
 					FROM `products`
-					WHERE `product_id`='{$product_id}'
-					LIMIT 1";
-		$sql = mysql_query($query) or die(mysql_error());
-		$row = mysql_fetch_assoc($sql);
+					WHERE `product_id`='{$product_id}'";
+		$result = $mysqli->query($query) or die($mysqli->error);
+		$row = $result->fetch_assoc();
 	} else {
 		header('Location: ../');
 	}
@@ -95,14 +93,14 @@
                         </li>
                         <?php
 						
-							$query = "SELECT `product_id`, `url`, `name`, `image_thumb`
+							$query = "SELECT *
 										FROM `products`
 										WHERE `product_id`='1'
 											OR `product_id`='2'
 											OR `product_id`='5'
 											OR `product_id`='6'";
-							$sql = mysql_query($query) or die(mysql_error());
-							while ($row = mysql_fetch_assoc($sql)) {
+							$result = $mysqli->query($query) or die($mysqli->error);
+							while ($row = $result->fetch_assoc()) {
 								echo "
 									<li class='menu-item'>
 										<div class='menu-photo-holder'>

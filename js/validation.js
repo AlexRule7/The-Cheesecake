@@ -420,7 +420,7 @@ $(document).ready(function(){
 				cache: false,
 				dataType: 'json',
 				success: function(data) {
-					location.reload();
+					that.closest('form').find('.change-success').slideDown().html('<h2>Изменения сохранены</h2>');
 				}
 			});
 		}

@@ -4,49 +4,44 @@
 	
 	include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 	
-	if (!isset($_SESSION['user_id']))
-	{
-		if (isset($_COOKIE['email']) && isset($_COOKIE['password']))
-		{
-			$email = sanitize($_COOKIE['email']);
-			$password = sanitize($_COOKIE['password']);
+	if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_hashed_id'])) {
+		if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
+			$email = Database::sanitize($_COOKIE['email']);
+			$password = Database::sanitize($_COOKIE['password']);
 	
 			$query = "SELECT `user_id`, `password`
 						FROM `users`
 						WHERE `email`='{$email}' AND `password`='{$password}'
 						LIMIT 1";
-			$sql = mysql_query($query) or die(mysql_error());
+			$result = $mysqli->query($query) or die($mysqli->error);
 	
-			if (mysql_num_rows($sql) == 1)
-			{
-				$row = mysql_fetch_assoc($sql);
+			if ($result->num_rows == 1) {
+				$row = $result->fetch_assoc();
 				$_SESSION['user_id'] = $row['user_id'];
+				$hashed_id = md5(md5($row['user_id']) . $row['salt']);
+				$_SESSION['user_hashed_id'] = $hashed_id;
 			}
 		}
 	}
 	
-	if (isset($_SESSION['user_id']))
-	{
-		$query = "SELECT `name`, `email`
+	if (isset($_SESSION['user_id']) && isset($_SESSION['user_hashed_id'])) {
+		$query = "SELECT *
 					FROM `users`
 					WHERE `user_id` = '{$_SESSION['user_id']}'
 					LIMIT 1";
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		
-		if (mysql_num_rows($sql) != 1)
-		{
-			if (isset($_SESSION['user_id'])) {
-				unset($_SESSION['user_id']);
-				unset($name);
+		if ($result->num_rows != 1) {
+			header('Location: http://'.$_SERVER['SERVER_NAME'].'/user/logout.php');
+			exit;
+		} else {
+			$row = $result->fetch_assoc();
+			$hashed_id = md5(md5($row['user_id']) . $row['salt']);
+			if ($_SESSION['user_hashed_id'] != $hashed_id) {
+				header('Location: http://'.$_SERVER['SERVER_NAME'].'/user/logout.php');
+				exit;
 			}
-			
-			setcookie('login', '', 0, "/");
-			setcookie('password', '', 0, "/");
-			
-			header('Location: index.php');
 		}
-		
-		$row = mysql_fetch_assoc($sql);
 		
 		$name = $row['name'];
 	}

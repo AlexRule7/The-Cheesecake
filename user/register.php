@@ -9,10 +9,10 @@ header('Content-type: application/json');
 
 if (!empty($_POST))
 {
-	$user_name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
-	$user_email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
-	$user_phone = (isset($_POST['user-phone'])) ? sanitize($_POST['user-phone']) : '';
-	$pass = (isset($_POST['user-pass'])) ? sanitize($_POST['user-pass']) : '';
+	$user_name = (isset($_POST['user-name'])) ? Database::sanitize($_POST['user-name']) : '';
+	$user_email = (isset($_POST['user-email'])) ? Database::sanitize($_POST['user-email']) : '';
+	$user_phone = (isset($_POST['user-phone'])) ? Database::sanitize($_POST['user-phone']) : '';
+	$pass = (isset($_POST['user-pass'])) ? Database::sanitize($_POST['user-pass']) : '';
 		
 	$salt = GenerateSalt();
 	$password = md5(md5($pass) . $salt);
@@ -21,16 +21,16 @@ if (!empty($_POST))
 				FROM `users`
 				WHERE `email` = '{$user_email}'";
 
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
-	if (!mysql_num_rows($sql)) {
+	if (!$result->num_rows) {
 		$query = "SELECT *
 					FROM `phones`
 					WHERE `phone` = '{$user_phone}'";
 	
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		
-		if (!mysql_num_rows($sql)) {
+		if (!$result->num_rows) {
 			$query = "INSERT
 						INTO `users`
 						SET
@@ -40,8 +40,11 @@ if (!empty($_POST))
 							`bonus_received`='0',
 							`salt`='{$salt}'";
 							
-			$sql = mysql_query($query) or die(mysql_error());
-			$_SESSION['user_id'] = mysql_insert_id();
+			$result = $mysqli->query($query) or die($mysqli->error);
+			
+			$_SESSION['user_id'] = $mysqli->insert_id;
+			$hashed_id = md5(md5($_SESSION['user_id']) . $salt);
+			$_SESSION['user_hashed_id'] = $hashed_id;
 			
 			$query = "INSERT
 						INTO `phones`
@@ -49,17 +52,17 @@ if (!empty($_POST))
 							`user_id`='{$_SESSION['user_id']}',
 							`phone`='{$user_phone}'";
 							
-			$sql = mysql_query($query) or die(mysql_error());
+			$result = $mysqli->query($query) or die($mysqli->error);
 		} else {
-			$row = mysql_fetch_assoc($sql);
+			$row = $result->fetch_assoc();
 			$user_id = $row['user_id'];
 			
 			$query = "SELECT *
 						FROM `users`
 						WHERE `user_id` = '{$user_id}'";
 		
-			$sql = mysql_query($query) or die(mysql_error());
-			$row = mysql_fetch_assoc($sql);
+			$result = $mysqli->query($query) or die($mysqli->error);
+			$row = $result->fetch_assoc();
 			
 			if (empty($row['email'])) {
 				$query = "UPDATE `users`
@@ -71,8 +74,11 @@ if (!empty($_POST))
 								`salt`='{$salt}'
 							WHERE `user_id`='{$user_id}'";
 				
-				$sql = mysql_query($query) or die(mysql_error());
+				$result = $mysqli->query($query) or die($mysqli->error);
+				
 				$_SESSION['user_id'] = $user_id;
+				$hashed_id = md5(md5($_SESSION['user_id']) . $salt);
+				$_SESSION['user_hashed_id'] = $hashed_id;
 			} else {
 				$error = array (
 					'id' => '2',

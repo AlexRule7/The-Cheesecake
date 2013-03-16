@@ -4,7 +4,10 @@
 	
 	if (isset($_SESSION['user_id'])) {
 		unset($_SESSION['user_id']);
-		unset($name);
+	}
+	
+	if (isset($_SESSION['user_hashed_id'])) {
+		unset($_SESSION['user_hashed_id']);
 	}
 	
 	setcookie('email', '', 0, "/");

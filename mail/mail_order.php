@@ -34,13 +34,15 @@
                                             </tr>
                                             <?php
 											
+												$mysqli = Database::getConnection();
+											
 												foreach ($item_list as $key => $val) {
 													if ($val['qty'] != 0) {
 														$query = "SELECT `name`, `price`
 																	FROM `products`
 																	WHERE `product_id`='{$val['id']}'";
-														$sql = mysql_query($query) or die(mysql_error());
-														$row = mysql_fetch_assoc($sql);
+														$result = $mysqli->query($query) or die($mysqli->error);
+														$row = $result->fetch_assoc();
 														
 														echo "
 															<tr>
@@ -88,15 +90,7 @@
                             <table width="100%" cellspacing="0" cellpadding="15px" style="background: white; margin-top:20px; padding-top: 15px; -webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px;">
                             	<tr>
                                 	<td width="30%" style="border-bottom: solid 1px #e9e4e7"><h3 style="margin-bottom: 3px; margin-top: 10px">Адрес:</h3></td>
-                                	<td width="70%" style="border-bottom: solid 1px #e9e4e7">
-										<?php echo "м. {$address['metro']}, {$address['street']} {$address['house']}".
-											(!empty($address['building']) ? 'к'.$address['building'].'' : '').
-											(!empty($address['flat']) ? ', кв. '.$address['flat'].'' : '').
-											(!empty($address['enter']) ? ', подъезд '.$address['enter'].'' : '').
-											(!empty($address['floor']) ? ', этаж '.$address['floor'].'' : '').
-											(!empty($address['domofon']) ? ', домофон '.$address['domofon'].'' : '').".";
-										?>
-                                    </td>
+                                	<td width="70%" style="border-bottom: solid 1px #e9e4e7"><?php echo address_title($address); ?></td>
                                 </tr>
                                 <?php
 									if ($address['office'] == 1 && !empty($address['company'])) {

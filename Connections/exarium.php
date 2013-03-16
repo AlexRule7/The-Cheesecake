@@ -12,7 +12,7 @@ $db_selected = mysql_select_db($database_exarium);
 
 mysql_query("SET NAMES `utf8`");
 
-function sanitize($data)
+function Database::sanitize($data)
 {
 	// remove whitespaces (not a must though)
 	$data = trim($data); 

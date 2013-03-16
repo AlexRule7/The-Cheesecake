@@ -38,13 +38,13 @@
                             	<form id="poll">
                             	<?php
 								
-									$query = "SELECT `poll_id`, `title`
+									$query = "SELECT *
 												FROM `polls`
 												ORDER BY `poll_id` ASC
 												LIMIT 3";
-								
-									$sql = mysql_query($query) or die(mysql_error());
-									while ($row = mysql_fetch_assoc($sql)) {
+									$result = $mysqli->query($query) or die($mysqli->error);
+									
+									while ($row = $result->fetch_assoc()) {
 										echo "
 											<div class='grid small-col'>
 												<h3>{$row['title']}</h3>
@@ -55,15 +55,15 @@
 													WHERE `poll_id`='{$row['poll_id']}'
 													ORDER BY `poll_choice_id` ASC";
 									
-										$sql2 = mysql_query($query2) or die(mysql_error());
-										while ($row2 = mysql_fetch_assoc($sql2)) {
+										$result2 = $mysqli->query($query2) or die($mysqli->error);
+										while ($row2 = $result2->fetch_assoc()) {
 											$query3 = "SELECT `poll_choice_id`
 														FROM `poll_results`
 														WHERE `poll_id`='{$row['poll_id']}' AND `user_id` = '{$_SESSION['user_id']}'";
 										
-											$sql3 = mysql_query($query3) or die(mysql_error());
-											if (mysql_num_rows($sql3)) {
-												$row3 = mysql_fetch_assoc($sql3);
+											$result3 = $mysqli->query($query3) or die($mysqli->error);
+											if ($result3->num_rows) {
+												$row3 = $result3->fetch_assoc();
 												if ($row3['poll_choice_id'] == $row2['poll_choice_id']) {
 													$is_checked = 'checked';
 												} else {

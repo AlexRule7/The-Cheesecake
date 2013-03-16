@@ -81,6 +81,8 @@ jQuery(document).ready(function($){
 							$('input[name="user-phone[]"], input[name=user-phone]').mask('+7(999)999-99-99');
 						});
 					}
+				}
+				if (form.attr('id') == 'admin-change-user' || form.attr('id') == 'admin-change-order') {
 					var data = 'user-id='+data.user_id;
 					$.ajax({
 						type: 'POST',
@@ -90,9 +92,12 @@ jQuery(document).ready(function($){
 						dataType: 'html',
 						success: function(data) {
 							if (!data) {
-								$('.order-history').addClass('centered-text whiteboard').html('<h2>У пользователя пока нет заказов</h2>');
+								form.find('.order-history').addClass('centered-text whiteboard').html('<h2>У пользователя пока нет заказов</h2>');
 							} else {
-								$('.order-history').removeClass('centered-text whiteboard').html(data);
+								form.find('.order-history').removeClass('centered-text whiteboard').html(data);
+								if (form.attr('id') == 'admin-change-user') {
+									form.find('.order-history .order-history-change').remove();
+								}
 							}
 						}
 					});
@@ -245,9 +250,10 @@ jQuery(document).ready(function($){
 		order_history_details.each(function(index, element) {
 			var order_cake_qty = 0;
 			$(element).find('.order-history-details-qt').each(function(index, element) {
+				$cake_qty = Number($(element).text().replace( /[^\d]+/g, ''));
 				$(element).siblings('.order-history-details-product-name').each(function(index, element) {
 					if (cakes[$(element).text()]) {
-						cakes[$(element).text()] += 1;
+						cakes[$(element).text()] += $cake_qty;
 					} else {
 						cakes[$(element).text()] = 1;
 					}

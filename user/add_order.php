@@ -7,32 +7,32 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 header('Content-type: application/json');
 
-$user_name = (isset($_POST['user-name'])) ? sanitize($_POST['user-name']) : '';
-$user_email = (isset($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
-$user_phone = (isset($_POST['user-phone'])) ? sanitize($_POST['user-phone']) : '';
-$address_id = (isset($_POST['user-address'])) ? sanitize($_POST['user-address']) : '';
-$user_metro = (isset($_POST['user-metro'])) ? sanitize($_POST['user-metro']) : '';
-$user_street = (isset($_POST['user-street'])) ? sanitize($_POST['user-street']) : '';
-$user_house = (isset($_POST['user-house'])) ? sanitize($_POST['user-house']) : '';
-$user_building = (isset($_POST['user-building'])) ? sanitize($_POST['user-building']) : '';
-$user_flat = (isset($_POST['user-flat'])) ? sanitize($_POST['user-flat']) : '';
-$user_enter = (isset($_POST['user-enter'])) ? sanitize($_POST['user-enter']) : '';
-$user_floor = (isset($_POST['user-floor'])) ? sanitize($_POST['user-floor']) : '';
-$user_domofon = (isset($_POST['user-domofon'])) ? sanitize($_POST['user-domofon']) : '';
-$user_company = (isset($_POST['user-company'])) ? sanitize($_POST['user-company']) : '';
+$user_name = (isset($_POST['user-name'])) ? Database::sanitize($_POST['user-name']) : '';
+$user_email = (isset($_POST['user-email'])) ? Database::sanitize($_POST['user-email']) : '';
+$user_phone = (isset($_POST['user-phone'])) ? Database::sanitize($_POST['user-phone']) : '';
+$address_id = (isset($_POST['user-address'])) ? Database::sanitize($_POST['user-address']) : '';
+$user_metro = (isset($_POST['user-metro'])) ? Database::sanitize($_POST['user-metro']) : '';
+$user_street = (isset($_POST['user-street'])) ? Database::sanitize($_POST['user-street']) : '';
+$user_house = (isset($_POST['user-house'])) ? Database::sanitize($_POST['user-house']) : '';
+$user_building = (isset($_POST['user-building'])) ? Database::sanitize($_POST['user-building']) : '';
+$user_flat = (isset($_POST['user-flat'])) ? Database::sanitize($_POST['user-flat']) : '';
+$user_enter = (isset($_POST['user-enter'])) ? Database::sanitize($_POST['user-enter']) : '';
+$user_floor = (isset($_POST['user-floor'])) ? Database::sanitize($_POST['user-floor']) : '';
+$user_domofon = (isset($_POST['user-domofon'])) ? Database::sanitize($_POST['user-domofon']) : '';
+$user_company = (isset($_POST['user-company'])) ? Database::sanitize($_POST['user-company']) : '';
 if (isset($_POST['user-office'])) {
 	$user_office = 1;
 } else {
 	$user_office = 0;
 }
 
-$order_comment = (isset($_POST['order-comment'])) ? sanitize($_POST['order-comment']) : '';
-$order_time = (isset($_POST['order-time'])) ? sanitize($_POST['order-time']) : '';
-$order_date = (isset($_POST['order-date'])) ? sanitize($_POST['order-date']) : '';
-$order_discount = (isset($_POST['order-discount'])) ? sanitize($_POST['order-discount']) : '';
-$order_raw_bill = (isset($_POST['order-raw-bill'])) ? sanitize($_POST['order-raw-bill']) : '';
-$order_bill = (isset($_POST['order-bill'])) ? sanitize($_POST['order-bill']) : '';
-$order_delivery = (isset($_POST['order-delivery'])) ? sanitize($_POST['order-delivery']) : '';
+$order_comment = (isset($_POST['order-comment'])) ? Database::sanitize($_POST['order-comment']) : '';
+$order_time = (isset($_POST['order-time'])) ? Database::sanitize($_POST['order-time']) : '';
+$order_date = (isset($_POST['order-date'])) ? Database::sanitize($_POST['order-date']) : '';
+$order_discount = (isset($_POST['order-discount'])) ? Database::sanitize($_POST['order-discount']) : '';
+$order_raw_bill = (isset($_POST['order-raw-bill'])) ? Database::sanitize($_POST['order-raw-bill']) : '';
+$order_bill = (isset($_POST['order-bill'])) ? Database::sanitize($_POST['order-bill']) : '';
+$order_delivery = (isset($_POST['order-delivery'])) ? Database::sanitize($_POST['order-delivery']) : '';
 
 $order_date = date('d.m.Y', strtotime($order_date));
 
@@ -41,8 +41,8 @@ if (!isset($_SESSION['user_id'])) {
 				FROM `users`
 				WHERE `email` = '{$user_email}'";
 
-	$sql = mysql_query($query) or die(mysql_error());
-	if (!mysql_num_rows($sql)) {
+	$result = $mysqli->query($query) or die($mysqli->error);
+	if (!$result->num_rows) {
 		preg_match('/\d-\d+-\d+$/', $user_phone, $match);
 		$pass = str_replace('-', '', $match[0]);
 		$salt = GenerateSalt();
@@ -52,9 +52,9 @@ if (!isset($_SESSION['user_id'])) {
 					FROM `phones`
 					WHERE `phone` = '{$user_phone}'";
 	
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		
-		if (!mysql_num_rows($sql)) {
+		if (!$result->num_rows) {
 			$query = "INSERT
 						INTO `users`
 						SET
@@ -64,8 +64,8 @@ if (!isset($_SESSION['user_id'])) {
 							`bonus_received`='1',
 							`salt`='{$salt}'";
 							
-			$sql = mysql_query($query) or die(mysql_error());
-			$_SESSION['user_id'] = mysql_insert_id();
+			$result = $mysqli->query($query) or die($mysqli->error);
+			$_SESSION['user_id'] = $mysqli->insert_id;
 			$_SESSION['new_user'] = true;
 			
 			$query = "INSERT
@@ -74,10 +74,10 @@ if (!isset($_SESSION['user_id'])) {
 							`user_id`='{$_SESSION['user_id']}',
 							`phone`='{$user_phone}'";
 							
-			$sql = mysql_query($query) or die(mysql_error());
-			$phone_id = mysql_insert_id();
+			$result = $mysqli->query($query) or die($mysqli->error);
+			$phone_id = $mysqli->insert_id;
 		} else {
-			$row = mysql_fetch_assoc($sql);
+			$row = $result->fetch_assoc();
 			$phone_id = $row['phone_id'];
 			$user_id = $row['user_id'];
 			
@@ -85,8 +85,8 @@ if (!isset($_SESSION['user_id'])) {
 						FROM `users`
 						WHERE `user_id` = '{$user_id}'";
 		
-			$sql = mysql_query($query) or die(mysql_error());
-			$row = mysql_fetch_assoc($sql);
+			$result = $mysqli->query($query) or die($mysqli->error);
+			$row = $result->fetch_assoc();
 			
 			if (empty($row['email'])) {
 				$query = "UPDATE `users`
@@ -98,7 +98,7 @@ if (!isset($_SESSION['user_id'])) {
 								`salt`='{$salt}'
 							WHERE `user_id`='{$user_id}'";
 				
-				$sql = mysql_query($query) or die(mysql_error());
+				$result = $mysqli->query($query) or die($mysqli->error);
 				$_SESSION['user_id'] = $user_id;
 				$_SESSION['new_user'] = true;
 			} else {
@@ -111,14 +111,7 @@ if (!isset($_SESSION['user_id'])) {
 			}
 		}
 		
-		$query = "INSERT
-					INTO `discounts`
-					SET
-						`user_id`='{$_SESSION['user_id']}',
-						`discount`='5',
-						`value`='1'";
-						
-		$sql = mysql_query($query) or die(mysql_error());
+		add_discount($_SESSION['user_id'], 5);
 		$_SESSION['new_user_discount'] = 5;
 		
 		$query = "INSERT
@@ -136,8 +129,8 @@ if (!isset($_SESSION['user_id'])) {
 						`floor`='{$user_floor}',
 						`domofon`='{$user_domofon}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
-		$address_id = mysql_insert_id();
+		$result = $mysqli->query($query) or die($mysqli->error);
+		$address_id = $mysqli->insert_id;
 		
 		// MAIL
 		
@@ -168,18 +161,18 @@ if (!isset($_SESSION['user_id'])) {
 				FROM `phones`
 				WHERE `phone` = '{$user_phone}'";
 				
-	$sql = mysql_query($query) or die(mysql_error());
-	if (!mysql_num_rows($sql)) {
+	$result = $mysqli->query($query) or die($mysqli->error);
+	if (!$result->num_rows) {
 		$query = "INSERT
 					INTO `phones`
 					SET
 						`user_id`='{$_SESSION['user_id']}',
 						`phone`='{$user_phone}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
-		$phone_id = mysql_insert_id();
+		$result = $mysqli->query($query) or die($mysqli->error);
+		$phone_id = $mysqli->insert_id;
 	} else {
-		$row = mysql_fetch_assoc($sql);
+		$row = $result->fetch_assoc();
 		$phone_id = $row['phone_id'];
 	}
 	
@@ -199,8 +192,8 @@ if (!isset($_SESSION['user_id'])) {
 						`floor`='{$user_floor}',
 						`domofon`='{$user_domofon}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
-		$address_id = mysql_insert_id();
+		$result = $mysqli->query($query) or die($mysqli->error);
+		$mysqli->insert_id;
 	}
 }
 
@@ -208,39 +201,18 @@ $query = "SELECT `bonus_received`
 			FROM `users`
 			WHERE `user_id` = '{$_SESSION['user_id']}'";
 			
-$sql = mysql_query($query) or die(mysql_error());
-$row = mysql_fetch_assoc($sql);
+$result = $mysqli->query($query) or die($mysqli->error);
+$row = $result->fetch_assoc();
 
 if ($row['bonus_received'] == 0 && !isset($_SESSION['new_user'])) {
-	$query = "SELECT *
-				FROM `discounts`
-				WHERE `user_id` = '{$_SESSION['user_id']}' AND `discount` = '5'";
-				
-	$sql = mysql_query($query) or die(mysql_error());
-	
-	if (mysql_num_rows($sql)) {
-		$row = mysql_fetch_assoc($sql);
-		$query = "UPDATE `discounts`
-					SET `value`=value+1
-					WHERE `discount_id` = '{$row['discount_id']}'";
-		$sql = mysql_query($query) or die(mysql_error());
-	} else {
-		$query = "INSERT
-					INTO `discounts`
-					SET
-						`user_id`='{$_SESSION['user_id']}',
-						`discount`='5',
-						`value`='1'";
-						
-		$sql = mysql_query($query) or die(mysql_error());
-	}
+	add_discount($_SESSION['user_id'], 5);
 	$_SESSION['new_user_discount'] = 5;
 	
 	$query = "UPDATE `users`
 				SET `bonus_received`='1'
 				WHERE `user_id`='{$_SESSION['user_id']}'";
 	
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 }
 
 $query = "INSERT
@@ -257,29 +229,12 @@ $query = "INSERT
 				`delivery`='{$order_delivery}',
 				`comment`='{$order_comment}'";
 				
-$sql = mysql_query($query) or die(mysql_error());
-$order_id = mysql_insert_id();
+$result = $mysqli->query($query) or die($mysqli->error);
+$order_id = $mysqli->insert_id;
 $_SESSION['order_id'] = $order_id;
 
 if (!empty($order_discount)) {
-	$query = "SELECT *
-				FROM `discounts`
-				WHERE `user_id` = '{$_SESSION['user_id']}' AND `discount` = '{$order_discount}'";
-				
-	$sql = mysql_query($query) or die(mysql_error());
-	$row = mysql_fetch_assoc($sql);
-	
-	if ($row['value'] == 1) {
-		$query = "DELETE
-					FROM `discounts`
-					WHERE `discount_id` = '{$row['discount_id']}'";
-		$sql = mysql_query($query) or die(mysql_error());
-	} else {
-		$query = "UPDATE `discounts`
-					SET `value`=value-1
-					WHERE `discount_id` = '{$row['discount_id']}'";
-		$sql = mysql_query($query) or die(mysql_error());
-	}
+	remove_discount($_SESSION['user_id'], $order_discount);
 }
 
 foreach ($_SESSION['item_list'] as $key => $val) {
@@ -291,7 +246,7 @@ foreach ($_SESSION['item_list'] as $key => $val) {
 						`product_id`='{$val['id']}',
 						`amount`='{$val['qty']}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 	}
 }
 
@@ -300,34 +255,7 @@ if ($_SESSION['item_total'] >= 3) {
 	if ($_SESSION['item_total'] >= 5) {
 		$new_discount = 10;
 	}
-	$query = "SELECT `discount_id`, `discount`
-				FROM `discounts`
-				WHERE `user_id` = '{$_SESSION['user_id']}'";
-				
-	$sql = mysql_query($query) or die(mysql_error());
-	
-	if (mysql_num_rows($sql)) {
-		while ($row = mysql_fetch_assoc($sql)) {
-			if ($row['discount'] == $new_discount) {
-				$query = "UPDATE `discounts`
-							SET `value`=value+1
-							WHERE `discount_id` = '{$row['discount_id']}'";
-				$sql = mysql_query($query) or die(mysql_error());
-				$created = 1;
-			}
-		}
-	}
-	if ($created != 1) {
-		$query = "INSERT
-					INTO `discounts`
-					SET
-						`user_id`='{$_SESSION['user_id']}',
-						`discount`='{$new_discount}',
-						`value`='1'";
-						
-		$sql = mysql_query($query) or die(mysql_error());
-	}
-	
+	add_discount($_SESSION['user_id'], $new_discount);
 	$_SESSION['new_discount'] = $new_discount;
 }
 
@@ -343,7 +271,7 @@ if (isset($_SESSION['new_user_discount']) || isset($_SESSION['new_discount'])) {
 	$query = "UPDATE `orders`
 				SET `discounts_given`='{$discounts_given}'
 				WHERE `order_id` = '{$order_id}'";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 }
 // MAIL
 

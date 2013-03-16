@@ -1,8 +1,8 @@
 <?php
 
 if (!empty($_POST)) {
-	$admin_login = (isset($_POST['admin-login'])) ? sanitize($_POST['admin-login']) : '';
-	$admin_pass = (isset($_POST['admin-pass'])) ? sanitize($_POST['admin-pass']) : '';
+	$admin_login = (isset($_POST['admin-login'])) ? Database::sanitize($_POST['admin-login']) : '';
+	$admin_pass = (isset($_POST['admin-pass'])) ? Database::sanitize($_POST['admin-pass']) : '';
 	
 	if (!empty($admin_login) && !empty($admin_pass)) {
 		$salt = GenerateSalt();
@@ -14,7 +14,7 @@ if (!empty($_POST)) {
 						`password`='{$admin_pass}',
 						`salt`='{$salt}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 	}
 }
 

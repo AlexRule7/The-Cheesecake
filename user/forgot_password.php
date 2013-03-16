@@ -8,28 +8,28 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 header('Content-type: application/json');
 
 if (!empty($_POST['user-email'])) {
-	$user_email = (!empty($_POST['user-email'])) ? sanitize($_POST['user-email']) : '';
+	$user_email = Database::sanitize($_POST['user-email']);
 	
 	$query = "SELECT `user_id`, `name`
 				FROM `users`
 				WHERE `email` = '{$user_email}'";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
-	if (mysql_num_rows($sql)) {
-		$row = mysql_fetch_assoc($sql);
+	if ($result->num_rows) {
+		$row = $result->fetch_assoc();
 		$user_name = $row['name'];
 		$hash = uniqid();
 		
 		$query = "SELECT `change_id`
 					FROM `password_change`
 					WHERE `user_id`='{$row['user_id']}'";
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		
-		if (mysql_num_rows($sql)) {
+		if ($result->num_rows) {
 			$query = "DELETE
 						FROM `password_change`
 						WHERE `user_id`='{$row['user_id']}'";
-			$sql = mysql_query($query) or die(mysql_error());
+			$result = $mysqli->query($query) or die($mysqli->error);
 		}
 		
 		$query = "INSERT
@@ -38,7 +38,7 @@ if (!empty($_POST['user-email'])) {
 						`user_id`='{$row['user_id']}',
 						`hash`='{$hash}'";
 						
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 		
 		// MAIL
 		
@@ -68,8 +68,8 @@ if (!empty($_POST['user-email'])) {
 		exit;
 	}
 } else if (!empty($_POST['user-pass']) && !empty($_POST['user-pass-conf'])) {
-	$user_id = sanitize($_POST['user-id']);
-	$user_pass = sanitize($_POST['user-pass']);
+	$user_id = Database::sanitize($_POST['user-id']);
+	$user_pass = Database::sanitize($_POST['user-pass']);
 	$salt = GenerateSalt();
 	$user_pass = md5(md5($user_pass) . $salt);
 	
@@ -78,12 +78,12 @@ if (!empty($_POST['user-email'])) {
 					`password`='{$user_pass}',
 					`salt`='{$salt}'
 				WHERE `user_id` = '{$user_id}'";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
 	$query = "DELETE
 				FROM `password_change`
 				WHERE `user_id`='{$user_id}'";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
 	echo json_encode('success');
 }

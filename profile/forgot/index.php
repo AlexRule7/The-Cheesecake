@@ -19,14 +19,14 @@
                 <?php
 				
 					if (isset($_GET['hash'])) {
-						$hash = sanitize($_GET['hash']);
+						$hash = Database::sanitize($_GET['hash']);
 						$query = "SELECT `user_id`
 									FROM `password_change`
 									WHERE `hash`='{$hash}'";
-						$sql = mysql_query($query) or die(mysql_error());
+						$result = $mysqli->query($query) or die($mysqli->error);
 						
-						if (mysql_num_rows($sql)) {
-							$row = mysql_fetch_assoc($sql);
+						if ($result->num_rows) {
+							$row = $result->fetch_assoc();
 				?>
                     <h2>Смена пароля</h2>
                     <div class="hor-splitter"></div>

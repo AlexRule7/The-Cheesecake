@@ -30,3 +30,15 @@
 .deleterow {
 	display: none;
 }
+
+.whiteboard {
+	background: #fff;
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	border: solid 1px rgba(194,194,194,0.5);
+	margin-top: 15px;
+}

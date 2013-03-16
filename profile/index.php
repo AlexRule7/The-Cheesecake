@@ -45,12 +45,12 @@
                                         <label for="user-phone">Телефоны:</label>
                                         <br>
                                         <?php
-                                            $query = "SELECT `phone`, `phone_id`
+                                            $query = "SELECT *
                                                         FROM `phones`
                                                         WHERE `user_id` = '{$_SESSION['user_id']}'
                                                         ORDER BY `phone_id` ASC";
-                                            $sql = mysql_query($query) or die(mysql_error());
-                                            while( $row = mysql_fetch_assoc($sql) ) {
+                                            $result = $mysqli->query($query) or die($mysqli->error);
+                                            while($row = $result->fetch_assoc()) {
                                                 echo "
                                                     <span class='profile-phone-holder'>
                                                         <input type='hidden' name='user-phone-id[]' value='{$row['phone_id']}'>
@@ -79,6 +79,7 @@
                                         <a href="#" class="small-btn blue-btn">Сохранить</a>
                                         <span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
                                     </div>
+                                    <div class="whiteboard grid full-size-col hidden centered-text change-success"></div>
                                 </form>
                             </div>
                         </div><!-- tab-1 -->
@@ -88,72 +89,73 @@
                                     <h2>Ваши адреса</h2>
                                     <div class="hor-splitter"></div>
                                     <?php
-                                        $query1 = "SELECT `address_id`, `metro`, `street`, `house`, `building`, `office`, `company`, `flat`, `enter`, `floor`, `domofon`
+                                        $query = "SELECT *
                                                     FROM `addresses`
                                                     WHERE `user_id` = '{$_SESSION['user_id']}'";
                                         
-                                        $sql1 = mysql_query($query1) or die(mysql_error());
-                                        if (mysql_num_rows($sql1) != 0) {
+                                        $result = $mysqli->query($query) or die($mysqli->error);
+                                        if ($result->num_rows != 0) {
                                             echo "
                                                 <div class='field'>
                                                     <label for='user-address'>На эти адреса Вы уже делали заказ:</label>
                                                     <select class='text-input' name='user-address'>";
-                                            while ($row1 = mysql_fetch_assoc($sql1)) {
+                                            while ($row = $result->fetch_assoc()) {
+												$address_title = address_title($row);
                                                 echo "
-                                                        <option value='{$row1['address_id']}'>м. {$row1['metro']}, {$row1['street']}, {$row1['house']}</option>";
+                                                        <option value='{$row['address_id']}'>{$address_title}</option>";
                                             }
                                             echo "
                                                         <option value='0'>-- Добавить новый адрес --</option>
                                                     </select>
                                                 </div>";
-                                            mysql_data_seek($sql1, 0);
-                                            $row1 = mysql_fetch_assoc($sql1);
+                                            $result->data_seek(0);
+                                            $row = $result->fetch_assoc();
                                         }
                                     ?>
                                     <div id="address">
                                         <div class="field checkbox-field">
-                                            <input class="checkbox-input" type="checkbox" id="to-office" name="user-office" <?php echo ($row1['office'] == 1) ? 'checked' : ''; ?>>
+                                            <input class="checkbox-input" type="checkbox" id="to-office" name="user-office" <?php echo ($row['office'] == 1) ? 'checked' : ''; ?>>
                                             <label for="user-office">Доставка в офис</label>
                                         </div>
                                         <div class="field">
                                             <label for="user-metro">Ближайшая станция метро:</label>
-                                            <input class="text-input" type="text" tabindex="5" name="user-metro" value="<?php echo $row1['metro']; ?>">
+                                            <input class="text-input" type="text" tabindex="5" name="user-metro" value="<?php echo $row['metro']; ?>">
                                         </div>
                                         <div class="field">
                                             <label for="user-street">Улица:</label>
-                                            <input class="text-input" type="text" tabindex="6" name="user-street" value="<?php echo $row1['street']; ?>">
+                                            <input class="text-input" type="text" tabindex="6" name="user-street" value="<?php echo $row['street']; ?>">
                                         </div>
                                         <div class="field group">
                                             <div class="mini-field">
                                                 <label for="user-house">Дом:</label>
-                                                <input class="text-input" type="text" tabindex="7" name="user-house" value="<?php echo $row1['house']; ?>">
+                                                <input class="text-input" type="text" tabindex="7" name="user-house" value="<?php echo $row['house']; ?>">
                                             </div>
                                             <div class="mini-field">
                                                 <label for="user-building">Корпус:</label>
-                                                <input class="text-input" type="text" tabindex="8" name="user-building" value="<?php echo $row1['building']; ?>">
+                                                <input class="text-input" type="text" tabindex="8" name="user-building" value="<?php echo $row['building']; ?>">
                                             </div>
                                             <div class="mini-field">
                                                 <label for="user-flat">Квартира:</label>
-                                                <input class="text-input" type="text" tabindex="9" name="user-flat" value="<?php echo $row1['flat']; ?>">
+                                                <input class="text-input" type="text" tabindex="9" name="user-flat" value="<?php echo $row['flat']; ?>">
                                             </div>
                                         </div>
                                         <div class="field group">
                                             <div class="mini-field">
                                                 <label for="user-enter">Подъезд:</label>
-                                                <input class="text-input" type="text" tabindex="10" name="user-enter" value="<?php echo $row1['enter']; ?>">
+                                                <input class="text-input" type="text" tabindex="10" name="user-enter" value="<?php echo $row['enter']; ?>">
                                             </div>
                                             <div class="mini-field">
                                                 <label for="user-floor">Этаж:</label>
-                                                <input class="text-input" type="text" tabindex="11" name="user-floor" value="<?php echo $row1['floor']; ?>">
+                                                <input class="text-input" type="text" tabindex="11" name="user-floor" value="<?php echo $row['floor']; ?>">
                                             </div>
                                             <div class="mini-field">
                                                 <label for="user-domofon">Домофон:</label>
-                                                <input class="text-input" type="text" tabindex="12" name="user-domofon" value="<?php echo $row1['domofon']; ?>">
+                                                <input class="text-input" type="text" tabindex="12" name="user-domofon" value="<?php echo $row['domofon']; ?>">
                                             </div>
                                         </div>
                                         <div class="field company">
                                             <label for="user-company">Название компании:</label>
-                                            <input class="text-input" type="text" tabindex="13" name="user-company" value="<?php echo $row1['company']; ?>">
+                                            <input class="text-input" type="text" tabindex="13" name="user-company" value="<?php echo $row['company']; ?>">
                                         </div>
                                         <div class="field">
                                             <div class="half-field">
@@ -164,6 +166,7 @@
                                                 <a href="#tabs-2" class="small-btn red-btn delete-address">Удалить адрес</a>
                                             </div>
                                         </div>
+                                        <div class="whiteboard grid full-size-col hidden centered-text change-success"></div>
                                     </div>
                                 </form>
                         	</div>
@@ -179,12 +182,12 @@
                                                 WHERE `user_id` = '{$_SESSION['user_id']}'
                                                 ORDER BY `order_date` DESC";
                                                     
-                                    $sql = mysql_query($query) or die(mysql_error());
+                                    $result = $mysqli->query($query) or die($mysqli->error);
                                     
-                                    if (mysql_num_rows($sql)) {
-                                        for ($i = mysql_num_rows($sql); $i > 0; $i--)
+                                    if ($result->num_rows) {
+                                        for ($i = $result->num_rows; $i > 0; $i--)
                                         {
-                                            $row = mysql_fetch_assoc($sql);
+                                            $row = $result->fetch_assoc();
 											
 											if ($row['canceled'] == 0) {
 												$order_status_canceled = '';
@@ -206,20 +209,20 @@
                                                         WHERE `order_id` = '{$row['order_id']}'
                                                         ORDER BY `id` ASC";
                                                             
-                                            $sql2 = mysql_query($query2) or die(mysql_error());
+                                            $result2 = $mysqli->query($query2) or die($mysqli->error);
                                             
-                                            if (mysql_num_rows($sql2)) {
-                                                for ($p = 1; $p <= mysql_num_rows($sql2); $p++)
+                                            if ($result2->num_rows) {
+                                                for ($p = 1; $p <= $result2->num_rows; $p++)
                                                 {
-                                                    $row2 = mysql_fetch_assoc($sql2);
+                                                    $row2 = $result2->fetch_assoc();
                                                     
                                                     $query3 = "SELECT `name`, `price`
                                                                 FROM `products`
                                                                 WHERE `product_id` = '{$row2['product_id']}'";
                                                                     
-                                                    $sql3 = mysql_query($query3) or die(mysql_error());
+                                                    $result3 = $mysqli->query($query3) or die($mysqli->error);
                                                     
-                                                    $row3 = mysql_fetch_assoc($sql3);
+                                                    $row3 = $result3->fetch_assoc();
                                                     
                                                     echo "
                                                         <div class='order-history-details-row group'>
@@ -265,10 +268,10 @@
                                                     FROM `discounts`
                                                     WHERE `user_id` = '{$_SESSION['user_id']}'";
                                                         
-                                        $sql = mysql_query($query) or die(mysql_error());
+                                        $result = $mysqli->query($query) or die($mysqli->error);
                                         
-                                        if (mysql_num_rows($sql)) {
-                                            while ($row = mysql_fetch_assoc($sql)) {
+                                        if ($result->num_rows) {
+                                            while ($row = $result->fetch_assoc()) {
                                                 if ($row['discount'] == 5) {
                                                     $discount_5 = 'selected';
                                                     $discount_5_value = $row['value'];

@@ -1,4 +1,4 @@
-function addItem(id, qty) {
+function add_item(id, qty) {
 	var data = '';
 	if ($.isArray(id)) {
 		$.each(id, function(index) {
@@ -61,7 +61,7 @@ jQuery(document).ready(function($){
 			scrollTop: $('.user-panel').offset().top-15
 		}, 500);
 		id = $(this).attr("href");
-		addItem(id, 1).done(function() {
+		add_item(id, 1).done(function() {
 			$('.mini-cart').trigger('click');
 		});
 		
@@ -132,7 +132,7 @@ jQuery(document).ready(function($){
 			photo.hide('fast');
 		}
 		
-		addItem(id, qty).done(function() {
+		add_item(id, qty).done(function() {
 			photo.show('fast');
 		});
 	});
@@ -152,7 +152,7 @@ jQuery(document).ready(function($){
 		$('.mini-cart-item-qt').each(function(index, element) {
             qty[index] = element.value;
         });
-		addItem(id, qty);
+		add_item(id, qty);
 		
 		if ($('.main-cart-item:visible').length == 1) {
 			$('.text-content-inner h2').after('<span id="empty-message">Ваша корзина пуста :(</span>');

@@ -6,6 +6,9 @@ include($_SERVER['DOCUMENT_ROOT'].'/Connections/thecheesecake.php');
 
 if (isset($_GET['logout']))
 {
+	if (isset($_SESSION['admin_hashed_id']))
+		unset($_SESSION['admin_hashed_id']);
+		
 	if (isset($_SESSION['admin_id']))
 		unset($_SESSION['admin_id']);
 	
@@ -16,7 +19,7 @@ if (isset($_GET['logout']))
 	exit;
 }
 
-if (isset($_SESSION['admin_id']))
+if (isset($_SESSION['admin_hashed_id']))
 {
 	// юзер уже залогинен, перекидываем его отсюда на закрытую страницу
 	
@@ -29,19 +32,18 @@ if (isset($_SESSION['admin_id']))
 
 if (!empty($_POST))
 {
-	$login = (isset($_POST['login'])) ? sanitize($_POST['login']) : '';
+	$login = (isset($_POST['login'])) ? Database::sanitize($_POST['login']) : '';
 	
 	$query = "SELECT `salt`
 				FROM `admin`
 				WHERE `login`='{$login}'
 				LIMIT 1";
-	$sql = mysql_query($query) or die(mysql_error());
+	$result = $mysqli->query($query) or die($mysqli->error);
 	
-	if (mysql_num_rows($sql) == 1)
-	{
+	if ($result->num_rows == 1) {
 		$error = '';
 		
-		$row = mysql_fetch_assoc($sql);
+		$row = $result->fetch_assoc();
 		
 		// итак, вот она соль, соответствующая этому логину:
 		$salt = $row['salt'];
@@ -58,14 +60,15 @@ if (!empty($_POST))
 					FROM `admin`
 					WHERE `login`='{$login}' AND `password`='{$password}'
 					LIMIT 1";
-		$sql = mysql_query($query) or die(mysql_error());
+		$result = $mysqli->query($query) or die($mysqli->error);
 
 		// если такой пользователь нашелся
-		if (mysql_num_rows($sql) == 1)
-		{
+		if ($result->num_rows == 1) {
 			// то мы ставим об этом метку в сессии (допустим мы будем ставить ID пользователя)
 
-			$row = mysql_fetch_assoc($sql);
+			$row = $result->fetch_assoc();
+			$hashed_id = md5(md5($row['admin_id']) . $salt);
+			$_SESSION['admin_hashed_id'] = $hashed_id;
 			$_SESSION['admin_id'] = $row['admin_id'];
 			
 			
@@ -109,29 +112,32 @@ if (!empty($_POST))
 </head>
 <body>
 
-<center>
-<div class="ui-widget" align="left" style="width: 500px;">
-
-<form name="login" method="post" action="login.php">
-
-	<fieldset class="ui-corner-all"><legend class="ui-corner-all">Авторизация</legend>
-    <?php
-	
-	if (!empty($error)) {
-		print '<div id="error_notification">'.$error.'</div>';
-	}
-	
-	?>
-    <label>Логин</label><input id="name" type="text" name="login"><br />
-	<label>Пароль</label><input type="password" name="password"><br />
-	<label>Запомнить</label><input type="checkbox" name="remember" value="1"><br />
-	<input id="submit" class="button" type="submit" name="submit" value="Войти"><br />
-	</fieldset>
-
-</form>
-
-</div>
-</center>
+    <!-- Sign in popup -->
+        <div class="popup-holder">
+            <div class="popup-body">
+                <div class="big-col centered">
+                	<form class="login" name="login" method="post" action="/admin/login.php">
+                        <h2>Вход</h2>
+                        <div class="hor-splitter"></div>
+                        <div class="field">
+                            <label for="login">Login:</label>
+                            <input class="text-input" type="text" tabindex="1" name="login">
+                        </div>
+                        <div class="field">
+                            <label for="password">Пароль:</label>
+                            <input class="text-input" type="password" tabindex="2" name="password">
+                        </div>
+                        <div class="field checkbox-field">
+                            <input class="checkbox-input" type="checkbox" name="remember" value="1">
+                            <label for="remember">Запомнить меня</label>
+                        </div>
+                        <div class="field">
+                            <input type="submit" name="submit" class="small-btn blue-btn user-login" value="Войти">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 </body>
 </html>

@@ -157,7 +157,7 @@
                                             <label for="user-company">Название компании:</label>
                                             <input class="text-input" type="text" tabindex="13" name="user-company" value="<?php echo $row['company']; ?>">
                                         </div>
-                                        <div class="field">
+                                        <div class="field group">
                                             <div class="half-field">
                                                 <a href="#tabs-2" class="small-btn blue-btn save-address">Сохранить</a>
                                                 <span id="spinner_si"><img src="/images/spinner.gif" class="spinner" title="Loading..."></span>
@@ -253,7 +253,7 @@
                             </div>
                         </div><!-- tab-3 -->
                         <div class="almost-full-size-col centered tab" id="tabs-4">
-                        	<div class="big-col centered">
+                        	<div class="big-col centered profile-discounts">
                                 <h2>Ваши скидки и купоны</h2>
                                 <div class="hor-splitter"></div>
                                 <div class="grid half-col">
@@ -287,8 +287,8 @@
                                         <span class="discount-qt"><?php echo $discount_5_value; ?></span></i>
                                     </p>
                                     <p>Скидка 5% дается каждому зарегистрированному пользователю:</p>
-                                    <p>1. После оформления первого заказа;</p>
-                                    <p>2. При заказе от 3 чизкейков на следующий заказ.</p>
+                                    <p>1. сразу после оформления своего первого заказа;</p>
+                                    <p>2. при заказе от 3 чизкейков на следующий заказ.</p>
                                 </div>
                                 <div class="grid half-col">
                                     <p>

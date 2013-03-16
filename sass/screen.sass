@@ -1047,7 +1047,6 @@ x:-o-prefocus, .menu-photo // opera fix
         float: none
     +breakpoint(tablet)
         float: left
-
     h3
         min-height: 0
         margin: 0 0 10px 15px
@@ -1124,6 +1123,9 @@ x:-o-prefocus, .menu-photo // opera fix
     +breakpoint(mobile)
         font-size: 1.4em
         padding: 5px 10px
+    +breakpoint(tablet)
+        font-size: 1.8em
+        padding: 8px 10px
     &.selected
         color: $main-dark-colot
         +background-image(linear-gradient(left, transparent, rgba(white,.7)))
@@ -1186,6 +1188,10 @@ x:-o-prefocus, .menu-photo // opera fix
 .order-history-details-total-price
     text-align: right
     width: 20%
+.profile-discounts
+    .half-col
+        +breakpoint(tablet)
+            width: 50% !important
 
 
 // Error page
